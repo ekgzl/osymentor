@@ -51,6 +51,14 @@ export default function SignupCardComp() {
   const [inputType, setInputType] = React.useState("password");
   // (tekrar) için olan useState
   const [inputType2, setInputType2] = React.useState("password");
+
+  const [capsLockOn, setCapsLockOn] = React.useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
+  const [capsLockOn2, setCapsLockOn2] = React.useState(false);
+  const [isPasswordFocused2, setIsPasswordFocused2] = React.useState(false);
+  
+
+
   //-------FORMIK------
   const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
     useFormik({
@@ -76,7 +84,10 @@ export default function SignupCardComp() {
             icon: "error",
             confirmButtonText: "Devam et",
             confirmButtonColor: "#37474f",
-            width: "28%",
+            customClass: {
+              container: 'swal2-container-custom',
+              popup: 'swal2-popup-custom'
+            }
           });
           return;
         }
@@ -125,7 +136,9 @@ export default function SignupCardComp() {
               onChange={handleChange}
               value={values.email}
               onBlur={handleBlur}
+
             />
+          
             {/*eğer email input alanına focus geldiğinde ve hata varsa hata mesajını ekrana yaz*/}
             {touched.email && errors.email && (
               <p className={"text-red-700 text-xs "}>{errors.email}</p>
@@ -148,7 +161,17 @@ export default function SignupCardComp() {
               placeholder="Şifre"
               value={values.password}
               onChange={handleChange}
-              onBlur={handleBlur}
+              // onBlur ile input alanının dışına çıkıldığında focus'u kapattım ve capsLock'u false yaptım
+              onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+                handleBlur(e);
+                setIsPasswordFocused(false);
+                setCapsLockOn(false);
+              }}
+              onFocus={() =>  setIsPasswordFocused(true)}
+              // onKeyDown her tuşa basıldığında tetiklenirken onKeyUp sadece tuşun bırakıldığında fonksiyonu çağırır
+              // getModifierState ile capsLock açık olup olmadığını kontrol ettim
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn(e.getModifierState('CapsLock'))}
+              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn(e.getModifierState('CapsLock'))}
             >
               <Input.Icon
                 as={IconButton}
@@ -168,6 +191,9 @@ export default function SignupCardComp() {
                 )}
               </Input.Icon>
             </Input>
+            {capsLockOn && isPasswordFocused && (
+        <p className="text-yellow-700 text-xs">Caps Lock açık</p>
+      )}
             {touched.password && errors.password && (
               <p className={"text-red-700 text-xs "}>{errors.password}</p>
             )}
@@ -190,7 +216,14 @@ export default function SignupCardComp() {
               value={values.password2}
               onChange={handleChange}
               /*kullanıcı bir form alanına tıklayıp alanın dışına çıktığında tetiklenir*/
-              onBlur={handleBlur}
+              onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+                handleBlur(e);
+                setIsPasswordFocused2(false);
+                setCapsLockOn2(false);
+              }}
+              onFocus={() => setIsPasswordFocused2(true)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn2(e.getModifierState('CapsLock'))}
+                onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn2(e.getModifierState('CapsLock'))}
             >
               <Input.Icon
                 as={IconButton}
@@ -199,6 +232,7 @@ export default function SignupCardComp() {
                 placement="end"
                 color="secondary"
                 className="data-[placement=end]:right-1.5 !absolute select-auto z-10 pointer-events-auto"
+                
                 onClick={() =>
                   setInputType2(inputType2 === "password" ? "text" : "password")
                 }
@@ -210,6 +244,9 @@ export default function SignupCardComp() {
                 )}
               </Input.Icon>
             </Input>
+            {capsLockOn2 && isPasswordFocused2 && (
+        <p className="text-yellow-700 text-xs">Caps Lock açık</p>
+      )}
             {touched.password2 && errors.password2 && (
               <p className={"text-red-700 text-xs"}>{errors.password2}</p>
             )}

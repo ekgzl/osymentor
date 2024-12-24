@@ -4,3 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* SweetAlert2 Custom Styles */
+.swal2-container-custom {
+    padding: 1rem;
+  }
+  /* 87% yapar ama 550'yi aşmaz */
+  .swal2-popup-custom {
+    width: 80% !important;
+    max-width: 550px !important;
+  }

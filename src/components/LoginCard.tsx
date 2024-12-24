@@ -16,6 +16,8 @@ import initialUsers from "../data/users.json";
 
 import Swal from "sweetalert2";
 
+
+
 // önce bir kullanıcı tanımla
 type User = {
   email: string;
@@ -42,6 +44,12 @@ const Toast = Swal.mixin({
 });
 
 export function LoginCardComp() {
+
+// useStateler function içinde tanımlanmalı!!
+  const [capsLockOn, setCapsLockOn] = React.useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
+
+
   const navigate = useNavigate();
 
   const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
@@ -66,7 +74,10 @@ export function LoginCardComp() {
             icon: "error",
             confirmButtonText: "Devam et",
             confirmButtonColor: "#37474f",
-            width: "28%",
+            customClass: {
+              container: 'swal2-container-custom',
+              popup: 'swal2-popup-custom'
+            }
           });
 
           return;
@@ -78,9 +89,13 @@ export function LoginCardComp() {
             title: "Şifre hatalı!",
             text: "Lütfen tekrar deneyin",
             icon: "error",
-            confirmButtonText: "Enter",
+            confirmButtonText: "Devam et",
             confirmButtonColor: "#37474f",
-            width: "28%",
+            // SweetAlert2 css'leri globalde ayarladım
+            customClass: {
+              container: 'swal2-container-custom',
+              popup: 'swal2-popup-custom'
+            }
           });
 
           // sadece şifre alanını sıfırlar
@@ -151,7 +166,14 @@ export function LoginCardComp() {
               placeholder="Şifre"
               onChange={handleChange}
               value={values.password}
-              onBlur={handleBlur}
+              onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+                handleBlur(e);
+                setIsPasswordFocused(false);
+                setCapsLockOn(false);
+              }}
+              onFocus={() => setIsPasswordFocused(true)}
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn(e.getModifierState('CapsLock'))}
+              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn(e.getModifierState('CapsLock'))}
             >
               <Input.Icon
                 as={IconButton}
@@ -171,6 +193,9 @@ export function LoginCardComp() {
                 )}
               </Input.Icon>
             </Input>
+            {capsLockOn && isPasswordFocused && (
+              <p className="text-yellow-700 text-xs">Caps Lock açık</p>
+            )}
             {errors.password && touched.password && (
               <p className={"text-red-700 text-xs "}>{errors.password}</p>
             )}
