@@ -16,14 +16,14 @@ export const AnimatedTextComp = () => {
   }, [words.length]);
 
   return (
-    <div className="h-full w-full rounded-l-3xl flex items-center justify-center bg-gradient-to-b from-sky-300 to-orange-300">
+    <div className="h-[38rem] sm:h-[35rem] w-full rounded-l-3xl flex items-center justify-center bg-gradient-to-b from-sky-300 to-orange-300">
       <div className="text-center">
         {words.map((word, index) => (
           <div
             key={index}
-            className={`transition-all duration-700 text-5xl font-bold  mt-3 mb-3 ${
+            className={`transition-all duration-700 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mt-4 sm:mt-3 mb-4 sm:mb-3 ${
               currentWordIndex === index
-                ? "text-gray-700 opacity-100 text-6xl"
+                ? "text-gray-700 opacity-100 scale-110"
                 : "text-gray-600 opacity-20"
             }`}
           >

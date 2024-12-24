@@ -128,13 +128,15 @@ export function LandingNavbarComp() {
         <Collapse open={openNav}>
           <NavList />
 
-          <Button isFullWidth size="sm" className="mt-3 border-none">
+          <Button as={"a"} isFullWidth size="sm" className="mt-3 border-none" href={"/login"}>
             Giriş yap
           </Button>
           <Button
+            as={"a"}
             isFullWidth
             size="sm"
             className="mt-2 mb-3 hover:bg-amber-600 border-none"
+            href={"/signup"}
           >
             Kayıt Ol
           </Button>

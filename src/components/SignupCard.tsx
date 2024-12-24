@@ -96,12 +96,12 @@ export default function SignupCardComp() {
     });
 
   return (
-    <div className="grid place-items-center w-full h-full p-2 ">
-      <div className="w-full max-w-md mx-auto p-2">
-        <Typography as="h2" type="h4" className="mb-2 text-center">
+    <div className="grid place-items-center w-full h-full sm:p-2">
+      <div className="w-full max-w-[95%] mx-auto p-1 sm:p-2">
+        <Typography as="h2" type="h2" className="mb-2 text-center text-3xl md:text-4xl sm:text-3xl">
           Kayıt Ol
         </Typography>
-        <Typography className="text-foreground text-center">
+        <Typography className="text-foreground text-center text-sm lg:text-lg md:text-lg sm:text-base">
           Kayıt olmak için e-posta adresinizi ve şifrenizi girin.
         </Typography>
         {/*Button bir mouse event beklediği için `handleSubmit` kullanılamıyor o yüzden burada onSubmit kullanıp butonun type submit yaptım*/}
@@ -113,7 +113,7 @@ export default function SignupCardComp() {
               /* eposta yazısına mouse geldiğinde input alanına odaklanır.  */ htmlFor="email"
               type="small"
               color="default"
-              className="font-semibold "
+              className="font-semibold text-xs sm:text-sm"
             >
               E-posta
             </Typography>
@@ -137,7 +137,7 @@ export default function SignupCardComp() {
               htmlFor="password"
               type="small"
               color="default"
-              className="font-semibold"
+              className="font-semibold text-xs sm:text-sm"
             >
               Şifre
             </Typography>
@@ -178,7 +178,7 @@ export default function SignupCardComp() {
               htmlFor="password2"
               type="small"
               color="default"
-              className="font-semibold"
+              className="font-semibold text-xs sm:text-sm"
             >
               Şifre (Tekrar)
             </Typography>
@@ -214,7 +214,7 @@ export default function SignupCardComp() {
               <p className={"text-red-700 text-xs"}>{errors.password2}</p>
             )}
           </div>
-          <Button type={"submit"} className={"my-2"} size="md" isFullWidth>
+          <Button  type={"submit"} className={"text-xs lg:text-base md:text-sm sm:text-sm my-2"} size="md" isFullWidth>
             Kayıt Ol
           </Button>
         </form>
@@ -226,12 +226,13 @@ export default function SignupCardComp() {
             href={"/login"}
             size="sm"
             isFullWidth
+            className="text-xs lg:text-base md:text-sm sm:text-sm"
           >
             Zaten bir hesaba sahibim
           </Button>
 
-          <Button size="sm" variant="outline" color="secondary" isFullWidth>
-            <GoogleCircle className="w-5 h-5 mr-2" /> Google ile kayıt ol
+          <Button className="text-xs lg:text-base md:text-sm sm:text-sm" size="sm" variant="outline" color="secondary" isFullWidth>
+            <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google ile kayıt ol
           </Button>
         </div>
       </div>

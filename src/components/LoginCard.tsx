@@ -101,12 +101,12 @@ export function LoginCardComp() {
     });
   const [inputType, setInputType] = React.useState("password");
   return (
-    <div className="grid place-items-center w-full h-full p-2 ">
-      <div className="w-full max-w-md mx-auto p-2">
-        <Typography as="h2" type="h4" className="mb-2 text-center">
+    <div className="grid place-items-center w-full sm:p-6 md:p-8">
+      <div className="w-full max-w-[93%] mx-auto p-4 sm:p-6">
+        <Typography as="h2"  className="mb-2 text-center font-bold text-3xl md:text-5xl sm:text-4xl">
           Giriş Yap
         </Typography>
-        <Typography className="text-foreground text-center">
+        <Typography className="text-foreground text-center text-sm lg:text-lg md:text-lg sm:text-base">
           E-posta adresi ve şifre ile giriş yap
         </Typography>
         <form onSubmit={handleSubmit} className="mt-10">
@@ -115,15 +115,15 @@ export function LoginCardComp() {
               /*Burada label olarak kullanılıyor text yani. */ as="label"
               /* htmlFor id değeri email olan input alanını işaret ediyor.*/
               /* eposta yazısına mouse geldiğinde input alanına odaklanır.  */ htmlFor="email"
-              type="small"
               color="default"
-              className="font-semibold "
+              className="font-semibold text-xs  sm:text-sm"
             >
               E-posta
             </Typography>
             <Input
+              className="text-xs lg:text-base md:text-sm sm:text-xs"
               size="lg"
-              /* label alanında veya farklı alanlar içinm kullanılır */ id="email"
+              id="email"
               type="email"
               placeholder="E-posta"
               onChange={handleChange}
@@ -138,13 +138,13 @@ export function LoginCardComp() {
             <Typography
               as="label"
               htmlFor="password"
-              type="small"
               color="default"
-              className="font-semibold"
+              className="font-semibold text-xs sm:text-sm"
             >
               Şifre
             </Typography>
             <Input
+              className="text-xs lg:text-base md:text-sm sm:text-xs"
               size="lg"
               id="password"
               type={inputType}
@@ -175,22 +175,22 @@ export function LoginCardComp() {
               <p className={"text-red-700 text-xs "}>{errors.password}</p>
             )}
           </div>
-          <Button type={"submit"} size="md" isFullWidth>
+          <Button type={"submit"} className="text-sm  lg:text-base md:text-base sm:text-sm" isFullWidth>
             Giriş Yap
           </Button>
         </form>
-        <div className="my-4">
-          <Button size="md" variant="outline" color="secondary" isFullWidth>
-            <GoogleCircle className="w-5 h-5 mr-2" /> Google ile giriş yap
+        <div className="mt-4 mb-16 sm:my-4">
+          <Button className="text-sm  lg:text-base md:text-base sm:text-sm" variant="outline" color="secondary" isFullWidth>
+            <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google ile giriş yap
           </Button>
-        </div>
-        <Typography className="flex items-center justify-center gap-1 text-foreground">
+        </div>  
+        <Typography className="flex items-center justify-center gap-1 text-foreground text-xs sm:text-base">
           Hesabın yok mu?
           <Typography
             color="primary"
             as="a"
             href="/signup"
-            className="font-semibold"
+            className="font-semibold text-xs sm:text-base"
           >
             Hesap oluştur
           </Typography>
