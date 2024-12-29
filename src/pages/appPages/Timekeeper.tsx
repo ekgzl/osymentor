@@ -86,8 +86,8 @@ export const TimekeeperPage = () => {
   return (
 
     <div className="p-8 bg-gradient-to-l from-orange-100 to-sky-100 rounded-lg shadow-lg">
-      <h1 className="text-4xl font-bold mb-8 text-center text-primary-dark">Kronometre</h1>
-      <div className="text-9xl mb-8 text-center text-primary-dark">
+      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center text-primary-dark">Kronometre</h1>
+      <div className="text-2xl sm:text-5xl md:text-7xl lg:text-9xl mb-8 text-center text-primary-dark">
         {formatNumber(time.hours)}:{formatNumber(time.minutes)}:
         {formatNumber(time.seconds)}
       </div>
@@ -115,11 +115,9 @@ export const TimekeeperPage = () => {
           Mola
         </Button>
         <Button
-          size='lg'
+          size="lg"
           onClick={resetTimer}
-          className="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-all duration-500 ease-in-out
-          border-none
-          "
+          className="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-all duration-500 ease-in-out border-none"
         >
           Sıfırla
         </Button>
