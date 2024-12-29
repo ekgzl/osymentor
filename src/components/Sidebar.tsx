@@ -21,6 +21,7 @@ import {
   ProfileCircle,
   ChatLines,
 } from "iconoir-react";
+import { Link } from "react-router-dom";
 
 const Links = [
   {
@@ -28,7 +29,7 @@ const Links = [
 
     title: "Ana Sayfa",
 
-    href: "/",
+    href: "/app",
   },
 
   {
@@ -36,7 +37,7 @@ const Links = [
 
     title: "Kronometre",
 
-    href: "/timekeeper",
+    href: "/app/timekeeper",
   },
 
   {
@@ -44,7 +45,7 @@ const Links = [
 
     title: "Deneme Analizi",
 
-    href: "/test",
+    href: "/app/test",
   },
 ];
 
@@ -73,9 +74,9 @@ export function SidebarComp() {
                 key={title}
                 className={"cursor-pointer hover:bg-[#025373]"}
                 /* Burada list.item bir "a" elementi oluyor. */
-                as="a"
+                as={Link}
                 /* Bu sayede href kullanılabilir. */
-                href={href}
+                to={href}
               >
                 <List.ItemStart>
                   <Icon color="#F28A2E" className="h-[18px] w-[18px]" />
@@ -107,8 +108,8 @@ export function SidebarComp() {
             <Collapse open={isOpen}>
               <List>
                 <List.Item
-                  as="a"
-                  href="/profile"
+                  as={Link}
+                  to="/app/profile"
                   className={"hover:bg-[#025373]"}
                 >
                   <List.ItemStart>
@@ -121,8 +122,8 @@ export function SidebarComp() {
                 </List.Item>
 
                 <List.Item
-                  as="a"
-                  href="/social"
+                  as={Link}
+                  to="/app/social"
                   className={"hover:bg-[#025373]"}
                 >
                   <List.ItemStart>

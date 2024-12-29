@@ -1,9 +1,9 @@
-import { HomePage } from "./pages/Home.tsx";
-import { TimekeeperPage } from "./pages/Timekeeper.tsx";
-import { TestPage } from "./pages/Test.tsx";
+import { HomePage } from "./pages/appPages/Home.tsx";
+import { TimekeeperPage } from "./pages/appPages/Timekeeper.tsx";
+import { TestPage } from "./pages/appPages/Test.tsx";
 import { Route, Routes } from "react-router-dom";
-import { SocialPage } from "./pages/Social.tsx";
-import { ProfilePage } from "./pages/Profile.tsx";
+import { SocialPage } from "./pages/appPages/Social.tsx";
+import { ProfilePage } from "./pages/appPages/Profile.tsx";
 import { LandingPage } from "./pages/landingPages/Landing.tsx";
 import { LoginPage } from "./pages/authPages/Login.tsx";
 import { SignupPage } from "./pages/authPages/Signup.tsx";
@@ -13,6 +13,7 @@ import { LandingLayout } from "./pages/landingPages/LandingLayout.tsx";
 import AboutPage from "./pages/landingPages/About.tsx";
 import ServicesPage from "./pages/landingPages/Services.tsx";
 import ContactPage from "./pages/landingPages/Contact.tsx";
+import { AppLayout } from "./pages/appPages/appLayout.tsx";
 
 function App() {
   return (
@@ -31,50 +32,18 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
 
-      <Route path="/app/*">
-        <Route
-          index
-          element={
-            <PrivateRoute>
-              <HomePage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="test"
-          element={
-            <PrivateRoute>
-              <TestPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="social"
-          element={
-            <PrivateRoute>
-              <SocialPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="timekeeper"
-          element={
-            <PrivateRoute>
-              <TimekeeperPage />
-            </PrivateRoute>
-          }
-        />
 
-        <Route
-          path="profile"
-          element={
-            <PrivateRoute>
-              <ProfilePage />
-            </PrivateRoute>
-          }
-        />
+      <Route element={<AppLayout />}>
+        <Route path="/app" element={<PrivateRoute><HomePage /></PrivateRoute>} />
+        <Route path="/app/*">
+          <Route path="test" element={<PrivateRoute><TestPage /></PrivateRoute>} />
+          <Route path="social" element={<PrivateRoute><SocialPage /></PrivateRoute>} />
+          <Route path="timekeeper" element={<PrivateRoute><TimekeeperPage /></PrivateRoute>} />
+          <Route path="profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Route>
+
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
