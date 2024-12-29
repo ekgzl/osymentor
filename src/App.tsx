@@ -13,7 +13,7 @@ import { LandingLayout } from "./pages/landingPages/LandingLayout.tsx";
 import AboutPage from "./pages/landingPages/About.tsx";
 import ServicesPage from "./pages/landingPages/Services.tsx";
 import ContactPage from "./pages/landingPages/Contact.tsx";
-import { AppLayout } from "./pages/appPages/appLayout.tsx";
+import { AppLayout } from "./pages/appPages/AppLayout.tsx";
 
 function App() {
   return (
