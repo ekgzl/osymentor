@@ -1,128 +1,58 @@
 import { Button } from '@material-tailwind/react';
-import { useState, useRef, useEffect } from 'react';
+import { useStopwatch } from 'react-timer-hook';
 
 export const TimekeeperPage = () => {
 
-  // Internal değişkenler, component içinde tanımlanan ve sadece component içinde
-  // kullanılabilen yerel değişkenlerdir. useState ile oluşturulan state'ler,
-  // useRef ile oluşturulan ref'ler ve diğer değişkenler internal olarak kabul edilir.
-
-  // Kronometre için saat, dakika, saniye ve saliseleri tutan durum değişkeni state değişirse component render edilir.
-  const [time, setTime] = useState({ hours: 0, minutes: 0, seconds: 0, centiseconds: 0 });
-
-  // Kronometrenin çalışıp çalışmadığını kontrol eden durum değişkeni
-  const [isRunning, setIsRunning] = useState(false);
-
-  // setInterval referansını tutan useRef değişkeni
-  // useRef, component render'ları arasında değerini koruyan bir container oluşturur
-  // useState'den farkı, useRef değeri değiştiğinde component yeniden render olmaz
-  // Peki ekrandaki sayılar neden artıyor: useRef sayesinde değil, useState ile yönetilen time state'inin değişmesi sayesinde oluyor. useRef burada sadece interval'i durdurmak istediğimizde kullanabileceğimiz bir referans.
-
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-
-  const startTimer = () => {
-    if (!isRunning) {
-      setIsRunning(true);
-      // Her 10 milisaniyede bir zamanlayıcıyı günceller çünkü 10 milisaniye = 1 centisecond
-      intervalRef.current = setInterval(() => {
-        //prevTime: önceki zaman değerleri (bu fonksiyonda parametre olarak otomatik veriliyor)
-        setTime((prevTime) => {
-          // Salise, saniye, dakika ve saat değerlerini artırma mantığı
-          let newCentiseconds = prevTime.centiseconds + 1;
-          let newSeconds = prevTime.seconds;
-          let newMinutes = prevTime.minutes;
-          let newHours = prevTime.hours;
-
-          if (newCentiseconds === 100) {
-            newCentiseconds = 0;
-            newSeconds++;
-          }
-          if (newSeconds === 60) {
-            newSeconds = 0;
-            newMinutes++;
-          }
-          if (newMinutes === 60) {
-            newMinutes = 0;
-            newHours++;
-          }
-
-          // her bir değişiklikte 
-          return {
-            hours: newHours,
-            minutes: newMinutes,
-            seconds: newSeconds,
-            centiseconds: newCentiseconds,
-          };
-        });
-      }, 10);
-    }
-  };
-
-  const stopTimer = () => {
-    if (intervalRef.current) {
-      // clearInterval default bir fonksiyondur.
-      // clearInterval ile setInterval'in çalışması durdurulur.
-      clearInterval(intervalRef.current);
-      setIsRunning(false);
-    }
-  };
-
-  const resetTimer = () => {
-    stopTimer();
-    setTime({ hours: 0, minutes: 0, seconds: 0, centiseconds: 0 });
-  };
-
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, []);
+  const {
+    seconds,
+    minutes,
+    hours,
+    isRunning,
+    start,
+    pause,
+    reset,
+  } = useStopwatch({ autoStart: false });
 
   const formatNumber = (num: number) => num.toString().padStart(2, '0');
 
-  return (
 
+
+
+  return (
     <div className="p-8 bg-gradient-to-l from-orange-100 to-sky-100 rounded-lg shadow-lg">
       <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center text-primary-dark">Kronometre</h1>
-      <div className="text-2xl sm:text-5xl md:text-7xl lg:text-9xl mb-8 text-center text-primary-dark">
-        {formatNumber(time.hours)}:{formatNumber(time.minutes)}:
-        {formatNumber(time.seconds)}
+      <div className="text-2xl sm:text-5xl md:text-7xl lg:text-9xl mb-8 text-center text-primary-dark font-mono font-normal">
+        {formatNumber(hours)}:{formatNumber(minutes)}:
+        {formatNumber(seconds)}
       </div>
       <div className="flex gap-4">
         <Button
-          size='lg'
-          onClick={startTimer}
+          onClick={start}
           disabled={isRunning}
-          className={`px-6 py-2 rounded-lg ${isRunning
+          className={`px-4 sm:px-6 sm:py-2 rounded-lg ${isRunning
             ? 'bg-gray-400 cursor-not-allowed'
             : 'bg-amber-600 hover:bg-amber-700'
-            } text-white font-semibold transition-all duration-500 ease-in-out border-none`}
+            } text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm`}
         >
           Başlat
         </Button>
         <Button
-          size='lg'
-          onClick={stopTimer}
+          onClick={pause}
           disabled={!isRunning}
-          className={`px-6 py-2 rounded-lg ${!isRunning
+          className={`px-4 sm:px-6 sm:py-2 rounded-lg ${!isRunning
             ? 'bg-gray-400 cursor-not-allowed'
             : 'bg-red-600 hover:bg-red-700'
-            } text-white font-semibold transition-all duration-500 ease-in-out border-none`}
+            } text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm`}
         >
           Mola
         </Button>
         <Button
-          size="lg"
-          onClick={resetTimer}
-          className="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-all duration-500 ease-in-out border-none"
+          onClick={() => reset(new Date(), false)}
+          className="px-4 sm:px-6 sm:py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm"
         >
           Sıfırla
         </Button>
       </div>
     </div>
-
   );
 };
