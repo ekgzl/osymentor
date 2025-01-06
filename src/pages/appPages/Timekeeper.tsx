@@ -1,4 +1,5 @@
 import { Button } from '@material-tailwind/react';
+import { useEffect } from 'react';
 import { useStopwatch } from 'react-timer-hook';
 
 export const TimekeeperPage = () => {
@@ -15,7 +16,30 @@ export const TimekeeperPage = () => {
 
   const formatNumber = (num: number) => num.toString().padStart(2, '0');
 
+  useEffect(() => {
+    const savedState = JSON.parse(localStorage.getItem('timekeeper') || '{}');
+    if (savedState && savedState.time) {
+      const { time } = savedState;
+      const oldTime = new Date(time);
+      const elapSecond = oldTime.getHours() * 60 * 60 + oldTime.getMinutes() * 60 + oldTime.getSeconds()
+      const offset = new Date();
+      offset.setSeconds(offset.getSeconds() + elapSecond);
+      reset(offset, false);
+    }
+  }, [reset]);
 
+
+  useEffect(() => {
+    if (!isRunning) return;
+    const now = new Date();
+    now.setHours(hours);
+    now.setMinutes(minutes);
+    now.setSeconds(seconds);
+    const state = {
+      time: now
+    };
+    localStorage.setItem('timekeeper', JSON.stringify(state));
+  }, [hours, minutes, seconds, isRunning]);
 
 
   return (
@@ -47,7 +71,10 @@ export const TimekeeperPage = () => {
           Mola
         </Button>
         <Button
-          onClick={() => reset(new Date(), false)}
+          onClick={() => {
+            reset(new Date(), false);
+            localStorage.removeItem('timekeeper')
+          }}
           className="px-4 sm:px-6 sm:py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm"
         >
           Sıfırla
