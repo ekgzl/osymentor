@@ -40,8 +40,8 @@ function App() {
           <Route path="social" element={<PrivateRoute><SocialPage /></PrivateRoute>} />
           <Route path="timekeeper" element={<PrivateRoute><TimekeeperPage /></PrivateRoute>} />
           <Route path="profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+          <Route path="*" element={<PrivateRoute><NotFoundPage /></PrivateRoute>} />
         </Route>
-        <Route path="*" element={<NotFoundPage />} />
       </Route>
 
 

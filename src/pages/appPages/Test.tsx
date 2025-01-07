@@ -1,3 +1,5 @@
+import OldSessionChart from "../../components/OldSessionChart";
+
 export const TestPage = () => {
-  return <>Test page</>;
+  return <OldSessionChart />
 };
