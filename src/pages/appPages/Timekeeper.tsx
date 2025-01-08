@@ -66,6 +66,7 @@ export const TimekeeperPage = () => {
     const oldSessions = JSON.parse(localStorage.getItem('sessions') || '{"sessions": []}');
     const newSessions = [...(oldSessions.sessions || []), state];
     localStorage.setItem('sessions', JSON.stringify({ sessions: newSessions }));
+    localStorage.removeItem('timekeeper')
     console.log(newSessions);
   }
 
