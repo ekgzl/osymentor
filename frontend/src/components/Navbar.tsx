@@ -3,82 +3,13 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../../features/drawer/SidebarSlice.ts";
-import {
-  IconButton,
-  Typography,
-  Input,
-  Collapse,
-  Navbar,
-} from "@material-tailwind/react";
+import { IconButton, Input, Navbar } from "@material-tailwind/react";
 
-import {
-  Archive,
-  Menu,
-  MultiplePages,
-  ProfileCircle,
-  Search,
-  SelectFace3d,
-  Xmark,
-} from "iconoir-react";
+import { Menu, Search, Xmark } from "iconoir-react";
 import { BadgeComp } from "./Badge.tsx";
 import { AvatarComp } from "./appComponents/Avatar.tsx";
 import { MenuScale } from "iconoir-react/regular";
 import { RootState } from "../../app/store.ts";
-
-const LINKS = [
-  {
-    icon: MultiplePages,
-
-    title: "Pages",
-
-    href: "#",
-  },
-
-  {
-    icon: ProfileCircle,
-
-    title: "Account",
-
-    href: "#",
-  },
-
-  {
-    icon: SelectFace3d,
-
-    title: "Blocks",
-
-    href: "#",
-  },
-
-  {
-    icon: Archive,
-
-    title: "Docs",
-
-    href: "#",
-  },
-];
-
-function NavList() {
-  return (
-    <ul className="mt-4 flex flex-col gap-x-3 gap-y-1.5 lg:mt-0 lg:flex-row lg:items-center">
-      {LINKS.map(({ icon: Icon, title, href }) => (
-        <li key={title}>
-          <Typography
-            as="a"
-            href={href}
-            type="small"
-            className="flex items-center gap-x-2 p-1 hover:text-primary"
-          >
-            <Icon className="h-4 w-4" />
-
-            {title}
-          </Typography>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 export function NavbarComp() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -87,12 +18,12 @@ export function NavbarComp() {
     window.addEventListener(
       "resize",
 
-      () => window.innerWidth >= 960 && setOpenNav(false),
+      () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
 
   const isSidebarOpen = useSelector(
-    (state: RootState) => state.sidebar.isSidebarOpen,
+    (state: RootState) => state.sidebar.isSidebarOpen
   );
 
   return (
@@ -142,10 +73,6 @@ export function NavbarComp() {
           )}
         </IconButton>
       </div>
-
-      <Collapse open={openNav}>
-        <NavList />
-      </Collapse>
     </Navbar>
   );
 }

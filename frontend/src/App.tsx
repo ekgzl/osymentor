@@ -18,7 +18,6 @@ import { AppLayout } from "./pages/appPages/AppLayout.tsx";
 function App() {
   return (
     <Routes>
-
       <Route element={<LandingLayout />}> {/* LandingLayout tüm bu rotalara uygulanır */}
         {/* LandingLayout içinde LandingNavbar ve FooterComp bulunur aşağıdaki rotalar Outlet componentinin yerine gönderilir */}
         
