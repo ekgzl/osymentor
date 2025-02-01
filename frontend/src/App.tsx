@@ -18,31 +18,71 @@ import { AppLayout } from "./pages/appPages/AppLayout.tsx";
 function App() {
   return (
     <Routes>
-      <Route element={<LandingLayout />}> {/* LandingLayout tüm bu rotalara uygulanır */}
+      <Route element={<LandingLayout />}>
+        {" "}
+        {/* LandingLayout tüm bu rotalara uygulanır */}
         {/* LandingLayout içinde LandingNavbar ve FooterComp bulunur aşağıdaki rotalar Outlet componentinin yerine gönderilir */}
-        
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/contact" element={<ContactPage />} />
       </Route>
 
-
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
 
-
       <Route element={<AppLayout />}>
-        <Route path="/app" element={<PrivateRoute><HomePage /></PrivateRoute>} />
+        <Route
+          path="/app"
+          element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          }
+        />
         <Route path="/app/*">
-          <Route path="test" element={<PrivateRoute><TestPage /></PrivateRoute>} />
-          <Route path="social" element={<PrivateRoute><SocialPage /></PrivateRoute>} />
-          <Route path="timekeeper" element={<PrivateRoute><TimekeeperPage /></PrivateRoute>} />
-          <Route path="profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
-          <Route path="*" element={<PrivateRoute><NotFoundPage /></PrivateRoute>} />
+          <Route
+            path="test"
+            element={
+              <PrivateRoute>
+                <TestPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="social"
+            element={
+              <PrivateRoute>
+                <SocialPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="timekeeper"
+            element={
+              <PrivateRoute>
+                <TimekeeperPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <PrivateRoute>
+                <NotFoundPage />
+              </PrivateRoute>
+            }
+          />
         </Route>
       </Route>
-
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
