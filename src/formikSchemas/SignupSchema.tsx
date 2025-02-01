@@ -10,8 +10,8 @@ export const SignupSchema = yup.object().shape({
     .required("Lütfen bir şifre girin")
     .min(8, "Şifre en az 8 elemandan oluşmalı")
     .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      "Şifre en az bir harf, bir rakam ve bir özel karakter içermelidir",
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&._])[A-Za-z\d@$!%*?&._]/,
+      "Şifre en az bir harf, bir rakam ve bir özel karakter içermelidir"
     ),
   password2: yup
     .string()

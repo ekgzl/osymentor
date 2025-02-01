@@ -21,7 +21,7 @@ function App() {
 
       <Route element={<LandingLayout />}> {/* LandingLayout tüm bu rotalara uygulanır */}
         {/* LandingLayout içinde LandingNavbar ve FooterComp bulunur aşağıdaki rotalar Outlet componentinin yerine gönderilir */}
-
+        
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />

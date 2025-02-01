@@ -21,9 +21,9 @@ import {
   Xmark,
 } from "iconoir-react";
 import { BadgeComp } from "./Badge.tsx";
-import { AvatarComp } from "./Avatar.tsx";
+import { AvatarComp } from "./appComponents/Avatar.tsx";
 import { MenuScale } from "iconoir-react/regular";
-import { RootState } from "../../app/Store.ts";
+import { RootState } from "../../app/store.ts";
 
 const LINKS = [
   {

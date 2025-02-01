@@ -7,7 +7,6 @@ export default {
   content: [
 
     "./index.html",
-
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@material-tailwind/react/**/*.{js,ts,jsx,tsx}"
 
@@ -19,7 +18,11 @@ export default {
       screens: {
         'bt': '1240px', // Custom breakpoint
       },
-    },
+      fontFamily: {
+        sans: ['Work Sans', 'sans-serif'],
+        mono: ['Noto Sans Mono', 'sans-serif'],
+      },
+    },  
 
   },
 

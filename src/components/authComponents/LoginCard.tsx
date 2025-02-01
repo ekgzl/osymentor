@@ -16,7 +16,8 @@ import initialUsers from "../../data/users.json";
 
 import Swal from "sweetalert2";
 
-
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../features/drawer/UserSlice";
 
 // önce bir kullanıcı tanımla
 type User = {
@@ -44,14 +45,12 @@ const Toast = Swal.mixin({
 });
 
 export function LoginCardComp() {
-
-// useStateler function içinde tanımlanmalı!!
+  // useStateler function içinde tanımlanmalı!!
   const [capsLockOn, setCapsLockOn] = React.useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
 
-
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
     useFormik({
       initialValues: {
@@ -64,7 +63,7 @@ export function LoginCardComp() {
       onSubmit: (values, { resetForm, setFieldValue }) => {
         const users = getUsers();
         const userExists = users.some(
-          (user: User) => user.email === values.email,
+          (user: User) => user.email === values.email
         );
 
         if (!userExists) {
@@ -75,9 +74,9 @@ export function LoginCardComp() {
             confirmButtonText: "Devam et",
             confirmButtonColor: "#37474f",
             customClass: {
-              container: 'swal2-container-custom',
-              popup: 'swal2-popup-custom'
-            }
+              container: "swal2-container-custom",
+              popup: "swal2-popup-custom",
+            },
           });
 
           return;
@@ -93,9 +92,9 @@ export function LoginCardComp() {
             confirmButtonColor: "#37474f",
             // SweetAlert2 css'leri globalde ayarladım
             customClass: {
-              container: 'swal2-container-custom',
-              popup: 'swal2-popup-custom'
-            }
+              container: "swal2-container-custom",
+              popup: "swal2-popup-custom",
+            },
           });
 
           // sadece şifre alanını sıfırlar
@@ -104,7 +103,16 @@ export function LoginCardComp() {
         }
 
         localStorage.setItem("token", "bearer-token");
-        localStorage.setItem("username", values.email.split("@")[0]);
+        const toUser = {
+          username: user.email.split("@")[0],
+          email: user.email,
+          exam: "KPSS",
+          avatar:
+            "https://storage.evrimagaci.org/old/mi_media/afcae823e61eefb077e1f223594b1e7f.jpeg",
+          birthdate: "",
+        };
+        localStorage.setItem("user", JSON.stringify(toUser));
+        dispatch(setUser(toUser));
         Toast.fire({
           icon: "success",
           title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
@@ -118,7 +126,10 @@ export function LoginCardComp() {
   return (
     <div className="grid place-items-center w-full sm:p-6 md:p-8">
       <div className="w-full max-w-[93%] mx-auto p-4 sm:p-6">
-        <Typography as="h2"  className="mb-2 text-center font-bold text-3xl md:text-5xl sm:text-4xl">
+        <Typography
+          as="h2"
+          className="mb-2 text-center font-bold text-3xl md:text-5xl sm:text-4xl"
+        >
           Giriş Yap
         </Typography>
         <Typography className="text-foreground text-center text-sm lg:text-lg md:text-lg sm:text-base">
@@ -172,8 +183,12 @@ export function LoginCardComp() {
                 setCapsLockOn(false);
               }}
               onFocus={() => setIsPasswordFocused(true)}
-              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn(e.getModifierState('CapsLock'))}
-              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn(e.getModifierState('CapsLock'))}
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                setCapsLockOn(e.getModifierState("CapsLock"))
+              }
+              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                setCapsLockOn(e.getModifierState("CapsLock"))
+              }
             >
               <Input.Icon
                 as={IconButton}
@@ -200,15 +215,25 @@ export function LoginCardComp() {
               <p className={"text-red-700 text-xs "}>{errors.password}</p>
             )}
           </div>
-          <Button type={"submit"} className="text-sm  lg:text-base md:text-base sm:text-sm" isFullWidth>
+          <Button
+            type={"submit"}
+            className="text-sm  lg:text-base md:text-base sm:text-sm"
+            isFullWidth
+          >
             Giriş Yap
           </Button>
         </form>
         <div className="mt-4 mb-16 sm:my-4">
-          <Button className="text-sm  lg:text-base md:text-base sm:text-sm" variant="outline" color="secondary" isFullWidth>
-            <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google ile giriş yap
+          <Button
+            className="text-sm  lg:text-base md:text-base sm:text-sm"
+            variant="outline"
+            color="secondary"
+            isFullWidth
+          >
+            <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google
+            ile giriş yap
           </Button>
-        </div>  
+        </div>
         <Typography className="flex items-center justify-center gap-1 text-foreground text-xs sm:text-base">
           Hesabın yok mu?
           <Typography

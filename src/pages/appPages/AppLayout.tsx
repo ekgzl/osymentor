@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { SidebarComp } from "../../components/Sidebar";
-import { RootState } from "../../../app/Store";
+import { SidebarComp } from "../../components/appComponents/Sidebar";
+import { RootState } from "../../../app/store";
 import { useSelector } from "react-redux";
 import { NavbarComp } from "../../components/Navbar";
 import { FooterComp } from "../../components/Footer";

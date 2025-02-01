@@ -1,3 +1,5 @@
+import UserProfileComp from "../../components/appComponents/UserProfile";
+
 export const ProfilePage = () => {
-  return <>Profile Page</>;
+  return <UserProfileComp />;
 };

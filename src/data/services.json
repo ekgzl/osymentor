@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Oil Change",
+    "description": "Ensure optimal engine performance with our professional oil change service.",
+    "image": "https://bucket.material-tailwind.com/magic-ai/06b38f84f9669f766048c469ce861b81880378273a11ae9badaedfc32868ef44.jpg",
+    "features": ["Carefully crafted services", "Amazing page examples"],
+    "link": "https://example.com/oil-change"
+  },
+  {
+    "title": "Tire Rotation",
+    "description": "Extend the lifespan of your tires and improve overall vehicle handling.",
+    "image": "https://bucket.material-tailwind.com/magic-ai/e7aa235a7bc5f504db1c66e27ece08f8118b1da6b21c013500391afcd572cf7d.jpg",
+    "features": [
+      "Embed your work with",
+      "Publish across social channels in a click"
+    ],
+    "link": "https://example.com/tire-rotation"
+  },
+  {
+    "title": "Brake Inspection",
+    "description": "Stay safe on the road with our thorough brake inspection service.",
+    "image": "https://bucket.material-tailwind.com/magic-ai/dc74a867f21afc734166a6d37c08beaba4ff040664ba8ccce918e054264ad68d.jpg",
+    "features": ["Carefully crafted services", "Amazing page examples"],
+    "link": "https://example.com/brake-inspection"
+  }
+]

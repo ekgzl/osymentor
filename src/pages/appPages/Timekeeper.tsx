@@ -3,9 +3,16 @@
 import { Button } from '@material-tailwind/react';
 import { useEffect } from 'react';
 import { useStopwatch } from 'react-timer-hook';
-import OldSessionChart from '../../components/OldSessionChart';
+import OldSessionChartComp from '../../components/appComponents/OldSessionChart';
+import { addSession } from '../../../features/drawer/SessionsSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../app/store';
 
 export const TimekeeperPage = () => {
+
+  const dispatch = useDispatch();
+  const sessions = useSelector((state: RootState) => state.sessions.sessions);
 
   const {
     seconds,
@@ -27,7 +34,7 @@ export const TimekeeperPage = () => {
     if (savedState && savedState.time) {
 
       const { time } = savedState;
-
+      
       const oldTime = new Date(time);
       // Kaydedilmiş zamandaki saat, dakika ve saniyeleri hesaplayarak toplam saniye cinsinden bir değer elde ediyoruz.
       const elapSecond = oldTime.getHours() * 60 * 60 + oldTime.getMinutes() * 60 + oldTime.getSeconds()
@@ -48,10 +55,16 @@ export const TimekeeperPage = () => {
     now.setMinutes(minutes);
     now.setSeconds(seconds);
     const state = {
-      time: now
+      time: now.toISOString()
     };
     localStorage.setItem('timekeeper', JSON.stringify(state));
   }, [hours, minutes, seconds, isRunning]);
+
+
+  // handeworkend ile çalışma bitire tıklayınca değişen state ile locale kayıt yap
+  useEffect(() => {
+    localStorage.setItem('sessions', JSON.stringify({ sessions }));
+  }, [sessions]);
 
   //çalışmayı bitirdiğimizde localStorage'a kaydediyoruz
   const handleWorkEnd = () => {
@@ -59,19 +72,18 @@ export const TimekeeperPage = () => {
     now.setHours(hours);
     now.setMinutes(minutes);
     now.setSeconds(seconds);
-    const state = {
-      time: now
-    };
+    
+    const localTime = new Date();
+    now.setDate(localTime.getDate());
 
-    const oldSessions = JSON.parse(localStorage.getItem('sessions') || '{"sessions": []}');
-    const newSessions = [...(oldSessions.sessions || []), state];
-    localStorage.setItem('sessions', JSON.stringify({ sessions: newSessions }));
-    localStorage.removeItem('timekeeper')
-    console.log(newSessions);
+    const state = { time: now.toISOString() };
+    if (now.getSeconds() === 0 && now.getMinutes() === 0 && now.getHours() === 0) {
+      return;
+    }
+    // dispatch ile stateini güncelle
+    dispatch(addSession(state));
+    localStorage.removeItem('timekeeper');
   }
-
-
-
 
 
   return (
@@ -126,11 +138,11 @@ export const TimekeeperPage = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </div >
       <div className="p-4 sm:p-8 bg-gradient-to-l from-orange-100 to-sky-100 rounded-lg shadow-lg mt-8">
         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center text-primary-dark">Çalışma Geçmişi</h1>
         <div className="mt-4">
-          <OldSessionChart />
+          <OldSessionChartComp />
         </div>
       </div>
     </>
