@@ -14,7 +14,7 @@ import {
   YAxis,
   Rectangle,
 } from "recharts";
-import { RootState } from "../../../app/store";
+import { RootState } from "../../../../app/store";
 
 //1236
 const sessionSumbyDay = (sessions: any) => {
