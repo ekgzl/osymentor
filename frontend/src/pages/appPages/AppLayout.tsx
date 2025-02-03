@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { SidebarComp } from "../../components/appComponents/Sidebar";
 import { RootState } from "../../../app/store";
 import { useSelector } from "react-redux";
-import { NavbarComp } from "../../components/Navbar";
+import { NavbarComp } from "../../components/appComponents/Navbar";
 import { FooterComp } from "../../components/Footer";
 
 export const AppLayout = () => {

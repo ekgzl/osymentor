@@ -2,14 +2,14 @@
 
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSidebar } from "../../features/drawer/SidebarSlice.ts";
+import { toggleSidebar } from "../../../features/drawer/SidebarSlice.ts";
 import { IconButton, Input, Navbar } from "@material-tailwind/react";
 
 import { Menu, Search, Xmark } from "iconoir-react";
 import { BadgeComp } from "./Badge.tsx";
-import { AvatarComp } from "./appComponents/Avatar.tsx";
+import { AvatarComp } from "./Avatar.tsx";
 import { MenuScale } from "iconoir-react/regular";
-import { RootState } from "../../app/store.ts";
+import { RootState } from "../../../app/store.ts";
 
 export function NavbarComp() {
   const [openNav, setOpenNav] = React.useState(false);
