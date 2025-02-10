@@ -1,26 +1,12 @@
-import { Eject, PauseSolid, PlaySolid, Refresh } from "iconoir-react";
+import { PauseSolid, PlaySolid, Refresh } from "iconoir-react";
 import { useTimer } from "react-timer-hook";
-import { Tooltip, IconButton, Button } from "@material-tailwind/react";
-import { useState } from "react";
+import { Tooltip, Button } from "@material-tailwind/react";
 
 function TimerComp() {
-  const [isClick, setIsClick] = useState(false);
-
   // beş dakiaya ayarlamak için olan date objesi
   const newDate = new Date();
   newDate.setSeconds(newDate.getSeconds() + 25 * 60);
-  const {
-    totalSeconds,
-    seconds,
-    minutes,
-    hours,
-    days,
-    isRunning,
-    start,
-    pause,
-    resume,
-    restart,
-  } = useTimer({
+  const { seconds, minutes, isRunning, start, pause, restart } = useTimer({
     // Zamanlayıcının kaç saniye olsununu belirtiyoruz
     expiryTimestamp: newDate,
     autoStart: false,
@@ -46,10 +32,7 @@ function TimerComp() {
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-amber-600 hover:bg-amber-700"
             } cursor-pointer py-1 px-2 md:px-3 lg:px-4  lg:py-2 rounded-lg text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm `}
-            onClick={() => {
-              start();
-              setIsClick(true);
-            }}
+            onClick={start}
           >
             <PlaySolid className=" h-[32px] w-[32px] transition-transform" />
           </Tooltip.Trigger>
