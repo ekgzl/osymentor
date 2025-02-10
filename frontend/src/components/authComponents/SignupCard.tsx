@@ -56,8 +56,6 @@ export default function SignupCardComp() {
   const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
   const [capsLockOn2, setCapsLockOn2] = React.useState(false);
   const [isPasswordFocused2, setIsPasswordFocused2] = React.useState(false);
-  
-
 
   //-------FORMIK------
   const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
@@ -74,7 +72,7 @@ export default function SignupCardComp() {
         // Kullanıcı var mı kontrol et
         const users = getUsers();
         const userExists = users.some(
-          (user: User) => user.email === values.email,
+          (user: User) => user.email === values.email
         );
 
         if (userExists) {
@@ -85,9 +83,9 @@ export default function SignupCardComp() {
             confirmButtonText: "Devam et",
             confirmButtonColor: "#37474f",
             customClass: {
-              container: 'swal2-container-custom',
-              popup: 'swal2-popup-custom'
-            }
+              container: "swal2-container-custom",
+              popup: "swal2-popup-custom",
+            },
           });
           return;
         }
@@ -98,6 +96,7 @@ export default function SignupCardComp() {
         Toast.fire({
           icon: "success",
           title: "Kayıt başarılı! Giriş ekranına aktarılıyorsun..",
+          timer: 1500,
         }).then(() => {
           navigate("/login");
         });
@@ -109,7 +108,11 @@ export default function SignupCardComp() {
   return (
     <div className="grid place-items-center w-full h-full sm:p-2">
       <div className="w-full max-w-[95%] mx-auto p-1 sm:p-2">
-        <Typography as="h2" type="h2" className="mb-2 text-center text-3xl md:text-4xl sm:text-3xl">
+        <Typography
+          as="h2"
+          type="h2"
+          className="mb-2 text-center text-3xl md:text-4xl sm:text-3xl"
+        >
           Kayıt Ol
         </Typography>
         <Typography className="text-foreground text-center text-sm lg:text-lg md:text-lg sm:text-base">
@@ -136,9 +139,8 @@ export default function SignupCardComp() {
               onChange={handleChange}
               value={values.email}
               onBlur={handleBlur}
-
             />
-          
+
             {/*eğer email input alanına focus geldiğinde ve hata varsa hata mesajını ekrana yaz*/}
             {touched.email && errors.email && (
               <p className={"text-red-700 text-xs "}>{errors.email}</p>
@@ -167,11 +169,15 @@ export default function SignupCardComp() {
                 setIsPasswordFocused(false);
                 setCapsLockOn(false);
               }}
-              onFocus={() =>  setIsPasswordFocused(true)}
+              onFocus={() => setIsPasswordFocused(true)}
               // onKeyDown her tuşa basıldığında tetiklenirken onKeyUp sadece tuşun bırakıldığında fonksiyonu çağırır
               // getModifierState ile capsLock açık olup olmadığını kontrol ettim
-              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn(e.getModifierState('CapsLock'))}
-              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn(e.getModifierState('CapsLock'))}
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                setCapsLockOn(e.getModifierState("CapsLock"))
+              }
+              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                setCapsLockOn(e.getModifierState("CapsLock"))
+              }
             >
               <Input.Icon
                 as={IconButton}
@@ -192,8 +198,8 @@ export default function SignupCardComp() {
               </Input.Icon>
             </Input>
             {capsLockOn && isPasswordFocused && (
-        <p className="text-yellow-700 text-xs">Caps Lock açık</p>
-      )}
+              <p className="text-yellow-700 text-xs">Caps Lock açık</p>
+            )}
             {touched.password && errors.password && (
               <p className={"text-red-700 text-xs "}>{errors.password}</p>
             )}
@@ -222,8 +228,12 @@ export default function SignupCardComp() {
                 setCapsLockOn2(false);
               }}
               onFocus={() => setIsPasswordFocused2(true)}
-                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn2(e.getModifierState('CapsLock'))}
-                onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn2(e.getModifierState('CapsLock'))}
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                setCapsLockOn2(e.getModifierState("CapsLock"))
+              }
+              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                setCapsLockOn2(e.getModifierState("CapsLock"))
+              }
             >
               <Input.Icon
                 as={IconButton}
@@ -232,7 +242,6 @@ export default function SignupCardComp() {
                 placement="end"
                 color="secondary"
                 className="data-[placement=end]:right-1.5 !absolute select-auto z-10 pointer-events-auto"
-                
                 onClick={() =>
                   setInputType2(inputType2 === "password" ? "text" : "password")
                 }
@@ -245,13 +254,18 @@ export default function SignupCardComp() {
               </Input.Icon>
             </Input>
             {capsLockOn2 && isPasswordFocused2 && (
-        <p className="text-yellow-700 text-xs">Caps Lock açık</p>
-      )}
+              <p className="text-yellow-700 text-xs">Caps Lock açık</p>
+            )}
             {touched.password2 && errors.password2 && (
               <p className={"text-red-700 text-xs"}>{errors.password2}</p>
             )}
           </div>
-          <Button  type={"submit"} className={"text-xs lg:text-base md:text-sm sm:text-sm my-2"} size="md" isFullWidth>
+          <Button
+            type={"submit"}
+            className={"text-xs lg:text-base md:text-sm sm:text-sm my-2"}
+            size="md"
+            isFullWidth
+          >
             Kayıt Ol
           </Button>
         </form>
@@ -268,8 +282,15 @@ export default function SignupCardComp() {
             Zaten bir hesaba sahibim
           </Button>
 
-          <Button className="text-xs lg:text-base md:text-sm sm:text-sm" size="sm" variant="outline" color="secondary" isFullWidth>
-            <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google ile kayıt ol
+          <Button
+            className="text-xs lg:text-base md:text-sm sm:text-sm"
+            size="sm"
+            variant="outline"
+            color="secondary"
+            isFullWidth
+          >
+            <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google
+            ile kayıt ol
           </Button>
         </div>
       </div>

@@ -13,7 +13,6 @@ import {
   LeaderboardStar,
   // LogOut,
   DashboardDots,
-  LogIn,
   MoreHorizCircle,
   NavArrowRight,
   SelectFace3d,
