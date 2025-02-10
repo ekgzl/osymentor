@@ -20,6 +20,7 @@ import {
   Timer,
   ProfileCircle,
   ChatLines,
+  LogOut,
 } from "iconoir-react";
 import { Link } from "react-router-dom";
 
@@ -72,7 +73,9 @@ export function SidebarComp() {
             {Links.map(({ icon: Icon, title, href }) => (
               <List.Item
                 key={title}
-                className={"cursor-pointer hover:bg-[#025373]"}
+                className={
+                  "cursor-pointer hover:bg-[#025373] focus:bg-[#182349]"
+                }
                 /* Burada list.item bir "a" elementi oluyor. */
                 as={Link}
                 /* Bu sayede href kullanılabilir. */
@@ -110,7 +113,7 @@ export function SidebarComp() {
                 <List.Item
                   as={Link}
                   to="/app/profile"
-                  className={"hover:bg-[#025373]"}
+                  className={"hover:bg-[#025373] focus:bg-[#182349]"}
                 >
                   <List.ItemStart>
                     <ProfileCircle
@@ -124,7 +127,7 @@ export function SidebarComp() {
                 <List.Item
                   as={Link}
                   to="/app/social"
-                  className={"hover:bg-[#025373]"}
+                  className={"hover:bg-[#025373] focus:bg-[#182349] "}
                 >
                   <List.ItemStart>
                     <ChatLines color="#F28A2E" className="h-[18px] w-[18px]" />
@@ -136,11 +139,15 @@ export function SidebarComp() {
 
             <hr className="-mx-3 my-3 border-secondary" />
 
-            <List.Item className="text-info hover:bg-info/10 hover:text-info focus:bg-info/10 focus:text-info">
+            <List.Item
+              className="text-info hover:bg-info/10 hover:text-info focus:bg-info/10 focus:text-info"
+              as={Link}
+              to="/"
+            >
               <List.ItemStart>
-                <LogIn className="h-[18px] w-[18px]" />
+                <LogOut className="h-[18px] w-[18px]" color="#D22B2B" />
               </List.ItemStart>
-              <p className="text-white">Giriş Yap</p>
+              <p className="text-white">Çıkış Yap</p>
             </List.Item>
             {/*TODO: EĞER KULLANICI GİRİŞ YAPMIŞSA BU BUTON AKTİF OLMALI*/}
             {/*<List.Item className="text-error hover:bg-error/10 hover:text-error focus:bg-error/10 focus:text-error">
