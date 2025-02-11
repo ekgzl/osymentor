@@ -6,11 +6,12 @@ function TimerComp() {
   // beş dakiaya ayarlamak için olan date objesi
   const newDate = new Date();
   newDate.setSeconds(newDate.getSeconds() + 25 * 60);
-  const { seconds, minutes, isRunning, start, pause, restart } = useTimer({
-    // Zamanlayıcının kaç saniye olsununu belirtiyoruz
-    expiryTimestamp: newDate,
-    autoStart: false,
-  });
+  const { seconds, minutes, isRunning, start, resume, pause, restart } =
+    useTimer({
+      // Zamanlayıcının kaç saniye olsununu belirtiyoruz
+      expiryTimestamp: newDate,
+      autoStart: false,
+    });
 
   const formatNumber = (num: number) => num.toString().padStart(2, "0");
 
@@ -27,14 +28,19 @@ function TimerComp() {
           <Tooltip.Trigger
             as={Button}
             disabled={isRunning}
-            className={`${
-              isRunning
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-amber-600 hover:bg-amber-700"
-            } cursor-pointer py-1 px-2 md:px-3 lg:px-4  lg:py-2 rounded-lg text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm `}
-            onClick={start}
+            className={`
+              ${!isRunning ? "bg-amber-600 hover:bg-amber-700" : "bg-gray-400 cursor-not-allowed"}
+                
+          cursor-pointer py-1 px-2 md:px-3 lg:px-4  lg:py-2 rounded-lg text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm `}
+            onClick={() => {
+              if (!isRunning) {
+                resume();
+              } else {
+                return;
+              }
+            }}
           >
-            <PlaySolid className=" h-[32px] w-[32px] transition-transform" />
+            <PlaySolid className=" h-[30px] w-[30px] transition-transform" />
           </Tooltip.Trigger>
           <Tooltip.Content className="flex gap-3 bg-transparent  dark:bg-transparent">
             <Tooltip>
@@ -49,7 +55,7 @@ function TimerComp() {
                     : "bg-red-600 hover:bg-red-700"
                 } py-1 px-2 md:px-3 lg:px-4 lg:py-2 rounded-lg text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm`}
               >
-                <PauseSolid className="h-[32px] w-[32px] text-white" />
+                <PauseSolid className="h-[30px] w-[30px] text-white" />
               </Tooltip.Trigger>
               <Tooltip.Content>
                 Mola
@@ -69,7 +75,7 @@ function TimerComp() {
                   "py-1 px-2 md:px-3 lg:px-4  lg:py-2 rounded-lgtext-white font-semibold bg-blue-500 hover:bg-blue-600 transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm"
                 }
               >
-                <Refresh className="h-[32px] w-[32px] text-white" />
+                <Refresh className="h-[28px] w-[28px] text-white" />
               </Tooltip.Trigger>
               <Tooltip.Content>
                 Sıfırla

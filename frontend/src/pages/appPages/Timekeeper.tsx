@@ -6,7 +6,7 @@ import TimerComp from "../../components/appComponents/timekeeperComponents/Timer
 
 export const TimekeeperPage = () => {
   return (
-    <div className="flex flex-col items-center w-full h-screen">
+    <div className="flex flex-col items-center w-full">
       <div className="w-full flex gap-5 items-center justify-between h-full">
         <div className="basis-[70%]">
           <ChronometerComp />
