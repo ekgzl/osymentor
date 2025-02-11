@@ -59,19 +59,6 @@ export function NavbarComp() {
           <BadgeComp></BadgeComp>
           <AvatarComp></AvatarComp>
         </div>
-
-        <IconButton
-          size="sm"
-          variant="ghost"
-          onClick={() => setOpenNav(!openNav)}
-          className="ml-1 grid lg:hidden"
-        >
-          {openNav ? (
-            <Xmark className="h-4 w-4" />
-          ) : (
-            <Menu className="h-4 w-4" />
-          )}
-        </IconButton>
       </div>
     </Navbar>
   );

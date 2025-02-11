@@ -80,10 +80,10 @@ function ChronometerComp() {
 
   return (
     <div className="w-full p-4 sm:p-8 bg-gradient-to-l from-orange-100 to-sky-100 rounded-lg shadow-lg">
-      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center text-primary-dark">
+      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-4xl font-bold md:mb-8 mb-3 text-center text-primary-dark">
         Kronometre
       </h1>
-      <div className="text-[3.5rem] md:text-9xl lg:text-[9rem] mb-10 text-center text-primary-dark font-mono font-normal">
+      <div className="text-[3.5rem] md:text-9xl lg:text-[9rem] md:mb-10 mb-6 text-center text-primary-dark font-mono font-normal">
         {formatNumber(hours)}:{formatNumber(minutes)}:{formatNumber(seconds)}
       </div>
       <div className="flex justify-center sm:justify-between items-center sm:gap-0 gap-2 flex-wrap">
@@ -115,7 +115,7 @@ function ChronometerComp() {
               reset(new Date(), false);
               localStorage.removeItem("timekeeper");
             }}
-            className=" py-1 px-3 md:px-4 lg:px-6  lg:py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm"
+            className=" py-1 px-3 md:px-4 lg:px-6  lg:py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm"
           >
             Sıfırla
           </Button>
