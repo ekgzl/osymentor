@@ -83,7 +83,24 @@
     "Koordinat Düzlemi ve Noktanın Analitiği",
     "Doğrunun Analitiği"
     ],
-    
+    "Fizik": [
+      "Fizik Bilimine Giriş",
+      "Madde ve Özellikleri",
+      "Hareket ve Kuvvet",
+      "İş, Güç ve Enerji I",
+      "Isı, Sıcaklık ve Genleşme",
+      "Elektrostatik",
+      "Elektrik Akımı ve Devreler",
+      "Mıknatıslar ve Manyetizma",
+      "Basınç",
+      "Kaldırma Kuvveti",
+      "Dalgalara Giriş ve Yay Dalgaları",
+      "Su, Ses ve Deprem Dalgaları",
+      "Aydınlanma, Gölge ve Düzlem Aynalar",
+      "Küresel Aynalar",
+      "Işığın Kırılması ve Renkler",
+      "Mercekler ve Optik Araçlar"
+    ],
     "Kimya": [
       "Kimya Bilimi",
       "Atom ve Yapısı",
@@ -113,24 +130,6 @@
       "Kalıtım",
       "Ekosistem Ekolojisi",
       "Güncel Çevre Sorunları"
-    ],
-    "Fizik": [
-      "Fizik Bilimine Giriş",
-      "Madde ve Özellikleri",
-      "Hareket ve Kuvvet",
-      "İş, Güç ve Enerji I",
-      "Isı, Sıcaklık ve Genleşme",
-      "Elektrostatik",
-      "Elektrik Akımı ve Devreler",
-      "Mıknatıslar ve Manyetizma",
-      "Basınç",
-      "Kaldırma Kuvveti",
-      "Dalgalara Giriş ve Yay Dalgaları",
-      "Su, Ses ve Deprem Dalgaları",
-      "Aydınlanma, Gölge ve Düzlem Aynalar",
-      "Küresel Aynalar",
-      "Işığın Kırılması ve Renkler",
-      "Mercekler ve Optik Araçlar"
     ],
     "Tarih": [
       "Tarih ve Zaman",

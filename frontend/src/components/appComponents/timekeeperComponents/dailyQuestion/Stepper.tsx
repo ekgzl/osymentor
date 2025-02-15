@@ -5,8 +5,11 @@ import { Button, Timeline } from "@material-tailwind/react";
 import { HomeSimple, Settings, UserCircle } from "iconoir-react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../app/store";
-import { nextStep, prevStep } from "../../../../features/drawer/StepperSlice";
+import { RootState } from "../../../../../app/store";
+import {
+  nextStep,
+  prevStep,
+} from "../../../../../features/drawer/StepperSlice";
 
 export function StepperComp() {
   const dispatch = useDispatch();
@@ -14,7 +17,11 @@ export function StepperComp() {
 
   return (
     <div className="w-full">
-      <Timeline mode="stepper" value={step.toString()} className="relative">
+      <Timeline
+        mode="stepper"
+        value={step.toString()}
+        className="relative mt-6"
+      >
         <Timeline.Item disabled={step < 0} value="0" className="w-full">
           <Timeline.Header>
             <Timeline.Separator className="translate-x-1/2" />
@@ -42,8 +49,7 @@ export function StepperComp() {
           <Timeline.Body className="text-center"></Timeline.Body>
         </Timeline.Item>
       </Timeline>
-
-      <div className="mt-4 flex w-full justify-between gap-4">
+      <div className="flex w-full justify-between gap-4">
         <Button disabled={step === 0} onClick={() => dispatch(prevStep())}>
           Geri
         </Button>

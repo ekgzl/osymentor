@@ -3,7 +3,7 @@
 import OldSessionChartComp from "../../components/appComponents/timekeeperComponents/OldSessionChart";
 import ChronometerComp from "../../components/appComponents/timekeeperComponents/Chronometer";
 import TimerComp from "../../components/appComponents/timekeeperComponents/Timer";
-import DailyQuestion from "../../components/appComponents/timekeeperComponents/DailyQuestion";
+import DailyQuestion from "../../components/appComponents/timekeeperComponents/dailyQuestion/FirstStep";
 
 export const TimekeeperPage = () => {
   return (

@@ -1,7 +1,9 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState = {
     step: 0,
+    subject: "",
+    type: "",
 }
 
 const stepperSlice = createSlice({
@@ -15,8 +17,17 @@ const stepperSlice = createSlice({
         prevStep(state) {
             state.step -= 1;
         },
+        setStep(state, action: PayloadAction<number>) {
+            state.step = action.payload;
+        },
+        setSubject(state, action: PayloadAction<string>) {
+            state.subject = action.payload;
+        },
+        setType(state, action: PayloadAction<string>) {
+            state.type = action.payload;
+        }
     }
 })
 
 export default stepperSlice.reducer;
-export const {nextStep, prevStep} = stepperSlice.actions;
+export const {nextStep, prevStep, setStep, setSubject, setType} = stepperSlice.actions;

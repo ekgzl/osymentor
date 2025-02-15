@@ -4,14 +4,14 @@ import { useStopwatch } from "react-timer-hook";
 import { RootState } from "../../../../app/store";
 import { addSession } from "../../../../features/drawer/SessionsSlice";
 import { Button, Dialog } from "@material-tailwind/react";
-import React from "react";
-import { StepperComp } from "./Stepper";
+import { StepperComp } from "./dailyQuestion/Stepper";
+import FirstStep from "./dailyQuestion/FirstStep";
+import SecondStep from "./dailyQuestion/SecondStep";
 
 function ChronometerComp() {
   const dispatch = useDispatch();
-  const [step, setStep] = React.useState(0);
   const sessions = useSelector((state: RootState) => state.sessions.sessions);
-
+  const step = useSelector((state: RootState) => state.stepper.step);
   const { seconds, minutes, hours, isRunning, start, pause, reset } =
     useStopwatch({ autoStart: false });
 
@@ -137,6 +137,9 @@ function ChronometerComp() {
             </Dialog.Trigger>
             <Dialog.Overlay>
               <Dialog.Content>
+                {step === 0 && <FirstStep></FirstStep>}
+                {step === 1 && <SecondStep></SecondStep>}
+                {step === 2 && <p>test2</p>}
                 <StepperComp></StepperComp>
               </Dialog.Content>
             </Dialog.Overlay>
