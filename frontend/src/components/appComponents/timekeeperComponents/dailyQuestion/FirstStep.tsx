@@ -28,7 +28,6 @@ const FirstStep = () => {
     //if the last 3 char is "SAY" then json should go "ayt" and into ayt there is "say"
     //if the last 3 char is "EA" then json should go "ayt" and into ayt there is "ea"
     if (!isCheck) {
-      console.log();
       if (exam.endsWith("SOZ")) {
         return Object.keys(exams.ayt.soz);
       } else if (exam.endsWith("SAY")) {
@@ -42,7 +41,6 @@ const FirstStep = () => {
     }
   }
   const examSubjects = createExamSubjectsArray();
-  console.log(examSubjects);
   return (
     <>
       <Typography type="h4">DERS</Typography>

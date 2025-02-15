@@ -14,7 +14,6 @@ const stepperSlice = createSlice({
     reducers: {
         nextStep(state) {
             state.step += 1;
-            console.log(state.step)
         },
         prevStep(state) {
             state.step -= 1;
@@ -33,7 +32,8 @@ const stepperSlice = createSlice({
         },
         setQuestionNumber(state, action: PayloadAction<number>) {
             state.questionNumber = action.payload;
-        }
+        },
+
     }
 })
 

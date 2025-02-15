@@ -12,7 +12,8 @@ import LastStep from "./dailyQuestion/LastStep";
 function ChronometerComp() {
   const dispatch = useDispatch();
   const sessions = useSelector((state: RootState) => state.sessions.sessions);
-  const step = useSelector((state: RootState) => state.stepper.step);
+  const stepper = useSelector((state: RootState) => state.stepper);
+
   const { seconds, minutes, hours, isRunning, start, pause, reset } =
     useStopwatch({ autoStart: false });
 
@@ -126,21 +127,23 @@ function ChronometerComp() {
         </div>
         <div className="w-full sm:w-auto">
           <Dialog>
-            <Dialog.Trigger
-              as={Button}
-              onClick={() => {
-                handleWorkEnd();
-                reset(new Date(), false);
-              }}
-              className="inline-block w-full py-1 px-3 md:px-4 lg:px-6 lg:py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm"
-            >
-              Çalışmayı Bitir
+            <Dialog.Trigger as={Button}>
+              <span
+                onClick={() => {
+                  handleWorkEnd();
+                  reset(new Date(), false);
+                  localStorage.removeItem("timekeeper");
+                  
+                }}
+              >
+                Etütü Bitir
+              </span>
             </Dialog.Trigger>
             <Dialog.Overlay>
               <Dialog.Content>
-                {step === 0 && <FirstStep></FirstStep>}
-                {step === 1 && <SecondStep></SecondStep>}
-                {step === 2 && <LastStep></LastStep>}
+                {stepper.step === 0 && <FirstStep></FirstStep>}
+                {stepper.step === 1 && <SecondStep></SecondStep>}
+                {stepper.step === 2 && <LastStep></LastStep>}
                 <StepperComp></StepperComp>
               </Dialog.Content>
             </Dialog.Overlay>

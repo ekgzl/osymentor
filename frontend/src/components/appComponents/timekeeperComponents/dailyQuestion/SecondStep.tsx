@@ -21,21 +21,18 @@ function SecondStep() {
   const user = useSelector((state: RootState) => state.user);
 
   function topicSelector() {
-    console.log("stepper tipi", stepper.type);
     if (stepper.type === "tyt") {
       return examsData["tyt"]?.[stepper.subject];
     } else {
       // I should use user.exam stringlast 3 or 2 chars they are: "SAY","SOZ"AND "EA" and do them lowercase if EA delete a space
       const exam = user.exam.slice(-3).toLowerCase();
       if (exam === " ea") {
-        return examsData["ayt"]?.["ea"]?.[stepper.subject];
+        return examsData["ayt"]?.["ea"]?.[stepper.subject] || [];
       }
-      console.log("dönüşen exam", exam);
-      return examsData["ayt"]?.[exam]?.[stepper.subject];
+      return examsData["ayt"]?.[exam]?.[stepper.subject] || [];
     }
   }
   const topics = topicSelector();
-  console.log(topics);
   return (
     <>
       <Typography type="h3" className="mb-3">

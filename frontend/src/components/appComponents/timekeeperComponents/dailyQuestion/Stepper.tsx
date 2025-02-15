@@ -1,8 +1,8 @@
 "use client";
 
-import { Button, Timeline } from "@material-tailwind/react";
+import { Button, Dialog, Timeline } from "@material-tailwind/react";
 
-import { HomeSimple, Settings, UserCircle } from "iconoir-react";
+import { Book, Notes, NumberedListLeft } from "iconoir-react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../app/store";
@@ -26,7 +26,7 @@ export function StepperComp() {
           <Timeline.Header>
             <Timeline.Separator className="translate-x-1/2" />
             <Timeline.Icon className="mx-auto">
-              <HomeSimple className="h-6 w-6" />
+              <Book className="h-6 w-6" />
             </Timeline.Icon>
           </Timeline.Header>
           <Timeline.Body className="text-center"></Timeline.Body>
@@ -35,7 +35,7 @@ export function StepperComp() {
           <Timeline.Header>
             <Timeline.Separator className="translate-x-1/2" />
             <Timeline.Icon className="mx-auto">
-              <UserCircle className="h-6 w-6" />
+              <Notes className="h-6 w-6" />
             </Timeline.Icon>
           </Timeline.Header>
           <Timeline.Body className="text-center"></Timeline.Body>
@@ -43,7 +43,7 @@ export function StepperComp() {
         <Timeline.Item disabled={step < 2} value="2" className="w-full">
           <Timeline.Header>
             <Timeline.Icon className="mx-auto">
-              <Settings className="h-6 w-6" />
+              <NumberedListLeft className="h-6 w-6" />
             </Timeline.Icon>
           </Timeline.Header>
           <Timeline.Body className="text-center"></Timeline.Body>
@@ -53,13 +53,31 @@ export function StepperComp() {
         <Button disabled={step === 0} onClick={() => dispatch(prevStep())}>
           Geri
         </Button>
-        <Button
-          variant="solid"
-          onClick={() => dispatch(nextStep())}
-          color={step === 2 ? "success" : "primary"}
-        >
-          {step === 2 ? "Bitir" : "İleri"}
-        </Button>
+        {step < 2 ? (
+          <Button
+            variant="solid"
+            onClick={() => {
+              if (step < 2) dispatch(nextStep());
+              else {
+                //bitir
+              }
+            }}
+            color={"primary"}
+          >
+            İleri
+          </Button>
+        ) : (
+          <Dialog.DismissTrigger
+            as={Button}
+            variant="solid"
+            color="success"
+            onClick={() => {
+              
+            }}
+          >
+            Bitir
+          </Dialog.DismissTrigger>
+        )}
       </div>
     </div>
   );

@@ -7,7 +7,6 @@ import { setQuestionNumber } from "../../../../../features/drawer/StepperSlice";
 function LastStep() {
   const stepper = useSelector((state: RootState) => state.stepper);
   const dispatch = useDispatch();
-  console.log(stepper);
   return (
     <>
       <Typography type="h3">SORU</Typography>
