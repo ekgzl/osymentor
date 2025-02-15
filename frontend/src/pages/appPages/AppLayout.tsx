@@ -12,7 +12,7 @@ export const AppLayout = () => {
 
   return (
     <>
-      <body
+      <div
         className={
           "flex min-h-screen bg-gradient-to-l from-orange-200 to-sky-200"
         }
@@ -35,7 +35,7 @@ export const AppLayout = () => {
             <Outlet />
           </div>
         </div>
-      </body>
+      </div>
       <FooterComp></FooterComp>
     </>
   );

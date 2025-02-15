@@ -32,9 +32,13 @@ export function FooterComp() {
 
       <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
         {LINKS.map(({ title, href }) => (
-          <li>
+          <li key={title}>
             {/* as= link ve to: ile single page navigation yapılır*/}
-            <Typography as={Link} to={href} className="hover:text-amber-600">
+            <Typography
+              as={Link}
+              to={href}
+              className="hover:text-amber-600"
+            >
               {title}
             </Typography>
           </li>
