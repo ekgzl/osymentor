@@ -1,6 +1,6 @@
 {
   "tyt": {
-    "turkce": [
+    "Türkçe": [
     "Sözcükte Anlam",
     "Cümlede Anlam",
     "Paragraf",
@@ -23,7 +23,7 @@
     "Yazım Kuralları",
     "Noktalama İşaretleri"
     ],
-    "matematik": [
+    "Matematik": [
     "Mantık",
     "Kümeler-Kartezyen Çarpım",
     "Temel Kavramlar",
@@ -52,7 +52,7 @@
     "2. Dereceden Denklemler",
     "Karmaşık Sayılar"
     ],
-    "geometri": [
+    "Geometri": [
       "Doğruda Açı",
     "Üçgende Açı",
     "Dik Üçgen",
@@ -84,7 +84,7 @@
     "Doğrunun Analitiği"
     ],
     
-    "kimya": [
+    "Kimya": [
       "Kimya Bilimi",
       "Atom ve Yapısı",
       "Periyodik Sistem",
@@ -98,7 +98,7 @@
       "Asitler, Bazlar ve Tuzlar",
       "Kimya Her Yerde"
     ],
-    "biyoloji": [
+    "Biyoloji": [
       "Canlıların Ortak Özellikleri",
       "Organik ve İnorganik Bileşikler",
       "Karbonhidrat, Yağ, Protein",
@@ -114,7 +114,7 @@
       "Ekosistem Ekolojisi",
       "Güncel Çevre Sorunları"
     ],
-    "fizik": [
+    "Fizik": [
       "Fizik Bilimine Giriş",
       "Madde ve Özellikleri",
       "Hareket ve Kuvvet",
@@ -132,7 +132,7 @@
       "Işığın Kırılması ve Renkler",
       "Mercekler ve Optik Araçlar"
     ],
-    "tarih": [
+    "Tarih": [
       "Tarih ve Zaman",
     "İlk ve Orta Çağlarda Türk Dünyası",
     "İslam Medeniyetinin Doğuşu",
@@ -154,7 +154,7 @@
     "Millî Mücadele",
     "Atatürkçülük ve Türk İnkılabı"
     ],
-    "cografya": [
+    "Coğrafya": [
       "Coğrafya, İnsan ve Doğa",
     "Dünya’nın Şekli ve Hareketleri",
     "Yer ve Zaman, Koordinat Sistemi",
@@ -177,7 +177,7 @@
     "Bölgeler",
     "Afetler"
     ],
-    "felsefe": [
+    "Felsefe": [
       "Felsefe’nin Konusu",
     "Bilgi Felsefesi",
     "Varlık Felsefesi",
@@ -193,8 +193,8 @@
     "20. Yüzyıl Felsefesi"
     ],
     
-    "din": [
-      "İnanç",
+    "Din": [
+    "İnanç",
     "İbadet",
     "Ahlâk ve Değerler",
     "Din, Kültür ve Medeniyet",

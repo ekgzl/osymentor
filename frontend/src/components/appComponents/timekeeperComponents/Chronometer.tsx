@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useStopwatch } from "react-timer-hook";
 import { RootState } from "../../../../app/store";
 import { addSession } from "../../../../features/drawer/SessionsSlice";
-import { Button } from "@material-tailwind/react";
+import { Button, Dialog } from "@material-tailwind/react";
+import React from "react";
+import { StepperComp } from "./Stepper";
 
 function ChronometerComp() {
   const dispatch = useDispatch();
+  const [step, setStep] = React.useState(0);
   const sessions = useSelector((state: RootState) => state.sessions.sessions);
 
   const { seconds, minutes, hours, isRunning, start, pause, reset } =
@@ -121,15 +124,23 @@ function ChronometerComp() {
           </Button>
         </div>
         <div className="w-full sm:w-auto">
-          <Button
-            onClick={() => {
-              handleWorkEnd();
-              reset(new Date(), false);
-            }}
-            className="inline-block w-full py-1 px-3 md:px-4 lg:px-6 lg:py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm"
-          >
-            Çalışmayı Bitir
-          </Button>
+          <Dialog>
+            <Dialog.Trigger
+              as={Button}
+              onClick={() => {
+                handleWorkEnd();
+                reset(new Date(), false);
+              }}
+              className="inline-block w-full py-1 px-3 md:px-4 lg:px-6 lg:py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm"
+            >
+              Çalışmayı Bitir
+            </Dialog.Trigger>
+            <Dialog.Overlay>
+              <Dialog.Content>
+                <StepperComp></StepperComp>
+              </Dialog.Content>
+            </Dialog.Overlay>
+          </Dialog>
         </div>
       </div>
     </div>

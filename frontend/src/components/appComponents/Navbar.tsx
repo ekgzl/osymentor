@@ -1,26 +1,16 @@
 "use client";
-
-import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../../../features/drawer/SidebarSlice.ts";
-import { IconButton, Input, Navbar } from "@material-tailwind/react";
+import { Input, Navbar } from "@material-tailwind/react";
 
-import { Menu, Search, Xmark } from "iconoir-react";
+import { Menu, Search } from "iconoir-react";
 import { BadgeComp } from "./Badge.tsx";
 import { AvatarComp } from "./Avatar.tsx";
 import { MenuScale } from "iconoir-react/regular";
 import { RootState } from "../../../app/store.ts";
 
 export function NavbarComp() {
-  const [openNav, setOpenNav] = React.useState(false);
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    window.addEventListener(
-      "resize",
-
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
-  }, []);
 
   const isSidebarOpen = useSelector(
     (state: RootState) => state.sidebar.isSidebarOpen
