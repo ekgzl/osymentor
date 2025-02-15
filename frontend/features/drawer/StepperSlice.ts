@@ -4,6 +4,8 @@ const initialState = {
     step: 0,
     subject: "",
     type: "",
+    topic: "",
+    questionNumber: 0,
 }
 
 const stepperSlice = createSlice({
@@ -25,9 +27,15 @@ const stepperSlice = createSlice({
         },
         setType(state, action: PayloadAction<string>) {
             state.type = action.payload;
+        },
+        setTopic(state, action: PayloadAction<string>) {
+            state.topic = action.payload;
+        },
+        setQuestionNumber(state, action: PayloadAction<number>) {
+            state.questionNumber = action.payload;
         }
     }
 })
 
 export default stepperSlice.reducer;
-export const {nextStep, prevStep, setStep, setSubject, setType} = stepperSlice.actions;
+export const {nextStep, prevStep, setStep, setSubject, setType, setTopic, setQuestionNumber} = stepperSlice.actions;

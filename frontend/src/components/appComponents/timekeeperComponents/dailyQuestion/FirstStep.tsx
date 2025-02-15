@@ -22,10 +22,30 @@ const FirstStep = () => {
   const [isCheck, setIsCheck] = useState(false);
 
   // Create an array of exam subjects based on the current exam type
-  const examSubjects = Object.keys(exams[isCheck ? "tyt" : "ayt"]);
-
+  // const examSubjects = Object.keys(exams[isCheck ? "tyt" : "ayt"]);
+  function createExamSubjectsArray() {
+    //if the last 3 char is "SOZ" then json should go "ayt" and into ayt there is "soz"
+    //if the last 3 char is "SAY" then json should go "ayt" and into ayt there is "say"
+    //if the last 3 char is "EA" then json should go "ayt" and into ayt there is "ea"
+    if (!isCheck) {
+      console.log();
+      if (exam.endsWith("SOZ")) {
+        return Object.keys(exams.ayt.soz);
+      } else if (exam.endsWith("SAY")) {
+        return Object.keys(exams.ayt.say);
+      } else if (exam.endsWith("EA")) {
+        return Object.keys(exams.ayt.ea);
+      }
+      return [];
+    } else {
+      return Object.keys(exams.tyt);
+    }
+  }
+  const examSubjects = createExamSubjectsArray();
+  console.log(examSubjects);
   return (
     <>
+      <Typography type="h4">DERS</Typography>
       <div className="flex flex-col gap-5 items-start justify-start">
         <div className="flex w-full gap-4 justify-start items-center">
           <p>Sınav Türü:</p>
@@ -43,9 +63,7 @@ const FirstStep = () => {
             }
           />
         </div>
-
         <div className="flex flex-col w-full items-center justify-start gap-4 text-center">
-          <Typography type="h4">DERS</Typography>
           {isCheck ? (
             <>
               {/* Group of 3 and 3 and 4 */}
@@ -127,7 +145,56 @@ const FirstStep = () => {
               </ButtonGroup>
             </>
           ) : (
-            <>a</>
+            <>
+              <ButtonGroup
+                variant="outline"
+                color="secondary"
+                isFullWidth
+                className="border-amber-800 border-[1px] rounded-lg"
+              >
+                {examSubjects.map((subject, index) =>
+                  index <= 1 ? (
+                    <Button
+                      key={index}
+                      value={subject}
+                      onClick={() => {
+                        setTimeout(() => {
+                          dispatch(setSubject(subject));
+                          dispatch(setType(isCheck ? "tyt" : "ayt"));
+                          dispatch(setStep(1));
+                        }, 200);
+                      }}
+                    >
+                      {subject}
+                    </Button>
+                  ) : null
+                )}
+              </ButtonGroup>
+              <ButtonGroup
+                variant="outline"
+                color="secondary"
+                isFullWidth
+                className="border-indigo-800 border-[1px] rounded-lg"
+              >
+                {examSubjects.map((subject, index) =>
+                  index > 1 && index <= 4 ? (
+                    <Button
+                      key={index}
+                      value={subject}
+                      onClick={() => {
+                        setTimeout(() => {
+                          dispatch(setSubject(subject));
+                          dispatch(setType(isCheck ? "tyt" : "ayt"));
+                          dispatch(setStep(1));
+                        }, 200);
+                      }}
+                    >
+                      {subject}
+                    </Button>
+                  ) : null
+                )}
+              </ButtonGroup>
+            </>
           )}
         </div>
       </div>

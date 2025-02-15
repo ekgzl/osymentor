@@ -7,6 +7,7 @@ import { Button, Dialog } from "@material-tailwind/react";
 import { StepperComp } from "./dailyQuestion/Stepper";
 import FirstStep from "./dailyQuestion/FirstStep";
 import SecondStep from "./dailyQuestion/SecondStep";
+import LastStep from "./dailyQuestion/LastStep";
 
 function ChronometerComp() {
   const dispatch = useDispatch();
@@ -139,7 +140,7 @@ function ChronometerComp() {
               <Dialog.Content>
                 {step === 0 && <FirstStep></FirstStep>}
                 {step === 1 && <SecondStep></SecondStep>}
-                {step === 2 && <p>test2</p>}
+                {step === 2 && <LastStep></LastStep>}
                 <StepperComp></StepperComp>
               </Dialog.Content>
             </Dialog.Overlay>

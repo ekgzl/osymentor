@@ -55,10 +55,10 @@ export function StepperComp() {
         </Button>
         <Button
           variant="solid"
-          disabled={step === 2}
           onClick={() => dispatch(nextStep())}
+          color={step === 2 ? "success" : "primary"}
         >
-          İleri
+          {step === 2 ? "Bitir" : "İleri"}
         </Button>
       </div>
     </div>
