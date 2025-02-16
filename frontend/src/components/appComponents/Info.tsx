@@ -188,7 +188,7 @@ export default function InfoComp() {
               open={isDatePickerOpen}
               onOpenChange={(open) => setIsDatePickerOpen(open)}
             >
-              <Popover.Trigger asChild>
+              <Popover.Trigger>
                 <div
                   className="w-full cursor-pointer"
                   onClick={(e) => {

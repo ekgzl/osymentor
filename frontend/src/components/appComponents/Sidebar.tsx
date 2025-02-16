@@ -22,7 +22,17 @@ import {
   LogOut,
 } from "iconoir-react";
 import { Link } from "react-router-dom";
-
+import { auth } from "../../config/firebase-config";
+import { signOut } from "firebase/auth";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 1200,
+  timerProgressBar: true,
+});
 const Links = [
   {
     icon: DashboardDots,
@@ -54,6 +64,23 @@ const Links = [
 // #030826 kapali mavi
 export function SidebarComp() {
   const [isOpen, setIsOpen] = React.useState(false);
+
+  // ------- ÇIKIŞ -------
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      Toast.fire({
+        icon: "success",
+        title: "Çıkış başarılı...",
+        timer: 1000,
+      }).then(() => {
+        navigate("/login");
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   return (
     <Card className="h-full max-w-[280px] rounded-none bg-[#030826] border-none flex flex-col items-center justify-between">
@@ -140,8 +167,7 @@ export function SidebarComp() {
 
             <List.Item
               className="text-info hover:bg-info/10 hover:text-info focus:bg-info/10 focus:text-info"
-              as={Link}
-              to="/"
+              onClick={handleLogout}
             >
               <List.ItemStart>
                 <LogOut className="h-[18px] w-[18px]" color="#D22B2B" />
