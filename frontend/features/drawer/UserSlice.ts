@@ -29,7 +29,7 @@ const userSlice = createSlice({
         state.avatar = action.payload.avatar;
         state.birthdate = action.payload.birthdate;
     },
-    clearUser: (state) => {
+    clearUser: () => {
       return {
         username: "",
         email: "",
