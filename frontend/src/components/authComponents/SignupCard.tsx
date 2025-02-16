@@ -9,12 +9,16 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase-config.tsx";
+
 import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { SignupSchema } from "../../formikSchemas/SignupSchema.tsx";
 import Swal from "sweetalert2";
 // `users.json`dan veriyi al
 import initialUsers from "../../data/users.json";
 import { useNavigate } from "react-router-dom";
+
 // localStorage'dan kullanıcıları al veya JSON'dan başlat
 const getUsers = () => {
   const users = localStorage.getItem("users");
@@ -90,6 +94,15 @@ export default function SignupCardComp() {
           return;
         }
 
+        //FIREBASE
+        createUserWithEmailAndPassword(auth, values.email, values.password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log(user);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
         // Yeni kullanıcı ekle
         const newUser = { email: values.email, password: values.password };
         saveUser(newUser);

@@ -10,27 +10,13 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../config/firebase-config.tsx";
+
 import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { LoginSchema } from "../../formikSchemas/LoginSchema.tsx";
-import initialUsers from "../../data/users.json";
 
 import Swal from "sweetalert2";
-
-import { useDispatch } from "react-redux";
-import { setUser } from "../../../features/drawer/UserSlice";
-
-// önce bir kullanıcı tanımla
-type User = {
-  email: string;
-  password: string;
-};
-
-// localStorage'dan kullanıcıları al veya JSON'dan başlat
-const getUsers = () => {
-  const users = localStorage.getItem("users");
-  // eger tarayıcıda yoksa dosyadan cek
-  return users ? JSON.parse(users) : initialUsers;
-};
 
 const Toast = Swal.mixin({
   toast: true,
@@ -49,8 +35,23 @@ export function LoginCardComp() {
   const [capsLockOn, setCapsLockOn] = React.useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
 
+  //-------GOOGLE POPUP------
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      const token = await user.getIdToken();
+      console.log(token);
+      Toast.fire({
+        icon: "success",
+        title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
+      }).then(() => {
+        navigate("/app");
+      });
+    } catch (error) {}
+  };
+
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
     useFormik({
       initialValues: {
@@ -61,65 +62,37 @@ export function LoginCardComp() {
       validateOnChange: false, // her input değişikliğinde validation yapma
       validateOnBlur: true, // her inputun dışına çıkıldığında validation yap
       onSubmit: (values, { resetForm, setFieldValue }) => {
-        const users = getUsers();
-        const userExists = users.some(
-          (user: User) => user.email === values.email
-        );
-
-        if (!userExists) {
-          Swal.fire({
-            title: "Kullanıcı bulunamadı!",
-            text: "Lütfen tekrar deneyin",
-            icon: "error",
-            confirmButtonText: "Devam et",
-            confirmButtonColor: "#37474f",
-            customClass: {
-              container: "swal2-container-custom",
-              popup: "swal2-popup-custom",
-            },
+        //-----------FIREBASE---------
+        signInWithEmailAndPassword(auth, values.email, values.password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log(user);
+            Toast.fire({
+              icon: "success",
+              title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
+            }).then(() => {
+              navigate("/app");
+            });
+            resetForm();
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            Swal.fire({
+              title: errorCode,
+              text: errorMessage,
+              icon: "error",
+              confirmButtonText: "Devam et",
+              confirmButtonColor: "#37474f",
+              // SweetAlert2 css'leri globalde ayarladım
+              customClass: {
+                container: "swal2-container-custom",
+                popup: "swal2-popup-custom",
+              },
+            });
+            console.log(errorCode, errorMessage);
+            setFieldValue("password", "").then((r) => console.log(r));
           });
-
-          return;
-        }
-
-        const user = users.find((user: User) => user.email === values.email);
-        if (user?.password !== values.password) {
-          Swal.fire({
-            title: "Şifre hatalı!",
-            text: "Lütfen tekrar deneyin",
-            icon: "error",
-            confirmButtonText: "Devam et",
-            confirmButtonColor: "#37474f",
-            // SweetAlert2 css'leri globalde ayarladım
-            customClass: {
-              container: "swal2-container-custom",
-              popup: "swal2-popup-custom",
-            },
-          });
-
-          // sadece şifre alanını sıfırlar
-          setFieldValue("password", "").then((r) => console.log(r));
-          return;
-        }
-
-        localStorage.setItem("token", "bearer-token");
-        const toUser = {
-          username: user.email.split("@")[0],
-          email: user.email,
-          exam: "KPSS",
-          avatar:
-            "https://storage.evrimagaci.org/old/mi_media/afcae823e61eefb077e1f223594b1e7f.jpeg",
-          birthdate: "",
-        };
-        localStorage.setItem("user", JSON.stringify(toUser));
-        dispatch(setUser(toUser));
-        Toast.fire({
-          icon: "success",
-          title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
-        }).then(() => {
-          navigate("/app");
-        });
-        resetForm();
       },
     });
   const [inputType, setInputType] = React.useState("password");
@@ -229,6 +202,7 @@ export function LoginCardComp() {
             variant="outline"
             color="secondary"
             isFullWidth
+            onClick={handleGoogleLogin}
           >
             <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google
             ile giriş yap

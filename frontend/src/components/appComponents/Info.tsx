@@ -259,7 +259,7 @@ export default function InfoComp() {
               <Select.Trigger placeholder="Sınav Seçiniz" />
               <Select.List>
                 <Select.Option value="YKS SAY">YKS-SAY</Select.Option>
-                <Select.Option value="YKS EA">YKS-EA</Select.Option>
+                <Select.Option value="YKS0 EA">YKS-EA</Select.Option>
                 <Select.Option value="YKS SOZ">YKS-SÖZ</Select.Option>
                 {/* <Select.Option value="KPSS">KPSS</Select.Option>
                 <Select.Option value="TUS">TUS</Select.Option>
