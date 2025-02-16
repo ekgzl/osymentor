@@ -9,15 +9,6 @@ interface User {
 }
 
 const initialState: User = (() => {
-  try {
-    const storedState = localStorage.getItem('user');
-    if (storedState) {
-      const parsedState = JSON.parse(storedState);
-      return parsedState;
-    }
-  } catch (error) {
-    console.error("Locale erişim hatası", error);
-  }
   return {
     username: "",
     email: "",
@@ -38,9 +29,18 @@ const userSlice = createSlice({
         state.avatar = action.payload.avatar;
         state.birthdate = action.payload.birthdate;
     },
+    clearUser: () => {
+      return {
+        username: "",
+        email: "",
+        exam: "",
+        avatar: "",
+        birthdate: "",
+      };
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;

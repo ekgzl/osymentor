@@ -5,19 +5,24 @@ import { TypeAnimation } from "react-type-animation";
 
 export const LandingLeftBodyComp = () => {
   return (
-
     // lg ile büyük ekranlarda ikili görüntü, aksinde küçükte tekli görüntü sağladım
-    <div className={"flex flex-col gap-y-5 sm:gap-y-8 flex-wrap lg:basis-5/12 basis-full"}>
-      <p
+    <div
+      className={
+        "flex flex-col gap-y-5 sm:gap-y-8 flex-wrap lg:basis-5/12 basis-full"
+      }
+    >
+      <div
         className={
           // TRACKING BURADA LETTER SPACINGI sıkışıyor
           //md ile büyük ekranlarda 7xl, aksinde 6xl yapıyorum
           "md:text-7xl text-6xl font-semibold leading-extra-tight tracking-[-0.03em] font-worksans bg-gradient-to-r from-[#F28A2E]  to-[#ed551c] inline-block text-transparent bg-clip-text"
         }
       >
-        <p className="pt-1">Öğrenmeyi ve <br /> kazanmayı <br /> basit hale getiren
-          <br /> platform.{" "}</p>
-      </p>
+        <p className="pt-1">
+          Öğrenmeyi ve <br /> kazanmayı <br /> basit hale getiren
+          <br /> platform.{" "}
+        </p>
+      </div>
       <div>
         <TypeAnimation
           sequence={[
@@ -58,12 +63,7 @@ export const LandingLeftBodyComp = () => {
             className="hover:z-10 focus:z-10"
             src="/avatar4.png"
           />
-          <Avatar
-            size={"lg"}
-            alt="user 3"
-            className=""
-            src="/avatar1.png"
-          />
+          <Avatar size={"lg"} alt="user 3" className="" src="/avatar1.png" />
           <Avatar
             size={"lg"}
             alt="user 4"
@@ -79,11 +79,7 @@ export const LandingLeftBodyComp = () => {
           />
         </div>
         <div>
-          <p
-            className={
-              " font-worksans tracking-tight text-blue-950 text-lg"
-            }
-          >
+          <p className={" font-worksans tracking-tight text-blue-950 text-lg"}>
             <span className={"font-semibold text-xl sm:text-3xl"}>2000 +</span>
             <br />
             Öğrenci ösyMentor ile sınavlarına hazırlanıyor.
@@ -91,12 +87,7 @@ export const LandingLeftBodyComp = () => {
         </div>
       </div>
       <div>
-        <Button
-          className={"rounded-3xl"}
-          size={"xl"}
-          as={"a"}
-          href="/signup"
-        >
+        <Button className={"rounded-3xl"} size={"xl"} as={"a"} href="/signup">
           <p className={"font-worksans font-medium text-lg"}>
             Ücretsiz Kayıt Ol
           </p>

@@ -12,7 +12,6 @@ import {
   Button,
 } from "@material-tailwind/react";
 
-
 // @utils
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
@@ -31,7 +30,6 @@ type User = {
   avatar: string;
   email2: string;
 };
-
 
 function TextField({ label, ...props }: { label: string; [key: string]: any }) {
   const id = React.useId();
@@ -132,7 +130,7 @@ export default function InfoComp() {
 
   /**
    * Click-Outside Detection Mekanizması
-   * 
+   *
    * Bu useEffect hook'u, DayPicker'ın dışına tıklandığında otomatik kapanmasını sağlar.
    * Nasıl Çalışır:
    * 1. DayPicker açıkken (isDatePickerOpen true olduğunda) bir mousedown event listener eklenir
@@ -140,7 +138,7 @@ export default function InfoComp() {
    *    - '.datepicker-popover' class'ına sahip elementi bulur
    *    - Tıklanan yer (event.target) bu elementin dışındaysa DayPicker'ı kapatır
    * 3. DayPicker kapandığında event listener temizlenir (cleanup)
-   * 
+   *
    * Bu yöntem şu durumlarda DayPicker'ın kapanmasını sağlar:
    * - Başka bir input alanına tıklandığında
    * - Sayfanın boş bir alanına tıklandığında
@@ -148,18 +146,18 @@ export default function InfoComp() {
    */
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const popover = document.querySelector('.datepicker-popover');
+      const popover = document.querySelector(".datepicker-popover");
       if (popover && !popover.contains(event.target as Node)) {
         setIsDatePickerOpen(false);
       }
     };
 
     if (isDatePickerOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDatePickerOpen]);
 
@@ -190,7 +188,7 @@ export default function InfoComp() {
               open={isDatePickerOpen}
               onOpenChange={(open) => setIsDatePickerOpen(open)}
             >
-              <Popover.Trigger asChild>
+              <Popover.Trigger>
                 <div
                   className="w-full cursor-pointer"
                   onClick={(e) => {
@@ -260,10 +258,12 @@ export default function InfoComp() {
             >
               <Select.Trigger placeholder="Sınav Seçiniz" />
               <Select.List>
-                <Select.Option value="YKS">YKS</Select.Option>
-                <Select.Option value="KPSS">KPSS</Select.Option>
+                <Select.Option value="YKS SAY">YKS-SAY</Select.Option>
+                <Select.Option value="YKS0 EA">YKS-EA</Select.Option>
+                <Select.Option value="YKS SOZ">YKS-SÖZ</Select.Option>
+                {/* <Select.Option value="KPSS">KPSS</Select.Option>
                 <Select.Option value="TUS">TUS</Select.Option>
-                <Select.Option value="YDS">YDS</Select.Option>
+                <Select.Option value="YDS">YDS</Select.Option> */}
               </Select.List>
             </Select>
           </InputSlot>

@@ -12,7 +12,7 @@ export function BadgeComp() {
         </IconButton>
       </Badge.Content>
 
-      <Badge.Indicator>5</Badge.Indicator>
+      <Badge.Indicator>3</Badge.Indicator>
     </Badge>
   );
 }

@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { SidebarComp } from "../../components/appComponents/Sidebar";
 import { RootState } from "../../../app/store";
 import { useSelector } from "react-redux";
-import { NavbarComp } from "../../components/Navbar";
+import { NavbarComp } from "../../components/appComponents/Navbar";
 import { FooterComp } from "../../components/Footer";
 
 export const AppLayout = () => {
@@ -12,7 +12,7 @@ export const AppLayout = () => {
 
   return (
     <>
-      <body
+      <div
         className={
           "flex min-h-screen bg-gradient-to-l from-orange-200 to-sky-200"
         }
@@ -35,7 +35,7 @@ export const AppLayout = () => {
             <Outlet />
           </div>
         </div>
-      </body>
+      </div>
       <FooterComp></FooterComp>
     </>
   );

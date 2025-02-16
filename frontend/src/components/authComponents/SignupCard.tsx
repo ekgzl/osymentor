@@ -9,30 +9,13 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../config/firebase-config.tsx";
+
 import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { SignupSchema } from "../../formikSchemas/SignupSchema.tsx";
 import Swal from "sweetalert2";
-// `users.json`dan veriyi al
-import initialUsers from "../../data/users.json";
 import { useNavigate } from "react-router-dom";
-// localStorage'dan kullanıcıları al veya JSON'dan başlat
-const getUsers = () => {
-  const users = localStorage.getItem("users");
-  return users ? JSON.parse(users) : initialUsers;
-};
-
-// önce bir kullanıcı tanımla
-type User = {
-  email: string;
-  password: string;
-};
-
-// kullanıcıyı kaydet locale
-const saveUser = (newUser: User) => {
-  const users: User[] = getUsers();
-  users.push(newUser);
-  localStorage.setItem("users", JSON.stringify(users));
-};
 
 const Toast = Swal.mixin({
   toast: true,
@@ -56,8 +39,22 @@ export default function SignupCardComp() {
   const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
   const [capsLockOn2, setCapsLockOn2] = React.useState(false);
   const [isPasswordFocused2, setIsPasswordFocused2] = React.useState(false);
-  
 
+  //-------GOOGLE POPUP------
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      const token = await user.getIdToken();
+      console.log(token);
+      Toast.fire({
+        icon: "success",
+        title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
+      }).then(() => {
+        navigate("/app");
+      });
+    } catch (error) {}
+  };
 
   //-------FORMIK------
   const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
@@ -71,45 +68,46 @@ export default function SignupCardComp() {
       validateOnChange: false, // her input değişikliğinde validation yapma
       validateOnBlur: true, // her inputun dışına çıkıldığında validation yap
       onSubmit: (values, { resetForm }) => {
-        // Kullanıcı var mı kontrol et
-        const users = getUsers();
-        const userExists = users.some(
-          (user: User) => user.email === values.email,
-        );
-
-        if (userExists) {
-          Swal.fire({
-            title: "Bu e-posta adresi zaten kayıtlı.",
-            text: "Lütfen tekrar deneyin",
-            icon: "error",
-            confirmButtonText: "Devam et",
-            confirmButtonColor: "#37474f",
-            customClass: {
-              container: 'swal2-container-custom',
-              popup: 'swal2-popup-custom'
-            }
+        //FIREBASE
+        createUserWithEmailAndPassword(auth, values.email, values.password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log(user);
+            Toast.fire({
+              icon: "success",
+              title: "Kayıt başarılı! Uygulama ekranına aktarılıyorsun..",
+              timer: 1200,
+            }).then(() => {
+              navigate("/app");
+            });
+            resetForm();
+          })
+          .catch((error) => {
+            console.log(error.message);
+            Swal.fire({
+              title: error.code,
+              text: error.message,
+              icon: "error",
+              confirmButtonText: "Devam et",
+              confirmButtonColor: "#37474f",
+              // SweetAlert2 css'leri globalde ayarladım
+              customClass: {
+                container: "swal2-container-custom",
+                popup: "swal2-popup-custom",
+              },
+            });
           });
-          return;
-        }
-
-        // Yeni kullanıcı ekle
-        const newUser = { email: values.email, password: values.password };
-        saveUser(newUser);
-        Toast.fire({
-          icon: "success",
-          title: "Kayıt başarılı! Giriş ekranına aktarılıyorsun..",
-        }).then(() => {
-          navigate("/login");
-        });
-
-        resetForm();
       },
     });
 
   return (
     <div className="grid place-items-center w-full h-full sm:p-2">
       <div className="w-full max-w-[95%] mx-auto p-1 sm:p-2">
-        <Typography as="h2" type="h2" className="mb-2 text-center text-3xl md:text-4xl sm:text-3xl">
+        <Typography
+          as="h2"
+          type="h2"
+          className="mb-2 text-center text-3xl md:text-4xl sm:text-3xl"
+        >
           Kayıt Ol
         </Typography>
         <Typography className="text-foreground text-center text-sm lg:text-lg md:text-lg sm:text-base">
@@ -136,9 +134,8 @@ export default function SignupCardComp() {
               onChange={handleChange}
               value={values.email}
               onBlur={handleBlur}
-
             />
-          
+
             {/*eğer email input alanına focus geldiğinde ve hata varsa hata mesajını ekrana yaz*/}
             {touched.email && errors.email && (
               <p className={"text-red-700 text-xs "}>{errors.email}</p>
@@ -167,11 +164,15 @@ export default function SignupCardComp() {
                 setIsPasswordFocused(false);
                 setCapsLockOn(false);
               }}
-              onFocus={() =>  setIsPasswordFocused(true)}
+              onFocus={() => setIsPasswordFocused(true)}
               // onKeyDown her tuşa basıldığında tetiklenirken onKeyUp sadece tuşun bırakıldığında fonksiyonu çağırır
               // getModifierState ile capsLock açık olup olmadığını kontrol ettim
-              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn(e.getModifierState('CapsLock'))}
-              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn(e.getModifierState('CapsLock'))}
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                setCapsLockOn(e.getModifierState("CapsLock"))
+              }
+              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                setCapsLockOn(e.getModifierState("CapsLock"))
+              }
             >
               <Input.Icon
                 as={IconButton}
@@ -192,8 +193,8 @@ export default function SignupCardComp() {
               </Input.Icon>
             </Input>
             {capsLockOn && isPasswordFocused && (
-        <p className="text-yellow-700 text-xs">Caps Lock açık</p>
-      )}
+              <p className="text-yellow-700 text-xs">Caps Lock açık</p>
+            )}
             {touched.password && errors.password && (
               <p className={"text-red-700 text-xs "}>{errors.password}</p>
             )}
@@ -222,8 +223,12 @@ export default function SignupCardComp() {
                 setCapsLockOn2(false);
               }}
               onFocus={() => setIsPasswordFocused2(true)}
-                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn2(e.getModifierState('CapsLock'))}
-                onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => setCapsLockOn2(e.getModifierState('CapsLock'))}
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                setCapsLockOn2(e.getModifierState("CapsLock"))
+              }
+              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                setCapsLockOn2(e.getModifierState("CapsLock"))
+              }
             >
               <Input.Icon
                 as={IconButton}
@@ -232,7 +237,6 @@ export default function SignupCardComp() {
                 placement="end"
                 color="secondary"
                 className="data-[placement=end]:right-1.5 !absolute select-auto z-10 pointer-events-auto"
-                
                 onClick={() =>
                   setInputType2(inputType2 === "password" ? "text" : "password")
                 }
@@ -245,13 +249,18 @@ export default function SignupCardComp() {
               </Input.Icon>
             </Input>
             {capsLockOn2 && isPasswordFocused2 && (
-        <p className="text-yellow-700 text-xs">Caps Lock açık</p>
-      )}
+              <p className="text-yellow-700 text-xs">Caps Lock açık</p>
+            )}
             {touched.password2 && errors.password2 && (
               <p className={"text-red-700 text-xs"}>{errors.password2}</p>
             )}
           </div>
-          <Button  type={"submit"} className={"text-xs lg:text-base md:text-sm sm:text-sm my-2"} size="md" isFullWidth>
+          <Button
+            type={"submit"}
+            className={"text-xs lg:text-base md:text-sm sm:text-sm my-2"}
+            size="md"
+            isFullWidth
+          >
             Kayıt Ol
           </Button>
         </form>
@@ -268,8 +277,16 @@ export default function SignupCardComp() {
             Zaten bir hesaba sahibim
           </Button>
 
-          <Button className="text-xs lg:text-base md:text-sm sm:text-sm" size="sm" variant="outline" color="secondary" isFullWidth>
-            <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google ile kayıt ol
+          <Button
+            className="text-xs lg:text-base md:text-sm sm:text-sm"
+            size="sm"
+            variant="outline"
+            color="secondary"
+            isFullWidth
+            onClick={handleGoogleLogin}
+          >
+            <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google
+            ile kayıt ol
           </Button>
         </div>
       </div>

@@ -1,26 +1,16 @@
 "use client";
-
-import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSidebar } from "../../features/drawer/SidebarSlice.ts";
-import { IconButton, Input, Navbar } from "@material-tailwind/react";
+import { toggleSidebar } from "../../../features/drawer/SidebarSlice.ts";
+import { Input, Navbar } from "@material-tailwind/react";
 
-import { Menu, Search, Xmark } from "iconoir-react";
+import { Menu, Search } from "iconoir-react";
 import { BadgeComp } from "./Badge.tsx";
-import { AvatarComp } from "./appComponents/Avatar.tsx";
+import { AvatarComp } from "./Avatar.tsx";
 import { MenuScale } from "iconoir-react/regular";
-import { RootState } from "../../app/store.ts";
+import { RootState } from "../../../app/store.ts";
 
 export function NavbarComp() {
-  const [openNav, setOpenNav] = React.useState(false);
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    window.addEventListener(
-      "resize",
-
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
-  }, []);
 
   const isSidebarOpen = useSelector(
     (state: RootState) => state.sidebar.isSidebarOpen
@@ -59,19 +49,6 @@ export function NavbarComp() {
           <BadgeComp></BadgeComp>
           <AvatarComp></AvatarComp>
         </div>
-
-        <IconButton
-          size="sm"
-          variant="ghost"
-          onClick={() => setOpenNav(!openNav)}
-          className="ml-1 grid lg:hidden"
-        >
-          {openNav ? (
-            <Xmark className="h-4 w-4" />
-          ) : (
-            <Menu className="h-4 w-4" />
-          )}
-        </IconButton>
       </div>
     </Navbar>
   );
