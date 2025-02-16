@@ -50,6 +50,7 @@ export default function SignupCardComp() {
       Toast.fire({
         icon: "success",
         title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
+        timer: 1000,
       }).then(() => {
         navigate("/app");
       });
