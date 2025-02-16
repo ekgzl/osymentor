@@ -12,10 +12,9 @@ export const LandingLayout = () => {
       <div className="sticky top-0 z-50">
         <LandingNavbarComp /> {/* her sayfa için sabit navbar */}
       </div>
-      <body className="bg-gradient-to-t from-orange-100 to-sky-100 min-h-screen">
+      <div className="bg-gradient-to-t from-orange-100 to-sky-100 min-h-screen">
         <Outlet /> {/* dinamik olarak değişen içerik */}
-
-      </body>
+      </div>
       <FooterComp></FooterComp>
     </>
   );

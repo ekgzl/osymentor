@@ -14,7 +14,7 @@ import {
   YAxis,
   Rectangle,
 } from "recharts";
-import { RootState } from "../../../app/store";
+import { RootState } from "../../../../app/store";
 
 //1236
 const sessionSumbyDay = (sessions: any) => {
@@ -114,7 +114,6 @@ function CustomTooltip({
 export default function OldSessionChartComp() {
   const sessions = useSelector((state: RootState) => state.sessions.sessions);
   const chartArray = sessionSumbyDay(sessions);
-  console.log(chartArray);
   // 7 günlük veri oluşturan bir dizi (array) oluşturur
   // Her bir gün için bugünden geriye doğru giderek veri hazırlar
   const CHART_DATA = Array.from({ length: 7 }, (_, index) => {
@@ -130,7 +129,6 @@ export default function OldSessionChartComp() {
       "Geçen Hafta": 0, // Geçen haftanın verisi (şimdilik 0)
     };
   });
-  console.log(CHART_DATA);
   return (
     <Card className="shadow-none border-none bg-transparent">
       <Card.Body className="p-6 relative">
