@@ -205,9 +205,7 @@ useNavigate Hook'u:
 - navigate fonksiyonu, yönlendirme sonrası state veya parametre geçmek için de kullanılabilir.
 */
               if (isMobileOrTablet()) {
-                console.log("a");
                 handleGoogleRedirect(navigate);
-                console.log("çıkışşşş");
               } else {
                 handleGoogleLogin(navigate);
               }
