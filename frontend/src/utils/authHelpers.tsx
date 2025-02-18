@@ -57,11 +57,16 @@ export const handleGoogleLogin = async (navigate: Function): Promise<void> => {
     const result: UserCredential = await signInWithPopup(auth, googleProvider);
     const token: string = await result.user.getIdToken();
 
-    await axios.post(
-      `${import.meta.env.API_URL}/api/v1/login`,
-      { idToken: token },
-      { withCredentials: true }
-    );
+    await axios
+      .post(
+        `${import.meta.env.API_URL}/api/v1/login`,
+        { idToken: token },
+        { withCredentials: true }
+      )
+      .then(() => {
+        console.log("babafireda");
+        console.log(import.meta.env.API_URL);
+      });
 
     Toast.fire({
       icon: "success",
