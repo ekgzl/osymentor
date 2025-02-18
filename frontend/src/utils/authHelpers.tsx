@@ -26,13 +26,16 @@ export const isMobileOrTablet = (): boolean => {
 
 export const handleGoogleRedirect = async (navigate: Function) => {
   try {
+    console.log("fonksiyon başı");
     await signInWithRedirect(auth, googleProvider);
   } catch (error) {
     console.error("Google Redirect Error:", error);
   }
 
   const result = await getRedirectResult(auth);
+  console.log("dönüş yok");
   if (result) {
+    console.log("buraya girdim");
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential?.accessToken;
 
