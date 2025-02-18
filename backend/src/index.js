@@ -42,7 +42,7 @@ app.post("/api/v1/login", async (req, res) => {
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(idToken);
-    const expiresIn = 60 * 1000;
+    const expiresIn = 60 * 60 * 1000; // 1 SAAT
     console.log("env", process.env.NODE_ENV);
     // cookie oluştur
     res.cookie("authToken", idToken, {

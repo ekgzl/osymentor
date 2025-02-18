@@ -74,7 +74,7 @@ export function SidebarComp() {
       //VITE_ veya NEXT_PUBLIC_ prefix'ini eklediğine emin ol.
       //Vite'de VITE_ Eğer sadece API_URL yazarsan, frontend’de çalışmaz.
       await signOut(auth);
-      await axios.post(`${import.meta.env.API_URL}/api/v1/logout`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/logout`, {
         withCredentials: true,
       });
       Toast.fire({
