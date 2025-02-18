@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
 import { setUser, clearUser } from "../features/drawer/UserSlice";
-import NotFoundPage from "./pages/NotFound";
 import axios from "axios";
 import { Spinner } from "@material-tailwind/react";
 interface PrivateRouteProps {
