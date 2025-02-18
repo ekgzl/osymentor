@@ -55,6 +55,8 @@ export const handleGoogleRedirect = async (navigate: Function) => {
       .catch((error) => {
         console.log("Giriş yapılırken hata oluştu", error);
       });
+  } else {
+    console.log("result gelmiyor");
   }
 };
 
