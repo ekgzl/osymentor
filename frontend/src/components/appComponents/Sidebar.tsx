@@ -71,6 +71,8 @@ export function SidebarComp() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
+      //VITE_ veya NEXT_PUBLIC_ prefix'ini eklediğine emin ol.
+      //Vite'de VITE_ Eğer sadece API_URL yazarsan, frontend’de çalışmaz.
       await signOut(auth);
       await axios.post(`${import.meta.env.API_URL}/api/v1/logout`, {
         withCredentials: true,

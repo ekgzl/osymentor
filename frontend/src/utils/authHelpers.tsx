@@ -43,7 +43,7 @@ export const handleGoogleRedirect = async (
     const token: string | undefined = credential?.accessToken;
 
     await axios.post(
-      `${import.meta.env.API_URL}/api/v1/login`,
+      `${import.meta.env.VITE_API_URL}/api/v1/login`,
       { idToken: token },
       { withCredentials: true }
     );
@@ -57,16 +57,11 @@ export const handleGoogleLogin = async (navigate: Function): Promise<void> => {
     const result: UserCredential = await signInWithPopup(auth, googleProvider);
     const token: string = await result.user.getIdToken();
 
-    await axios
-      .post(
-        `${import.meta.env.API_URL}/api/v1/login`,
-        { idToken: token },
-        { withCredentials: true }
-      )
-      .then(() => {
-        console.log("babafireda");
-        console.log(import.meta.env.API_URL);
-      });
+    await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/v1/login`,
+      { idToken: token },
+      { withCredentials: true }
+    );
 
     Toast.fire({
       icon: "success",
@@ -76,8 +71,6 @@ export const handleGoogleLogin = async (navigate: Function): Promise<void> => {
       navigate("/app");
     });
   } catch (error) {
-    console.log("babafireda");
-    console.log(import.meta.env.API_URL);
     console.error("Google Popup Hatası:", error);
   }
 };
