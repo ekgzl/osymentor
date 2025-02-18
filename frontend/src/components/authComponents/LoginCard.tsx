@@ -17,6 +17,7 @@ import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { LoginSchema } from "../../formikSchemas/LoginSchema.tsx";
 
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -35,13 +36,24 @@ export function LoginCardComp() {
   const [capsLockOn, setCapsLockOn] = React.useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
 
+  
+
   //-------GOOGLE POPUP------
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      const token = await user.getIdToken();
-      console.log(token);
+      const token = await result.user.getIdToken();
+
+      await axios.post(
+        "http://localhost:5030/api/v1/login",
+        {
+          idToken: token,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
       Toast.fire({
         icon: "success",
         title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",

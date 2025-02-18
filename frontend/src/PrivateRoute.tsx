@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
 import { setUser, clearUser } from "../features/drawer/UserSlice";
 import NotFoundPage from "./pages/NotFound";
+import axios from "axios";
 interface PrivateRouteProps {
   children: ReactNode;
 }
@@ -14,6 +15,21 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+
+  //-----FETCH USER-----
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/user", {
+        withCredentials: true, // Cookie'leri göndermek için
+      });
+      setUser(response.data.user);
+    } catch (error) {
+      console.error("Kullanıcı bilgileri alınamadı:", error);
+      clearUser();
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
