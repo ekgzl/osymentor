@@ -72,7 +72,7 @@ export function SidebarComp() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      await axios.post(`${process.env.API_URL}/api/v1/logout`, {
+      await axios.post(`${import.meta.env.API_URL}/api/v1/logout`, {
         withCredentials: true,
       });
       Toast.fire({
