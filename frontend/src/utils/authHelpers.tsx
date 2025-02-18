@@ -20,13 +20,10 @@ const Toast = Swal.mixin({
     toast.onmouseleave = Swal.resumeTimer;
   },
 });
-export const isMobileOrTablet = (): boolean => {
-  return window.innerWidth <= 768;
-};
 
 export const handleGoogleRedirect = async (navigate: Function) => {
+  console.log("fonksiyon başı");
   try {
-    console.log("fonksiyon başı");
     await signInWithRedirect(auth, googleProvider);
   } catch (error) {
     console.error("Google Redirect Error:", error);
