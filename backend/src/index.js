@@ -32,6 +32,10 @@ app.use(
     credentials: true,
   })
 );
+//hi world api
+app.get("/api/hi", (req, res) => {
+  res.json({ message: "Hi World!" });
+});
 
 app.post("/api/v1/login", async (req, res) => {
   const { idToken } = req.body; // firebase JWT token
