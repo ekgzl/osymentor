@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
 import { setUser, clearUser } from "../features/drawer/UserSlice";
-import NotFoundPage from "./pages/NotFound";
+import axios from "axios";
+import { Spinner } from "@material-tailwind/react";
 interface PrivateRouteProps {
   children: ReactNode;
 }
@@ -15,34 +16,42 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
+  //-----FETCH USER-----
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/v1/user", {
+        withCredentials: true, // Cookie'leri göndermek için
+      });
+      dispatch(setUser(response.data.user));
+      console.log("userdatafromapi", response.data.user);
+    } catch (error) {
+      console.error("Kullanıcı bilgileri alınamadı:", error);
+      dispatch(clearUser());
+    } finally {
+      setLoading(false);
+    }
+  };
+  // Firebase'deki oturum durumunu dinle
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const toUser = {
-          username: user?.email?.split("@")[0] || "defaultUsername",
-          email: user?.email || "defaultEmail",
-          exam: "YKS SAY",
-          avatar:
-            "https://storage.evrimagaci.org/old/mi_media/afcae823e61eefb077e1f223594b1e7f.jpeg",
-          birthdate: "",
-        };
-        dispatch(setUser(toUser));
+        // Firebase'de oturum açıksa, backend'den kullanıcı bilgilerini çek
+        await fetchUser();
       } else {
         dispatch(clearUser());
+        setLoading(false);
       }
-      setLoading(false);
     });
     return unsubscribe;
   }, [dispatch]);
 
   if (loading) {
-    return <NotFoundPage></NotFoundPage>;
+    return <Spinner className="h-12 w-12" color="primary" />;
   }
 
   if (!user.email) {
     return <Navigate to="/login" />;
   }
-  console.log("as");
   return children;
 };
 
