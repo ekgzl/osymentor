@@ -25,31 +25,38 @@ export const isMobileOrTablet = (): boolean => {
   return window.innerWidth <= 768;
 };
 
-export const handleGoogleRedirect = async (
-  navigate: Function
-): Promise<void> => {
+export const handleGoogleRedirect = async (navigate: Function) => {
   try {
     await signInWithRedirect(auth, googleProvider);
   } catch (error) {
     console.error("Google Redirect Error:", error);
   }
 
-  const result: UserCredential | null = await getRedirectResult(auth);
+  const result = await getRedirectResult(auth);
   if (result) {
-    const user: User = result.user;
-    console.log("Kullanıcı:", user);
-
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token: string | undefined = credential?.accessToken;
+    const token = credential?.accessToken;
 
-    await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/v1/login`,
-      { idToken: token },
-      { withCredentials: true }
-    );
+    await axios
+      .post(
+        `${import.meta.env.VITE_API_URL}/api/v1/login`,
+        { idToken: token },
+        { withCredentials: true }
+      )
+      .then(() => {
+        Toast.fire({
+          icon: "success",
+          title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
+        }).then(() => {
+          console.log("babafireda");
+          navigate("/app");
+        });
+        console.log("Giriş yaptı");
+      })
+      .catch((error) => {
+        console.log("Giriş yapılırken hata oluştu", error);
+      });
   }
-
-  navigate("/app");
 };
 
 export const handleGoogleLogin = async (navigate: Function): Promise<void> => {
