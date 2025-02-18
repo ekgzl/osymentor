@@ -32,10 +32,6 @@ app.use(
     credentials: true,
   })
 );
-//hi world api
-app.get("/api/hi", (req, res) => {
-  res.json({ message: "Hi World!" });
-});
 
 app.post("/api/v1/login", async (req, res) => {
   const { idToken } = req.body; // firebase JWT token
@@ -47,12 +43,12 @@ app.post("/api/v1/login", async (req, res) => {
   try {
     const decodedToken = await admin.auth().verifyIdToken(idToken);
     const expiresIn = 60 * 1000;
-
+    console.log("env", process.env.NODE_ENV);
     // cookie oluştur
     res.cookie("authToken", idToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: expiresIn,
     });
     const toUser = {
@@ -67,10 +63,6 @@ app.post("/api/v1/login", async (req, res) => {
     console.error("Token doğrulama hatası:", error);
     res.status(401).json({ error: "Geçersiz token" });
   }
-});
-
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello, World!" });
 });
 
 app.get("/api/v1/user", async (req, res) => {
