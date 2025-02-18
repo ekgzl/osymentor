@@ -47,7 +47,7 @@ app.post("/api/v1/login", async (req, res) => {
     // cookie oluştur
     res.cookie("authToken", idToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "development",
       sameSite: "none",
       maxAge: expiresIn,
     });
