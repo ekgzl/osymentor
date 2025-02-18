@@ -10,14 +10,17 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../../config/firebase-config.tsx";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase-config.tsx";
 
 import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { LoginSchema } from "../../formikSchemas/LoginSchema.tsx";
 
 import Swal from "sweetalert2";
-import axios from "axios";
+import {
+  handleGoogleLogin,
+  handleGoogleRedirect,
+} from "../../utils/authHelpers.tsx";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -36,31 +39,8 @@ export function LoginCardComp() {
   const [capsLockOn, setCapsLockOn] = React.useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
 
-  
-
-  //-------GOOGLE POPUP------
-  const handleGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const token = await result.user.getIdToken();
-
-      await axios.post(
-        "http://localhost:5030/api/v1/login",
-        {
-          idToken: token,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-
-      Toast.fire({
-        icon: "success",
-        title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
-      }).then(() => {
-        navigate("/app");
-      });
-    } catch (error) {}
+  const isMobileOrTablet = () => {
+    return window.innerWidth <= 768; // Örneğin, 768px ve altı mobil/tablet olarak kabul edilir
   };
 
   const navigate = useNavigate();
@@ -215,7 +195,21 @@ export function LoginCardComp() {
             variant="outline"
             color="secondary"
             isFullWidth
-            onClick={handleGoogleLogin}
+            onClick={() => {
+              /*
+useNavigate Hook'u:
+- React Router'da sayfalar arasında yönlendirme yapmak için kullanılır.
+- Bileşen içinde tanımlanmalı ve yalnızca React bileşenleri içinde kullanılabilir.
+- Fonksiyonel bir bileşen içinde, diğer import ifadelerinin hemen altında tanımlanmalıdır.
+- Yönlendirme yapmak için navigate('/yeni-yol') şeklinde kullanılabilir.
+- navigate fonksiyonu, yönlendirme sonrası state veya parametre geçmek için de kullanılabilir.
+*/
+              if (isMobileOrTablet()) {
+                handleGoogleRedirect(navigate);
+              } else {
+                handleGoogleLogin(navigate);
+              }
+            }}
           >
             <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google
             ile giriş yap

@@ -26,6 +26,8 @@ import { auth } from "../../config/firebase-config";
 import { signOut } from "firebase/auth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
@@ -70,12 +72,17 @@ export function SidebarComp() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      await axios.post(
+        "http://localhost:5000/api/v1/logout",
+        {},
+        { withCredentials: true }
+      );
       Toast.fire({
         icon: "success",
         title: "Çıkış başarılı...",
         timer: 1000,
       }).then(() => {
-        navigate("/login");
+        navigate("/");
       });
     } catch (error) {
       console.error("Logout error:", error);
@@ -166,7 +173,7 @@ export function SidebarComp() {
             <hr className="-mx-3 my-3 border-secondary" />
 
             <List.Item
-              className="text-info hover:bg-info/10 hover:text-info focus:bg-info/10 focus:text-info"
+              className="text-info hover:bg-info/10 hover:text-info focus:bg-info/10 focus:text-info cursor-pointer"
               onClick={handleLogout}
             >
               <List.ItemStart>
