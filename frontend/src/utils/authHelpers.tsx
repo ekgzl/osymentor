@@ -3,7 +3,6 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithRedirect,
-  User,
   UserCredential,
 } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase-config";
