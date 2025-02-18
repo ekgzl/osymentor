@@ -1,6 +1,9 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/" }
-    ]
-  }
-  
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" },
+    {
+      "source": "/__/auth/:match*",
+      "destination": "https://osymentor2025.firebaseapp.com/__/auth/:match*"
+    }
+  ]
+}

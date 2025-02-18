@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5175",
+    origin: process.env.FRONTEND_URL || "http://localhost:5175",
     credentials: true,
   })
 );
@@ -47,7 +47,7 @@ app.post("/api/v1/login", async (req, res) => {
     // cookie oluştur
     res.cookie("authToken", idToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV == "production",
+      secure: process.env.NODE_ENV === "production",
       sameSite: "none",
       maxAge: expiresIn,
     });
