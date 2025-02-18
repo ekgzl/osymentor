@@ -43,7 +43,7 @@ export const handleGoogleRedirect = async (
     const token: string | undefined = credential?.accessToken;
 
     await axios.post(
-      "http://localhost:5000/api/v1/login",
+      `${process.env.API_URL}/api/v1/login`,
       { idToken: token },
       { withCredentials: true }
     );
@@ -58,7 +58,7 @@ export const handleGoogleLogin = async (navigate: Function): Promise<void> => {
     const token: string = await result.user.getIdToken();
 
     await axios.post(
-      "http://localhost:5000/api/v1/login",
+      `${process.env.API_URL}/api/v1/login`,
       { idToken: token },
       { withCredentials: true }
     );

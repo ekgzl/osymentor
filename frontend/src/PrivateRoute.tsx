@@ -19,7 +19,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   //-----FETCH USER-----
   const fetchUser = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/v1/user", {
+      const response = await axios.get(`${process.env.API_URL}/api/v1/user`, {
         withCredentials: true, // Cookie'leri göndermek için
       });
       dispatch(setUser(response.data.user));

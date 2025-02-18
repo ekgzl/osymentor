@@ -73,7 +73,7 @@ export function SidebarComp() {
     try {
       await signOut(auth);
       await axios.post(
-        "http://localhost:5000/api/v1/logout",
+        `${process.env.API_URL}/api/v1/logout`,
         {},
         { withCredentials: true }
       );
