@@ -76,6 +76,8 @@ export const handleGoogleLogin = async (navigate: Function): Promise<void> => {
       navigate("/app");
     });
   } catch (error) {
+    console.log("babafireda");
+    console.log(import.meta.env.API_URL);
     console.error("Google Popup Hatası:", error);
   }
 };
