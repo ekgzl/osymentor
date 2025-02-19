@@ -93,7 +93,6 @@ export function LoginCardComp() {
     });
   const [inputType, setInputType] = React.useState("password");
 
-  // 🔹 Google ile giriş başlat
   const handleGoogleRedirect = async () => {
     console.log("Google yönlendirme başlatılıyor...");
     try {
@@ -103,7 +102,6 @@ export function LoginCardComp() {
     }
   };
 
-  // 🔹 Sayfa yüklendiğinde Google yönlendirme sonucunu kontrol et
   React.useEffect(() => {
     const fetchRedirectResult = async () => {
       console.log("Google yönlendirme sonucu bekleniyor...");
@@ -114,12 +112,12 @@ export function LoginCardComp() {
         if (result) {
           console.log("Google yönlendirme sonucu geldi:", result);
           const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential?.accessToken;
+          const idToken = await auth?.currentUser?.getIdToken(); // Doğru ID Token
 
           await axios
             .post(
               `${import.meta.env.VITE_API_URL}/api/v1/login`,
-              { idToken: token },
+              { idToken: idToken },
               { withCredentials: true }
             )
             .then(() => {
@@ -127,7 +125,7 @@ export function LoginCardComp() {
               navigate("/app");
             })
             .catch((error) => {
-              console.error("Giriş yapılırken hata oluştu:", error);
+              console.error("Giriş yapılırken hata oluştu:", error, idToken);
             });
         } else {
           console.log("Google yönlendirme sonucu gelmedi.");
