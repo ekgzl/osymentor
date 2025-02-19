@@ -58,7 +58,7 @@ app.post("/api/v1/login", async (req, res) => {
       avatar: decodedToken.picture || "https://example.com/default-avatar.png",
       birthdate: "",
     };
-    console.log(tuUser);
+    console.log(toUser);
     res.json({ status: "success", user: toUser });
   } catch (error) {
     console.error("Token doğrulama hatası:", error);
