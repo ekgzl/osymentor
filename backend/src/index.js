@@ -28,15 +28,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5175",
+    origin: process.env.FRONTEND_URL || "http://localhost:5176",
     credentials: true,
   })
 );
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://osymentor.vercel.app"); // Kendi domaininizi ekleyin
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
 
 app.post("/api/v1/login", async (req, res) => {
   const { idToken } = req.body; // firebase JWT token
@@ -107,7 +102,7 @@ app.post("/api/v1/logout", (req, res) => {
   res.json({ status: "success" });
 });
 
-const PORT =  5050;
+const PORT = 5050;
 app.listen(PORT, () => {
   console.log(`Server ${PORT} portunda çalışıyor`);
 });
