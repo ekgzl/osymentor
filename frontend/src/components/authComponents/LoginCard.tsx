@@ -111,7 +111,6 @@ export function LoginCardComp() {
 
         if (result) {
           console.log("Google yönlendirme sonucu geldi:", result);
-          const credential = GoogleAuthProvider.credentialFromResult(result);
           const idToken = await auth?.currentUser?.getIdToken(); // Doğru ID Token
 
           await axios
@@ -139,7 +138,7 @@ export function LoginCardComp() {
     };
 
     fetchRedirectResult();
-  }, [navigate]); // `navigate` değişirse useEffect tekrar çalışır
+  }, [navigate]);
 
   return (
     <div className="grid place-items-center w-full sm:p-6 md:p-8">
