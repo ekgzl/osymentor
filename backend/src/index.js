@@ -32,6 +32,11 @@ app.use(
     credentials: true,
   })
 );
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://osymentor.vercel.app"); // Kendi domaininizi ekleyin
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 app.post("/api/v1/login", async (req, res) => {
   const { idToken } = req.body; // firebase JWT token
