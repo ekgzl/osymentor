@@ -10,17 +10,20 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getRedirectResult,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithRedirect,
+} from "firebase/auth";
 import { auth } from "../../config/firebase-config.tsx";
 
 import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { LoginSchema } from "../../formikSchemas/LoginSchema.tsx";
 
 import Swal from "sweetalert2";
-import {
-  handleGoogleLogin,
-  handleGoogleRedirect,
-} from "../../utils/authHelpers.tsx";
+import { handleGoogleLogin } from "../../utils/authHelpers.tsx";
+import axios from "axios";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -89,6 +92,57 @@ export function LoginCardComp() {
       },
     });
   const [inputType, setInputType] = React.useState("password");
+
+  // 🔹 Google ile giriş başlat
+  const handleGoogleRedirect = async () => {
+    console.log("Google yönlendirme başlatılıyor...");
+    try {
+      await signInWithRedirect(auth, new GoogleAuthProvider());
+    } catch (error) {
+      console.error("Google Redirect Error:", error);
+    }
+  };
+
+  // 🔹 Sayfa yüklendiğinde Google yönlendirme sonucunu kontrol et
+  React.useEffect(() => {
+    const fetchRedirectResult = async () => {
+      console.log("Google yönlendirme sonucu bekleniyor...");
+
+      try {
+        const result = await getRedirectResult(auth);
+
+        if (result) {
+          console.log("Google yönlendirme sonucu geldi:", result);
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential?.accessToken;
+
+          await axios
+            .post(
+              `${import.meta.env.VITE_API_URL}/api/v1/login`,
+              { idToken: token },
+              { withCredentials: true }
+            )
+            .then(() => {
+              console.log("Giriş başarılı, yönlendiriliyor...");
+              navigate("/app");
+            })
+            .catch((error) => {
+              console.error("Giriş yapılırken hata oluştu:", error);
+            });
+        } else {
+          console.log("Google yönlendirme sonucu gelmedi.");
+        }
+      } catch (error) {
+        console.error(
+          "Google yönlendirme sonucu alınırken hata oluştu:",
+          error
+        );
+      }
+    };
+
+    fetchRedirectResult();
+  }, [navigate]); // `navigate` değişirse useEffect tekrar çalışır
+
   return (
     <div className="grid place-items-center w-full sm:p-6 md:p-8">
       <div className="w-full max-w-[93%] mx-auto p-4 sm:p-6">
@@ -205,7 +259,7 @@ useNavigate Hook'u:
 - navigate fonksiyonu, yönlendirme sonrası state veya parametre geçmek için de kullanılabilir.
 */
               if (isMobileOrTablet()) {
-                handleGoogleRedirect(navigate);
+                handleGoogleRedirect();
               } else {
                 handleGoogleLogin(navigate);
               }
