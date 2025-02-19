@@ -58,6 +58,7 @@ app.post("/api/v1/login", async (req, res) => {
       avatar: decodedToken.picture || "https://example.com/default-avatar.png",
       birthdate: "",
     };
+    console.log(tuUser);
     res.json({ status: "success", user: toUser });
   } catch (error) {
     console.error("Token doğrulama hatası:", error);
@@ -69,6 +70,7 @@ app.get("/api/v1/user", async (req, res) => {
   const token = req.cookies.authToken; // cookie'den token al
 
   if (!token) {
+    console.log("token bulunamadı");
     return res.status(401).json({ error: "Token bulunamadı" });
   }
 
@@ -81,6 +83,7 @@ app.get("/api/v1/user", async (req, res) => {
       avatar: decodedToken.picture || "https://example.com/default-avatar.png",
       birthdate: "",
     };
+    console.log("token var ve kullanıcı", toUser);
     res.json({ user: toUser });
   } catch (error) {
     console.error("Token doğrulama hatası:", error);
