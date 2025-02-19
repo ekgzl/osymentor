@@ -47,7 +47,7 @@ app.post("/api/v1/login", async (req, res) => {
     // cookie oluştur
     res.cookie("authToken", idToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       sameSite: "none",
       maxAge: expiresIn,
     });
@@ -68,9 +68,12 @@ app.post("/api/v1/login", async (req, res) => {
 
 app.get("/api/v1/user", async (req, res) => {
   const token = req.cookies.authToken; // cookie'den token al
+  console.log("Mevcut çerezler:", document.cookie);
 
   if (!token) {
     console.log("token bulunamadı");
+    console.log(req.cookies);
+    console.log(req);
     return res.status(401).json({ error: "Token bulunamadı" });
   }
 
