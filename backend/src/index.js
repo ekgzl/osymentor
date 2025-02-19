@@ -101,8 +101,7 @@ app.post("/api/v1/logout", (req, res) => {
   });
   res.json({ status: "success" });
 });
-
-const PORT = 5050;
+const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
   console.log(`Server ${PORT} portunda çalışıyor`);
 });
