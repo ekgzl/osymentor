@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-
+// taskkill /IM node.exe /F
 //json file
 const serviceAccount = {
   //from .env
@@ -28,12 +28,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5176",
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
     credentials: true,
   })
 );
 
 app.post("/api/v1/login", async (req, res) => {
+  console.log("api geldi");
   const { idToken } = req.body; // firebase JWT token
 
   if (!idToken) {
@@ -52,10 +53,12 @@ app.post("/api/v1/login", async (req, res) => {
       maxAge: expiresIn,
     });
     const toUser = {
-      username: decodedToken.email.split("@")[0] || "defaultUsername",
-      email: decodedToken.email || "defaultEmail",
+      username: decodedToken.email.split("@")[0] || null,
+      email: decodedToken.email || null,
       exam: "YKS SAY",
-      avatar: decodedToken.picture || "https://example.com/default-avatar.png",
+      avatar:
+        decodedToken.picture ||
+        "https://sm.ign.com/t/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.600.jpg",
       birthdate: "",
     };
     console.log(toUser);
@@ -79,10 +82,12 @@ app.get("/api/v1/user", async (req, res) => {
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
     const toUser = {
-      username: decodedToken.email.split("@")[0] || "defaultUsername",
-      email: decodedToken.email || "defaultEmail",
+      username: decodedToken.email.split("@")[0] || null,
+      email: decodedToken.email || null,
       exam: "YKS SAY",
-      avatar: decodedToken.picture || "https://example.com/default-avatar.png",
+      avatar:
+        decodedToken.picture ||
+        "https://sm.ign.com/t/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.600.jpg",
       birthdate: "",
     };
     console.log("token var ve kullanıcı", toUser);
@@ -98,7 +103,9 @@ app.post("/api/v1/logout", (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
+    path: "/",
   });
+  console.log("temiz  ");
   res.json({ status: "success" });
 });
 const PORT = process.env.PORT || 5050;
