@@ -33,6 +33,10 @@ app.use(
   })
 );
 
+app.get("/", async (req, res) => {
+  res.send("ösyMentor!");
+});
+
 app.post("/api/v1/login", async (req, res) => {
   console.log("api geldi");
   const { idToken } = req.body; // firebase JWT token
