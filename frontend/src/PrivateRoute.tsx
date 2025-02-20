@@ -35,6 +35,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
       setLoading(false);
     }
   };
+
   // Firebase'deki oturum durumunu dinle
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -54,6 +55,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   }
 
   if (!user.email) {
+    console.log("email yok", user.email);
     return <Navigate to="/login" />;
   }
   return children;

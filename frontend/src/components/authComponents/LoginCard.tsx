@@ -59,16 +59,28 @@ export function LoginCardComp() {
       onSubmit: (values, { resetForm, setFieldValue }) => {
         //-----------FIREBASE---------
         signInWithEmailAndPassword(auth, values.email, values.password)
-          .then((userCredential) => {
+          .then(async (userCredential) => {
             const user = userCredential.user;
-            console.log(user);
-            Toast.fire({
-              icon: "success",
-              title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
-              timer: 1000,
-            }).then(() => {
-              navigate("/app");
-            });
+            const idToken = await user.getIdToken();
+            await axios
+              .post(
+                `${import.meta.env.VITE_API_URL}/api/v1/login`,
+                { idToken: idToken },
+                { withCredentials: true }
+              )
+              .then(() => {
+                console.log("Giriş başarılı, yönlendiriliyor...");
+                Toast.fire({
+                  icon: "success",
+                  title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
+                  timer: 1000,
+                }).then(() => {
+                  navigate("/app");
+                });
+              })
+              .catch((error) => {
+                console.error("Giriş yapılırken hata oluştu:", error, idToken);
+              });
             resetForm();
           })
           .catch((error) => {
