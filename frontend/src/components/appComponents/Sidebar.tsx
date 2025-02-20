@@ -11,7 +11,6 @@ import {
 
 import {
   LeaderboardStar,
-  // LogOut,
   DashboardDots,
   MoreHorizCircle,
   NavArrowRight,
@@ -73,16 +72,20 @@ export function SidebarComp() {
     try {
       //VITE_ veya NEXT_PUBLIC_ prefix'ini eklediğine emin ol.
       //Vite'de VITE_ Eğer sadece API_URL yazarsan, frontend’de çalışmaz.
-      await signOut(auth);
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/logout`, {
-        withCredentials: true,
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Çıkış başarılı...",
-        timer: 1000,
-      }).then(() => {
-        navigate("/");
+      await signOut(auth).then(async () => {
+        await axios
+          .post(`${import.meta.env.VITE_API_URL}/api/v1/logout`, {
+            withCredentials: true,
+          })
+          .then(() => {
+            Toast.fire({
+              icon: "success",
+              title: "Çıkış başarılı...",
+              timer: 1000,
+            }).then(() => {
+              navigate("/");
+            });
+          });
       });
     } catch (error) {
       console.error("Logout error:", error);
@@ -181,17 +184,9 @@ export function SidebarComp() {
               </List.ItemStart>
               <p className="text-white">Çıkış Yap</p>
             </List.Item>
-            {/*TODO: EĞER KULLANICI GİRİŞ YAPMIŞSA BU BUTON AKTİF OLMALI*/}
-            {/*<List.Item className="text-error hover:bg-error/10 hover:text-error focus:bg-error/10 focus:text-error">
-                        <List.ItemStart>
-                            <LogOut className="h-[18px] w-[18px]" />
-                        </List.ItemStart>
-                        Logout
-                    </List.Item>*/}
           </List>
         </Card.Body>
       </div>
-      {/*TODO bu sidebar footer kısmı da kullanıcı giriş yaptığında aktif olmalı*/}
       <Card.Footer className="mt-10">
         <Card color="primary" className="shadow-none">
           <Card.Header className="m-3">
