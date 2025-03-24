@@ -11,7 +11,6 @@ import {
 
 import {
   LeaderboardStar,
-  // LogOut,
   DashboardDots,
   MoreHorizCircle,
   NavArrowRight,
@@ -26,6 +25,8 @@ import { auth } from "../../config/firebase-config";
 import { signOut } from "firebase/auth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
@@ -69,13 +70,22 @@ export function SidebarComp() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      Toast.fire({
-        icon: "success",
-        title: "Çıkış başarılı...",
-        timer: 1000,
-      }).then(() => {
-        navigate("/login");
+      //VITE_ veya NEXT_PUBLIC_ prefix'ini eklediğine emin ol.
+      //Vite'de VITE_ Eğer sadece API_URL yazarsan, frontend’de çalışmaz.
+      await signOut(auth).then(async () => {
+        await axios
+          .post(`${import.meta.env.VITE_API_URL}/api/v1/logout`, {
+            withCredentials: true,
+          })
+          .then(() => {
+            Toast.fire({
+              icon: "success",
+              title: "Çıkış başarılı...",
+              timer: 1000,
+            }).then(() => {
+              navigate("/");
+            });
+          });
       });
     } catch (error) {
       console.error("Logout error:", error);
@@ -166,7 +176,7 @@ export function SidebarComp() {
             <hr className="-mx-3 my-3 border-secondary" />
 
             <List.Item
-              className="text-info hover:bg-info/10 hover:text-info focus:bg-info/10 focus:text-info"
+              className="text-info hover:bg-info/10 hover:text-info focus:bg-info/10 focus:text-info cursor-pointer"
               onClick={handleLogout}
             >
               <List.ItemStart>
@@ -174,17 +184,9 @@ export function SidebarComp() {
               </List.ItemStart>
               <p className="text-white">Çıkış Yap</p>
             </List.Item>
-            {/*TODO: EĞER KULLANICI GİRİŞ YAPMIŞSA BU BUTON AKTİF OLMALI*/}
-            {/*<List.Item className="text-error hover:bg-error/10 hover:text-error focus:bg-error/10 focus:text-error">
-                        <List.ItemStart>
-                            <LogOut className="h-[18px] w-[18px]" />
-                        </List.ItemStart>
-                        Logout
-                    </List.Item>*/}
           </List>
         </Card.Body>
       </div>
-      {/*TODO bu sidebar footer kısmı da kullanıcı giriş yaptığında aktif olmalı*/}
       <Card.Footer className="mt-10">
         <Card color="primary" className="shadow-none">
           <Card.Header className="m-3">

@@ -9,19 +9,24 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../../config/firebase-config.tsx";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase-config.tsx";
 
 import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { SignupSchema } from "../../formikSchemas/SignupSchema.tsx";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import {
+  handleGoogleLogin,
+  handleGoogleRedirect,
+} from "../../utils/authHelpers.tsx";
+import axios from "axios";
 
 const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
   showConfirmButton: false,
-  timer: 3000,
+  timer: 1200,
   timerProgressBar: true,
   didOpen: (toast) => {
     toast.onmouseenter = Swal.stopTimer;
@@ -40,21 +45,10 @@ export default function SignupCardComp() {
   const [capsLockOn2, setCapsLockOn2] = React.useState(false);
   const [isPasswordFocused2, setIsPasswordFocused2] = React.useState(false);
 
-  //-------GOOGLE POPUP------
-  const handleGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      const token = await user.getIdToken();
-      console.log(token);
-      Toast.fire({
-        icon: "success",
-        title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
-        timer: 1000,
-      }).then(() => {
-        navigate("/app");
-      });
-    } catch (error) {}
+  const isMobileOrTablet = () => {
+    console.log(window.innerWidth);
+    console.log(window.innerWidth <= 768);
+    return window.innerWidth <= 768; // Örneğin, 768px ve altı mobil/tablet olarak kabul edilir
   };
 
   //-------FORMIK------
@@ -71,16 +65,29 @@ export default function SignupCardComp() {
       onSubmit: (values, { resetForm }) => {
         //FIREBASE
         createUserWithEmailAndPassword(auth, values.email, values.password)
-          .then((userCredential) => {
+          .then(async (userCredential) => {
             const user = userCredential.user;
             console.log(user);
-            Toast.fire({
-              icon: "success",
-              title: "Kayıt başarılı! Uygulama ekranına aktarılıyorsun..",
-              timer: 1200,
-            }).then(() => {
-              navigate("/app");
-            });
+            const idToken = await user.getIdToken();
+            await axios
+              .post(
+                `${import.meta.env.VITE_API_URL}/api/v1/login`,
+                { idToken: idToken },
+                { withCredentials: true }
+              )
+              .then(() => {
+                console.log("Kayıt başarılı, yönlendiriliyor...");
+                Toast.fire({
+                  icon: "success",
+                  title: "Kayıt başarılı! Uygulamaya aktarılıyorsun..",
+                  timer: 1000,
+                }).then(() => {
+                  navigate("/app");
+                });
+              })
+              .catch((error) => {
+                console.error("Giriş yapılırken hata oluştu:", error, idToken);
+              });
             resetForm();
           })
           .catch((error) => {
@@ -284,7 +291,13 @@ export default function SignupCardComp() {
             variant="outline"
             color="secondary"
             isFullWidth
-            onClick={handleGoogleLogin}
+            onClick={() => {
+              if (isMobileOrTablet()) {
+                handleGoogleRedirect(navigate);
+              } else {
+                handleGoogleLogin(navigate);
+              }
+            }}
           >
             <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google
             ile kayıt ol

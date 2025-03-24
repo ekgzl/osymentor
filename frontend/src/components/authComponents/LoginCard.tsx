@@ -10,13 +10,20 @@ import {
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
 
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../../config/firebase-config.tsx";
+import {
+  getRedirectResult,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithRedirect,
+} from "firebase/auth";
+import { auth } from "../../config/firebase-config.tsx";
 
 import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { LoginSchema } from "../../formikSchemas/LoginSchema.tsx";
 
 import Swal from "sweetalert2";
+import { handleGoogleLogin } from "../../utils/authHelpers.tsx";
+import axios from "axios";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -35,20 +42,8 @@ export function LoginCardComp() {
   const [capsLockOn, setCapsLockOn] = React.useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
 
-  //-------GOOGLE POPUP------
-  const handleGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      const token = await user.getIdToken();
-      console.log(token);
-      Toast.fire({
-        icon: "success",
-        title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
-      }).then(() => {
-        navigate("/app");
-      });
-    } catch (error) {}
+  const isMobileOrTablet = () => {
+    return window.innerWidth <= 768; // Örneğin, 768px ve altı mobil/tablet olarak kabul edilir
   };
 
   const navigate = useNavigate();
@@ -64,16 +59,28 @@ export function LoginCardComp() {
       onSubmit: (values, { resetForm, setFieldValue }) => {
         //-----------FIREBASE---------
         signInWithEmailAndPassword(auth, values.email, values.password)
-          .then((userCredential) => {
+          .then(async (userCredential) => {
             const user = userCredential.user;
-            console.log(user);
-            Toast.fire({
-              icon: "success",
-              title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
-              timer: 1000,
-            }).then(() => {
-              navigate("/app");
-            });
+            const idToken = await user.getIdToken();
+            await axios
+              .post(
+                `${import.meta.env.VITE_API_URL}/api/v1/login`,
+                { idToken: idToken },
+                { withCredentials: true }
+              )
+              .then(() => {
+                console.log("Giriş başarılı, yönlendiriliyor...");
+                Toast.fire({
+                  icon: "success",
+                  title: "Giriş başarılı! Uygulamaya aktarılıyorsun..",
+                  timer: 1000,
+                }).then(() => {
+                  navigate("/app");
+                });
+              })
+              .catch((error) => {
+                console.error("Giriş yapılırken hata oluştu:", error, idToken);
+              });
             resetForm();
           })
           .catch((error) => {
@@ -97,6 +104,54 @@ export function LoginCardComp() {
       },
     });
   const [inputType, setInputType] = React.useState("password");
+
+  const handleGoogleRedirect = async () => {
+    console.log("Google yönlendirme başlatılıyor...");
+    try {
+      await signInWithRedirect(auth, new GoogleAuthProvider());
+    } catch (error) {
+      console.error("Google Redirect Error:", error);
+    }
+  };
+
+  React.useEffect(() => {
+    const fetchRedirectResult = async () => {
+      console.log("Google yönlendirme sonucu bekleniyor...");
+
+      try {
+        const result = await getRedirectResult(auth);
+
+        if (result) {
+          console.log("Google yönlendirme sonucu geldi:", result);
+          const idToken = await auth?.currentUser?.getIdToken(); // Doğru ID Token
+
+          await axios
+            .post(
+              `${import.meta.env.VITE_API_URL}/api/v1/login`,
+              { idToken: idToken },
+              { withCredentials: true }
+            )
+            .then(() => {
+              console.log("Giriş başarılı, yönlendiriliyor...");
+              navigate("/app");
+            })
+            .catch((error) => {
+              console.error("Giriş yapılırken hata oluştu:", error, idToken);
+            });
+        } else {
+          console.log("Google yönlendirme sonucu gelmedi.");
+        }
+      } catch (error) {
+        console.error(
+          "Google yönlendirme sonucu alınırken hata oluştu:",
+          error
+        );
+      }
+    };
+
+    fetchRedirectResult();
+  }, [navigate]);
+
   return (
     <div className="grid place-items-center w-full sm:p-6 md:p-8">
       <div className="w-full max-w-[93%] mx-auto p-4 sm:p-6">
@@ -203,7 +258,21 @@ export function LoginCardComp() {
             variant="outline"
             color="secondary"
             isFullWidth
-            onClick={handleGoogleLogin}
+            onClick={() => {
+              /*
+useNavigate Hook'u:
+- React Router'da sayfalar arasında yönlendirme yapmak için kullanılır.
+- Bileşen içinde tanımlanmalı ve yalnızca React bileşenleri içinde kullanılabilir.
+- Fonksiyonel bir bileşen içinde, diğer import ifadelerinin hemen altında tanımlanmalıdır.
+- Yönlendirme yapmak için navigate('/yeni-yol') şeklinde kullanılabilir.
+- navigate fonksiyonu, yönlendirme sonrası state veya parametre geçmek için de kullanılabilir.
+*/
+              if (isMobileOrTablet()) {
+                handleGoogleRedirect();
+              } else {
+                handleGoogleLogin(navigate);
+              }
+            }}
           >
             <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google
             ile giriş yap
