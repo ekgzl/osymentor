@@ -64,7 +64,7 @@ export function LoginCardComp() {
             const idToken = await user.getIdToken();
             await axios
               .post(
-                `${import.meta.env.VITE_API_URL}/api/v1/login`,
+                `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
                 { idToken: idToken },
                 { withCredentials: true }
               )
@@ -127,7 +127,7 @@ export function LoginCardComp() {
 
           await axios
             .post(
-              `${import.meta.env.VITE_API_URL}/api/v1/login`,
+              `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
               { idToken: idToken },
               { withCredentials: true }
             )

@@ -71,7 +71,7 @@ export default function SignupCardComp() {
             const idToken = await user.getIdToken();
             await axios
               .post(
-                `${import.meta.env.VITE_API_URL}/api/v1/login`,
+                `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
                 { idToken: idToken },
                 { withCredentials: true }
               )

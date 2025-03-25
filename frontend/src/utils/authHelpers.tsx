@@ -38,7 +38,7 @@ export const handleGoogleRedirect = async (navigate: Function) => {
 
     await axios
       .post(
-        `${import.meta.env.VITE_API_URL}/api/v1/login`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
         { idToken: token },
         { withCredentials: true }
       )
@@ -66,7 +66,7 @@ export const handleGoogleLogin = async (navigate: Function): Promise<void> => {
     const token: string = await result.user.getIdToken();
 
     await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/v1/login`,
+      `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
       { idToken: token },
       { withCredentials: true }
     );

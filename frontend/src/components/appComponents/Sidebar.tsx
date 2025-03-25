@@ -74,7 +74,7 @@ export function SidebarComp() {
       //Vite'de VITE_ Eğer sadece API_URL yazarsan, frontend’de çalışmaz.
       await signOut(auth).then(async () => {
         await axios
-          .post(`${import.meta.env.VITE_API_URL}/api/v1/logout`, {
+          .post(`${import.meta.env.VITE_API_URL}/api/v1/auth/logout`, {
             withCredentials: true,
           })
           .then(() => {
