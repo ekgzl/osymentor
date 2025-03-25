@@ -1,6 +1,6 @@
 # ösyMentor
 
-Bu depo, [ösyMentor] için geliştirme ortamını içermektedir.
+Bu depo, ösyMentor için geliştirme ortamını içermektedir.
 
 ## 📋 Özellikler
 

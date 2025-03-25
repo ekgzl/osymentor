@@ -54,7 +54,7 @@ app.post("/api/v1/login", async (req, res) => {
     res.cookie("authToken", idToken, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: expiresIn,
     });
     const toUser = {
