@@ -9,8 +9,12 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/firebase-config.tsx";
+import {
+  sendEmailVerification,
+  createUserWithEmailAndPassword,
+  sendSignInLinkToEmail,
+} from "firebase/auth";
+import { auth, actionCodeSettings } from "../../config/firebase-config.tsx";
 
 import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { SignupSchema } from "../../formikSchemas/SignupSchema.tsx";
@@ -67,28 +71,43 @@ export default function SignupCardComp() {
         createUserWithEmailAndPassword(auth, values.email, values.password)
           .then(async (userCredential) => {
             const user = userCredential.user;
-            console.log(user);
-            const idToken = await user.getIdToken();
-            await axios
-              .post(
-                `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
-                { idToken: idToken },
-                { withCredentials: true }
-              )
-              .then(() => {
-                console.log("Kayıt başarılı, yönlendiriliyor...");
-                Toast.fire({
-                  icon: "success",
-                  title: "Kayıt başarılı! Uygulamaya aktarılıyorsun..",
-                  timer: 1000,
-                }).then(() => {
-                  navigate("/app");
-                });
-              })
-              .catch((error) => {
-                console.error("Giriş yapılırken hata oluştu:", error, idToken);
-              });
+
+            sendEmailVerification(user);
+            await Toast.fire({
+              icon: "success",
+              title:
+                "E-posta doğrulaması gönderildi, giriş sayfasına aktarılıyorsun.",
+              timer: 2000,
+            }).then(() => {
+              navigate("/login");
+            });
             resetForm();
+            // TODO
+            // BU KISIM AYRI BİR BUTONA AKTARILACAK LOGIN COMPONENTINDE
+            // sendSignInLinkToEmail(auth, user.email!, actionCodeSettings)
+            //   .then(() => {
+            //     // The link was successfully sent. Inform the user.
+            //     // Save the email locally so you don't need to ask the user for it again
+            //     // if they open the link on the same device.
+            //     window.localStorage.setItem("emailForSignIn", user.email!);
+            //     // ...
+            //   })
+            //   .catch((error) => {
+            //     const errorCode = error.code;
+            //     const errorMessage = error.message;
+            //     Swal.fire({
+            //       title: errorCode,
+            //       text: errorMessage,
+            //       icon: "error",
+            //       confirmButtonText: "Devam et",
+            //       confirmButtonColor: "#37474f",
+            //       // SweetAlert2 css'leri globalde ayarladım
+            //       customClass: {
+            //         container: "swal2-container-custom",
+            //         popup: "swal2-popup-custom",
+            //       },
+            //     });
+            //   });
           })
           .catch((error) => {
             console.log(error.message);

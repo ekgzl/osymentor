@@ -16,6 +16,16 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_APP_ID,
 };
 
+export const actionCodeSettings = {
+  // URL you want to redirect back to. The domain (www.example.com) for this
+  // URL must be in the authorized domains list in the Firebase Console.
+  url: "http://localhost:5173/login",
+  // This must be true.
+  handleCodeInApp: true,
+  // The domain must be configured in Firebase Hosting and owned by the project.
+  linkDomain: "osymentor2025.firebaseapp.com",
+};
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
