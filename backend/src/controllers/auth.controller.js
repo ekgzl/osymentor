@@ -10,6 +10,10 @@ exports.login = async (req, res) => {
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(idToken);
+    
+    if(!decodedToken.emailVerified){
+      return res.status(401).json({ error: "Giriş yaparken e-posta doğrulanmamış." });
+    }
     const expiresIn = 60 * 60 * 1000;
 
     // cookie oluştur ve tarayıcıya göm

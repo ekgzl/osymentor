@@ -64,19 +64,6 @@ export function LoginCardComp() {
             const user = userCredential.user;
             const idToken = await user.getIdToken();
 
-            //check if the users email is verified
-            if (!user.emailVerified) {
-              await sendEmailVerification(user);
-              await Toast.fire({
-                icon: "warning",
-                title:
-                  "E-postan doğrulanmamış, doğrulama linki mailine gönderildi.",
-                timer: 3000,
-              }).then(() => {
-                navigate("/login");
-              });
-              return;
-            }
             await axios
               .post(
                 `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
@@ -93,7 +80,22 @@ export function LoginCardComp() {
                   navigate("/app");
                 });
               })
-              .catch((error) => {
+              .catch(async (error) => {
+                if (error.response.status === 401) {
+                  await sendEmailVerification(user);
+                  Swal.fire({
+                    title: "Doğrulama Hatası",
+                    text: `E-postan doğrulanmamış, doğrulama linki ${values.email} adresine gönderildi.`,
+                    icon: "warning",
+                    confirmButtonText: "Devam et",
+                    confirmButtonColor: "#37474f",
+                    customClass: {
+                      container: "swal2-container-custom",
+                      popup: "swal2-popup-custom",
+                    },
+                  });
+                  return;
+                }
                 console.error("Giriş yapılırken hata oluştu:", error, idToken);
               });
             resetForm();
