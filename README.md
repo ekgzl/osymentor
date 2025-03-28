@@ -1,15 +1,15 @@
 # ösyMentor
 
-Bu depo, ösyMentor için geliştirme ortamını içermektedir.
+ösyMentor geliştirme sürecimi bu repo'dan yönetiyorum.
 
-## 📋 Özellikler
+##  Özellikler
 
 - Temel sistem mimarisi
 - Kullanıcı dostu arayüz
 - Modüler yapı
 - Responsive tasarım
 
-## 🛠️ Teknolojiler
+##  Teknolojiler
 
 - **Frontend:**
 
@@ -24,27 +24,6 @@ Bu depo, ösyMentor için geliştirme ortamını içermektedir.
   - ESLint (Kod Kalite Kontrolü)
   - date-fns 4.1 (Tarih Manipülasyonu)
   - iconoir-react 7.10 (İkon Kütüphanesi)
-
-## 🚀 Kurulum
-
-1. Depoyu klonlayın:
-
-```bash
-git clone https://github.com/ekgzl/osymentor.git
-cd osyMentor
-```
-
-2. Bağımlılıkları yükleyin:
-
-```bash
-npm install
-```
-
-3. Geliştirme sunucusunu başlatın:
-
-```bash
-npm run dev
-```
 
 ✉️ **İletişim**  
 [Enes Kaan Gözüela] - [enesgozuela@gmail.com]  
