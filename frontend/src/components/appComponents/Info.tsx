@@ -91,7 +91,6 @@ export default function InfoComp() {
     handleSubmit,
     touched,
     setFieldValue,
-    resetForm,
   } = useFormik<User>({
     initialValues: {
       username: user.username,
