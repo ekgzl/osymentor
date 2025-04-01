@@ -119,7 +119,7 @@ export default function InfoComp() {
 
         // validate password in client to verify account
         axios.post(
-          `${import.meta.env.VITE_API_URL}/api/user`,
+          `${import.meta.env.VITE_API_URL}/api/v1/user`,
           {
             username: values.username,
             email: values.email,
