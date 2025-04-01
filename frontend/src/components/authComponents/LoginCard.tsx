@@ -82,6 +82,8 @@ export function LoginCardComp() {
               })
               .catch(async (error) => {
                 if (error.response.status === 401) {
+                  //user
+                  console.log(user);
                   await sendEmailVerification(user);
                   Swal.fire({
                     title: "Doğrulama Hatası",

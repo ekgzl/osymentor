@@ -21,7 +21,6 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/api/v1/user`,
-
         {
           withCredentials: true,
         }

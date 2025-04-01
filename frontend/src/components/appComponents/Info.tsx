@@ -21,6 +21,14 @@ import { setUser } from "../../../features/drawer/UserSlice";
 import Swal from "sweetalert2";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
+import { auth } from "../../config/firebase-config";
+import {
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  sendEmailVerification,
+  updateEmail,
+  verifyBeforeUpdateEmail,
+} from "firebase/auth";
 
 type User = {
   username: string;
@@ -29,6 +37,7 @@ type User = {
   birthdate: string;
   avatar: string;
   email2: string;
+  password: string;
 };
 
 function TextField({ label, ...props }: { label: string; [key: string]: any }) {
@@ -105,20 +114,56 @@ export default function InfoComp() {
       birthdate: user.birthdate,
       avatar: user.avatar,
       email2: user.email,
+      password: "",
     },
     validationSchema: UserInfoSchema,
     validateOnChange: false,
     validateOnBlur: true,
-    onSubmit: (values) => {
-      const updatedUser = {
-        username: values.username,
-        email: values.email,
-        exam: values.exam,
-        avatar: user.avatar,
-        birthdate: values.birthdate,
-      };
-      dispatch(setUser(updatedUser));
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+    onSubmit: async (values) => {
+      if (user.email !== values.email) {
+        const currentUser = auth.currentUser;
+        if (!currentUser) {
+          return;
+        }
+        try {
+          // 1. Reauthentication işlemi
+          const credential = EmailAuthProvider.credential(
+            user.email,
+            values.password
+          );
+          await reauthenticateWithCredential(currentUser, credential);
+          // 2. Email güncelleme işlemi ve onay mesajı
+          await verifyBeforeUpdateEmail(currentUser, values.email);
+
+          await Swal.fire({
+            icon: "success",
+            title: "E-posta adresiniz güncellendi",
+            text: "Lütfen mailinize gelen linkle e-posta adresinizi onaylayın ve yeniden giriş yapın.",
+            confirmButtonText: "Oturumu kapat",
+            willClose: () => {
+              auth.signOut();
+            },
+          });
+        } catch (error: any) {
+          console.error("E-posta güncelleme hatası:", error.code);
+          if (error.code === "auth/invalid-credential") {
+            await Swal.fire({
+              icon: "error",
+              title: "Profil güncelleme hatası",
+              confirmButtonText: "Tekrar dene",
+              confirmButtonColor: "#E99421",
+              text: "Geçersiz şifre girildi.",
+            });
+          } else {
+            await Swal.fire({
+              icon: "error",
+              title: "Profil güncelleme hatası",
+              confirmButtonText: "Tekrar dene",
+            });
+          }
+          return;
+        }
+      }
       Toast.fire({
         icon: "success",
         title: "Bilgileriniz Güncellendi",
@@ -259,7 +304,7 @@ export default function InfoComp() {
               <Select.Trigger placeholder="Sınav Seçiniz" />
               <Select.List>
                 <Select.Option value="YKS SAY">YKS-SAY</Select.Option>
-                <Select.Option value="YKS0 EA">YKS-EA</Select.Option>
+                <Select.Option value="YKS EA">YKS-EA</Select.Option>
                 <Select.Option value="YKS SOZ">YKS-SÖZ</Select.Option>
                 {/* <Select.Option value="KPSS">KPSS</Select.Option>
                 <Select.Option value="TUS">TUS</Select.Option>
@@ -299,6 +344,21 @@ export default function InfoComp() {
           />
           {touched.email2 && errors.email2 && (
             <p className="text-red-500 text-xs">{errors.email2}</p>
+          )}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8 gap-x-4">
+          <TextField
+            type="password"
+            label="Şifre"
+            placeholder="Şifre"
+            id="password"
+            name="password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
+          />
+          {touched.password && errors.password && (
+            <p className="text-red-500 text-xs">{errors.password}</p>
           )}
         </div>
         <Button type="submit">Gönder</Button>
