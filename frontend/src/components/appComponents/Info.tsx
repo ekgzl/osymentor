@@ -13,11 +13,10 @@ import {
 } from "@material-tailwind/react";
 
 // @utils
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import { useFormik } from "formik";
 import { UserInfoSchema } from "../../formikSchemas/UserInfoSchema";
-import { setUser } from "../../../features/drawer/UserSlice";
 import Swal from "sweetalert2";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
@@ -25,10 +24,9 @@ import { auth } from "../../config/firebase-config";
 import {
   EmailAuthProvider,
   reauthenticateWithCredential,
-  sendEmailVerification,
-  updateEmail,
   verifyBeforeUpdateEmail,
 } from "firebase/auth";
+import axios from "axios";
 
 type User = {
   username: string;
@@ -83,20 +81,7 @@ function InputSlot({
   );
 }
 
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 2000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  },
-});
-
 export default function InfoComp() {
-  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const {
     values,
@@ -106,6 +91,7 @@ export default function InfoComp() {
     handleSubmit,
     touched,
     setFieldValue,
+    resetForm,
   } = useFormik<User>({
     initialValues: {
       username: user.username,
@@ -119,54 +105,89 @@ export default function InfoComp() {
     validationSchema: UserInfoSchema,
     validateOnChange: false,
     validateOnBlur: true,
-    onSubmit: async (values) => {
-      if (user.email !== values.email) {
-        const currentUser = auth.currentUser;
-        if (!currentUser) {
-          return;
-        }
-        try {
-          // 1. Reauthentication işlemi
-          const credential = EmailAuthProvider.credential(
-            user.email,
-            values.password
-          );
-          await reauthenticateWithCredential(currentUser, credential);
-          // 2. Email güncelleme işlemi ve onay mesajı
+    onSubmit: async (values, { resetForm }) => {
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
+        return;
+      }
+      try {
+        // reauthentication
+        const credential = EmailAuthProvider.credential(
+          user.email,
+          values.password
+        );
+        await reauthenticateWithCredential(currentUser, credential);
+
+        // validate password in client to verify account
+        axios.post(
+          `${import.meta.env.VITE_API_URL}/api/user`,
+          {
+            username: values.username,
+            email: values.email,
+            exam: values.exam,
+            avatar: values.avatar,
+            birthdate: values.birthdate,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+
+        if (user.email !== values.email) {
+          // email update
           await verifyBeforeUpdateEmail(currentUser, values.email);
 
           await Swal.fire({
             icon: "success",
             title: "E-posta adresiniz güncellendi",
             text: "Lütfen mailinize gelen linkle e-posta adresinizi onaylayın ve yeniden giriş yapın.",
-            confirmButtonText: "Oturumu kapat",
+            confirmButtonText: "Çıkış Yap",
+            confirmButtonColor: "#111827",
             willClose: () => {
               auth.signOut();
             },
           });
-        } catch (error: any) {
-          console.error("E-posta güncelleme hatası:", error.code);
-          if (error.code === "auth/invalid-credential") {
-            await Swal.fire({
-              icon: "error",
-              title: "Profil güncelleme hatası",
-              confirmButtonText: "Tekrar dene",
-              confirmButtonColor: "#E99421",
-              text: "Geçersiz şifre girildi.",
-            });
-          } else {
-            await Swal.fire({
-              icon: "error",
-              title: "Profil güncelleme hatası",
-              confirmButtonText: "Tekrar dene",
-            });
-          }
           return;
         }
+      } catch (error: any) {
+        console.error("E-posta güncelleme hatası:", error.code);
+        if (error.code === "auth/invalid-credential") {
+          await Swal.fire({
+            icon: "error",
+            title: "Profil güncelleme hatası",
+            confirmButtonText: "Tekrar dene",
+            confirmButtonColor: "#E99421",
+            text: "Geçersiz şifre girildi.",
+          });
+        }
+        if (error.code === "auth/missing-password") {
+          await Swal.fire({
+            icon: "error",
+            title: "Profil güncelleme hatası",
+            text: "Şifre alanı doldurulmalıdır.",
+            confirmButtonText: "Tekrar dene",
+            confirmButtonColor: "#111827",
+          });
+        } else {
+          await Swal.fire({
+            icon: "error",
+            title: "Profil güncelleme hatası",
+            confirmButtonText: "Tekrar dene",
+          });
+        }
+        return;
       }
-      Toast.fire({
+      Swal.fire({
         icon: "success",
-        title: "Bilgileriniz Güncellendi",
+        title: "Profil güncellendi",
+        confirmButtonText: "Devam et",
+        confirmButtonColor: "#111827",
+        willClose: () => {
+          resetForm();
+        },
       });
     },
   });

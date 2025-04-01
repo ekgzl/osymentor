@@ -16,5 +16,5 @@ export const UserInfoSchema = yup.object().shape({
     .oneOf([yup.ref("email")], "Eposta adresleri uyusmuyor"),
   exam: yup.string().required("Lütfen bir öğretim tipi seçin"),
   birthdate: yup.date(),
-  password: yup.string(),
+  password: yup.string().required("Lütfen bir şifre girin"),
 });

@@ -40,12 +40,13 @@ exports.setUser = async (req, res) => {
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
-    if (!username || !email || !exam || !avatar || !birthdate) {
+    if (!username || !email || !exam || !avatar) {
+      console.log(username, email, exam, avatar);
       return res.status(400).json({ error: "Tüm alanlar doldurulmalıdır" });
     }
     const user = await User.findOneAndUpdate(
       { email: decodedToken.email },
-      { username, exam, avatar, birthdate },
+      { username, exam, avatar, birthdate: birthdate || null },
       { new: true }
     );
     if (!user) {
