@@ -9,7 +9,10 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  sendEmailVerification,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../../config/firebase-config.tsx";
 
 import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
@@ -20,7 +23,6 @@ import {
   handleGoogleLogin,
   handleGoogleRedirect,
 } from "../../utils/authHelpers.tsx";
-import axios from "axios";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -67,27 +69,16 @@ export default function SignupCardComp() {
         createUserWithEmailAndPassword(auth, values.email, values.password)
           .then(async (userCredential) => {
             const user = userCredential.user;
-            console.log(user);
-            const idToken = await user.getIdToken();
-            await axios
-              .post(
-                `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
-                { idToken: idToken },
-                { withCredentials: true }
-              )
-              .then(() => {
-                console.log("Kayıt başarılı, yönlendiriliyor...");
-                Toast.fire({
-                  icon: "success",
-                  title: "Kayıt başarılı! Uygulamaya aktarılıyorsun..",
-                  timer: 1000,
-                }).then(() => {
-                  navigate("/app");
-                });
-              })
-              .catch((error) => {
-                console.error("Giriş yapılırken hata oluştu:", error, idToken);
-              });
+
+            sendEmailVerification(user);
+            await Toast.fire({
+              icon: "success",
+              title:
+                "E-posta doğrulaması gönderildi, giriş sayfasına aktarılıyorsun.",
+              timer: 2000,
+            }).then(() => {
+              navigate("/login");
+            });
             resetForm();
           })
           .catch((error) => {

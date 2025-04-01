@@ -5,25 +5,23 @@ import {
   CardFooter,
   Button,
 } from "@material-tailwind/react";
-import services from "../../data/services.json"; // Import the JSON file
+import services from "../../data/services.json";
 
 function ServicesPage() {
   return (
     <div className="container mx-auto py-16">
       <div className="mb-16 text-center lg:mb-28">
         <Typography variant="h6" className="text-lg">
-          Our Services
+          Hizmetler
         </Typography>
         <Typography variant="h1" className="my-2 !text-2xl lg:!text-4xl">
-          Quality Services for Your Vehicle
+          Sınavınız için rehberlik hizmeti
         </Typography>
         <Typography
           variant="lead"
           className="mx-auto w-full !text-gray-500 max-w-4xl"
         >
-          From essential maintenance to advanced diagnostics, our team is
-          dedicated to providing top-notch services to keep your vehicle running
-          smoothly.
+          Ekibimiz en iyi hizmetleri sunmaya adanmıştır.
         </Typography>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -54,7 +52,7 @@ function ServicesPage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Learn More
+                Daha Fazlası
               </Button>
             </CardFooter>
           </Card>

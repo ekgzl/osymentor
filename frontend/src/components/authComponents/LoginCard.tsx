@@ -24,6 +24,7 @@ import { LoginSchema } from "../../formikSchemas/LoginSchema.tsx";
 import Swal from "sweetalert2";
 import { handleGoogleLogin } from "../../utils/authHelpers.tsx";
 import axios from "axios";
+import { sendEmailVerification } from "firebase/auth/cordova";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -62,6 +63,7 @@ export function LoginCardComp() {
           .then(async (userCredential) => {
             const user = userCredential.user;
             const idToken = await user.getIdToken();
+
             await axios
               .post(
                 `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
@@ -78,7 +80,24 @@ export function LoginCardComp() {
                   navigate("/app");
                 });
               })
-              .catch((error) => {
+              .catch(async (error) => {
+                if (error.response.status === 401) {
+                  //user
+                  console.log(user);
+                  await sendEmailVerification(user);
+                  Swal.fire({
+                    title: "Doğrulama Hatası",
+                    text: `E-postan doğrulanmamış, doğrulama linki ${values.email} adresine gönderildi.`,
+                    icon: "warning",
+                    confirmButtonText: "Devam et",
+                    confirmButtonColor: "#37474f",
+                    customClass: {
+                      container: "swal2-container-custom",
+                      popup: "swal2-popup-custom",
+                    },
+                  });
+                  return;
+                }
                 console.error("Giriş yapılırken hata oluştu:", error, idToken);
               });
             resetForm();
@@ -86,6 +105,20 @@ export function LoginCardComp() {
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            if (errorCode === "auth/too-many-requests") {
+              Swal.fire({
+                title: "Hesap Koruma",
+                text: "Bu hesap için e-posta doğrulama isteği çok fazla yapılmış. Lütfen maili kontrol edin.",
+                icon: "warning",
+                confirmButtonText: "Devam et",
+                confirmButtonColor: "#37474f",
+                customClass: {
+                  container: "swal2-container-custom",
+                  popup: "swal2-popup-custom",
+                },
+              });
+              return;
+            }
             Swal.fire({
               title: errorCode,
               text: errorMessage,

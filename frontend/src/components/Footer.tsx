@@ -27,8 +27,8 @@ const LINKS = [
 
 export function FooterComp() {
   return (
-    <footer className=" px-12 flex w-full flex-row flex-wrap items-center justify-center gap-x-12 gap-y-3 border-surface py-4 text-center md:justify-between bg-gradient-to-l from-neutral-200 to-zinc-300">
-      <Typography>&copy; {YEAR} Enes Kaan Gözüela</Typography>
+    <footer className=" px-12 flex w-full flex-row flex-wrap items-center justify-center gap-x-12 gap-y-3 border-surface py-4 text-center md:justify-between bg-[#030826]">
+      <Typography color="secondary">&copy; {YEAR} Enes Kaan Gözüela</Typography>
 
       <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
         {LINKS.map(({ title, href }) => (
@@ -37,7 +37,7 @@ export function FooterComp() {
             <Typography
               as={Link}
               to={href}
-              className="hover:text-amber-600"
+              className="text-slate-200 hover:text-amber-600"
             >
               {title}
             </Typography>

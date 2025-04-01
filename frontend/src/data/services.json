@@ -1,26 +1,57 @@
 [
   {
-    "title": "Oil Change",
-    "description": "Ensure optimal engine performance with our professional oil change service.",
-    "image": "https://bucket.material-tailwind.com/magic-ai/06b38f84f9669f766048c469ce861b81880378273a11ae9badaedfc32868ef44.jpg",
-    "features": ["Carefully crafted services", "Amazing page examples"],
-    "link": "https://example.com/oil-change"
-  },
-  {
-    "title": "Tire Rotation",
-    "description": "Extend the lifespan of your tires and improve overall vehicle handling.",
-    "image": "https://bucket.material-tailwind.com/magic-ai/e7aa235a7bc5f504db1c66e27ece08f8118b1da6b21c013500391afcd572cf7d.jpg",
+    "title": "Akıllı Çalışma Planı",
+    "description": "Yapay zeka destekli algoritmalarla kişiye özel çalışma programı oluşturma",
+    "image": "https://example.com/ai-study-plan.jpg",
     "features": [
-      "Embed your work with",
-      "Publish across social channels in a click"
+      "Adaptif öğrenme teknolojisi",
+      "Gerçek zamanlı performans analizi",
+      "Okul dersleriyle entegre takvim"
     ],
-    "link": "https://example.com/tire-rotation"
+    "link": "/akilli-calisma-plani"
   },
   {
-    "title": "Brake Inspection",
-    "description": "Stay safe on the road with our thorough brake inspection service.",
-    "image": "https://bucket.material-tailwind.com/magic-ai/dc74a867f21afc734166a6d37c08beaba4ff040664ba8ccce918e054264ad68d.jpg",
-    "features": ["Carefully crafted services", "Amazing page examples"],
-    "link": "https://example.com/brake-inspection"
+    "title": "Duygu Analizi Modülü",
+    "description": "Yazılı ve sözlü geri bildirimlerle psikolojik durum takibi",
+    "image": "https://example.com/emotion-analysis.jpg",
+    "features": [
+      "Doğal dil işleme (NLP) teknolojisi",
+      "Motivasyon artırıcı bildirimler",
+      "Stres yönetimi önerileri"
+    ],
+    "link": "/duygu-analizi"
+  },
+  {
+    "title": "Oyunlaştırılmış Hedefler",
+    "description": "Başarıya ulaşmayı eğlenceli hale getiren interaktif sistem",
+    "image": "https://example.com/gamification.jpg",
+    "features": [
+      "Seviye atlama mekaniği",
+      "Akran karşılaştırmalı lider tablosu",
+      "Sanal ödül marketi"
+    ],
+    "link": "/oyunlastirma"
+  },
+  {
+    "title": "Fiziksel & Zihinsel Wellness",
+    "description": "Nefes egzersizleri ve mikro antrenmanlarla bütünsel destek",
+    "image": "https://example.com/wellness.jpg",
+    "features": [
+      "Bilimsel nefes teknikleri",
+      "5 dakikalık odak antrenmanları",
+      "Uyku kalitesi takip sistemi"
+    ],
+    "link": "/wellness-destek"
+  },
+  {
+    "title": "Aile İletişim Paneli",
+    "description": "Güvenli ve yapıcı iletişim için aile destek modülü",
+    "image": "https://example.com/family-dashboard.jpg",
+    "features": [
+      "Anlık ilerleme raporları",
+      "Psikolog onaylı iletişim ipuçları",
+      "Maliyet takip sistemi"
+    ],
+    "link": "/aile-paneli"
   }
 ]

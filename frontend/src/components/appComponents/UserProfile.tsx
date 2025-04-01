@@ -53,6 +53,7 @@ export default function UserProfileComp() {
           </div>
         </div>
       </Card.Header>
+      <hr></hr>
       <Card.Body className="px-6 pb-6 pt-20">
         {isOpen && <InfoComp />}
       </Card.Body>
