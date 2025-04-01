@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
     });
 
     // kullanıcıyı veritabanından getir
-    let user = await User.findOne({ email: decodedToken.email });
+    let user = await User.findOne({ uid: decodedToken.uid });
     //ilk kayıtta kullanıcı kaydetmek için
     if (!user) {
       user = new User({
@@ -67,5 +67,3 @@ exports.logout = (req, res) => {
   });
   res.json({ status: "success" });
 };
-
-
