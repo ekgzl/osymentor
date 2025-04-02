@@ -45,8 +45,8 @@ exports.setUser = async (req, res) => {
       return res.status(400).json({ error: "Tüm alanlar doldurulmalıdır" });
     }
     const user = await User.findOneAndUpdate(
-      { email: decodedToken.email },
-      { username, exam, avatar, birthdate: birthdate || null },
+      { uid: decodedToken.uid },
+      { username, exam, avatar, birthdate: birthdate || null, email: email },
       { new: true }
     );
     if (!user) {

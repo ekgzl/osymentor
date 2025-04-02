@@ -24,6 +24,7 @@ import { auth } from "../../config/firebase-config";
 import {
   EmailAuthProvider,
   reauthenticateWithCredential,
+  signOut,
   verifyBeforeUpdateEmail,
 } from "firebase/auth";
 import axios from "axios";
@@ -146,7 +147,10 @@ export default function InfoComp() {
             confirmButtonText: "Çıkış Yap",
             confirmButtonColor: "#111827",
             willClose: () => {
-              auth.signOut();
+              signOut(auth);
+              axios.post(`${import.meta.env.VITE_API_URL}/api/v1/auth/logout`, {
+                withCredentials: true,
+              });
             },
           });
           return;
