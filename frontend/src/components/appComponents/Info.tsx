@@ -28,6 +28,8 @@ import {
   verifyBeforeUpdateEmail,
 } from "firebase/auth";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../features/drawer/UserSlice";
 
 type User = {
   username: string;
@@ -83,6 +85,7 @@ function InputSlot({
 }
 
 export default function InfoComp() {
+  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const {
     values,
@@ -134,6 +137,15 @@ export default function InfoComp() {
             },
             withCredentials: true,
           }
+        );
+        dispatch(
+          setUser({
+            email: values.email,
+            username: values.username,
+            avatar: values.avatar,
+            exam: values.exam,
+            birthdate: values.birthdate,
+          })
         );
 
         if (user.email !== values.email) {
