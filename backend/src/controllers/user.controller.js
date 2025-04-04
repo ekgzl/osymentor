@@ -23,6 +23,7 @@ exports.getUser = async (req, res) => {
         exam: user.exam,
         avatar: user.avatar,
         birthdate: user.birthdate,
+        _id: user._id,
       },
     });
   } catch (error) {
