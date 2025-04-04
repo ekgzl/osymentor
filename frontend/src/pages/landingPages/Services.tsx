@@ -10,12 +10,12 @@ import services from "../../data/services.json";
 function ServicesPage() {
   return (
     <div className="container mx-auto py-16">
-      <div className="mb-16 text-center lg:mb-28">
+      <div className="mb-16 text-center ">
         <Typography variant="h6" className="text-lg">
           Hizmetler
         </Typography>
         <Typography variant="h1" className="my-2 !text-2xl lg:!text-4xl">
-          Sınavınız için rehberlik hizmeti
+          Sınavınız için rehberlik hizmeti  
         </Typography>
         <Typography
           variant="lead"
@@ -30,7 +30,7 @@ function ServicesPage() {
             <img
               src={service.image}
               alt={service.title}
-              className="h-64 w-full object-cover rounded-t-lg"
+              className="h-96 w-full object-cover rounded-t-lg object-top"
             />
             <CardBody>
               <Typography variant="h5" className="font-bold">

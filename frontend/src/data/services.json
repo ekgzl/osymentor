@@ -2,7 +2,7 @@
   {
     "title": "Akıllı Çalışma Planı",
     "description": "Yapay zeka destekli algoritmalarla kişiye özel çalışma programı oluşturma",
-    "image": "https://example.com/ai-study-plan.jpg",
+    "image": "https://iili.io/35jthbf.md.png",
     "features": [
       "Adaptif öğrenme teknolojisi",
       "Gerçek zamanlı performans analizi",
@@ -13,7 +13,7 @@
   {
     "title": "Duygu Analizi Modülü",
     "description": "Yazılı ve sözlü geri bildirimlerle psikolojik durum takibi",
-    "image": "https://example.com/emotion-analysis.jpg",
+    "image": "https://iili.io/35jtNWl.png",
     "features": [
       "Doğal dil işleme (NLP) teknolojisi",
       "Motivasyon artırıcı bildirimler",
@@ -24,7 +24,7 @@
   {
     "title": "Oyunlaştırılmış Hedefler",
     "description": "Başarıya ulaşmayı eğlenceli hale getiren interaktif sistem",
-    "image": "https://example.com/gamification.jpg",
+    "image": "https://iili.io/35jtOs2.png",
     "features": [
       "Seviye atlama mekaniği",
       "Akran karşılaştırmalı lider tablosu",
@@ -35,23 +35,12 @@
   {
     "title": "Fiziksel & Zihinsel Wellness",
     "description": "Nefes egzersizleri ve mikro antrenmanlarla bütünsel destek",
-    "image": "https://example.com/wellness.jpg",
+    "image": "https://iili.io/35w9W57.png",
     "features": [
       "Bilimsel nefes teknikleri",
       "5 dakikalık odak antrenmanları",
       "Uyku kalitesi takip sistemi"
     ],
     "link": "/wellness-destek"
-  },
-  {
-    "title": "Aile İletişim Paneli",
-    "description": "Güvenli ve yapıcı iletişim için aile destek modülü",
-    "image": "https://example.com/family-dashboard.jpg",
-    "features": [
-      "Anlık ilerleme raporları",
-      "Psikolog onaylı iletişim ipuçları",
-      "Maliyet takip sistemi"
-    ],
-    "link": "/aile-paneli"
   }
 ]
