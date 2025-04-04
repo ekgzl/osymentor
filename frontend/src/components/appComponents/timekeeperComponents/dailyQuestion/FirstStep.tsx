@@ -5,15 +5,25 @@ import {
   Switch,
   Typography,
 } from "@material-tailwind/react";
-import { useState, ChangeEvent } from "react";
-import exams from "../../../../data/exams.json";
+import { useState, ChangeEvent, useEffect } from "react";
+
 import { RootState } from "../../../../../app/store";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setStep,
   setSubject,
   setType,
+  setSubjectId,
 } from "../../../../../features/drawer/StepperSlice";
+
+import axios from "axios";
+
+interface Subject {
+  _id: string;
+  name: string;
+  examType: string;
+  // add other properties that your subjects have
+}
 
 const FirstStep = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -21,25 +31,45 @@ const FirstStep = () => {
   const exam = user.exam;
   const [isCheck, setIsCheck] = useState(false);
 
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  //GET ALL SUBJECTS FROM API
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_API_URL}/api/v1/subject`).then((res) => {
+      setSubjects(res.data.data.subjects);
+    });
+  }, []);
+
   // Create an array of exam subjects based on the current exam type
   // const examSubjects = Object.keys(exams[isCheck ? "tyt" : "ayt"]);
   function createExamSubjectsArray() {
-    //if the last 3 char is "SOZ" then json should go "ayt" and into ayt there is "soz"
-    //if the last 3 char is "SAY" then json should go "ayt" and into ayt there is "say"
-    //if the last 3 char is "EA" then json should go "ayt" and into ayt there is "ea"
+    // Add a check to ensure subjects is an array
+    if (!Array.isArray(subjects)) {
+      console.error("Subjects is not an array:", subjects);
+      return [];
+    }
+
     if (!isCheck) {
       if (exam.endsWith("SOZ")) {
-        return Object.keys(exams.ayt.soz);
+        return subjects
+          .filter((sub) => sub.examType === "AYT-EA")
+          .map((sub) => ({ name: sub.name, id: sub._id }));
       } else if (exam.endsWith("SAY")) {
-        return Object.keys(exams.ayt.say);
+        return subjects
+          .filter((sub) => sub.examType === "AYT-SAY")
+          .map((sub) => ({ name: sub.name, id: sub._id }));
       } else if (exam.endsWith("EA")) {
-        return Object.keys(exams.ayt.ea);
+        return subjects
+          .filter((sub) => sub.examType === "AYT-EA")
+          .map((sub) => ({ name: sub.name, id: sub._id }));
       }
-      return [];
     } else {
-      return Object.keys(exams.tyt);
+      return subjects
+        .filter((sub) => sub.examType === "TYT")
+        .map((sub) => ({ name: sub.name, id: sub._id }));
     }
+    return [];
   }
+
   const examSubjects = createExamSubjectsArray();
   return (
     <>
@@ -79,16 +109,17 @@ const FirstStep = () => {
                   index <= 2 ? (
                     <Button
                       key={index}
-                      value={subject}
+                      value={subject.name}
                       onClick={() => {
                         setTimeout(() => {
-                          dispatch(setSubject(subject));
+                          dispatch(setSubject(subject.name));
                           dispatch(setType(isCheck ? "tyt" : "ayt"));
                           dispatch(setStep(1));
+                          dispatch(setSubjectId(subject.id));
                         }, 200);
                       }}
                     >
-                      {subject}
+                      {subject.name}
                     </Button>
                   ) : null
                 )}
@@ -103,16 +134,17 @@ const FirstStep = () => {
                   index > 5 && index <= 9 ? (
                     <Button
                       key={index}
-                      value={subject}
+                      value={subject.name}
                       onClick={() => {
                         setTimeout(() => {
-                          dispatch(setSubject(subject));
+                          dispatch(setSubject(subject.name));
                           dispatch(setType(isCheck ? "tyt" : "ayt"));
                           dispatch(setStep(1));
+                          dispatch(setSubjectId(subject.id));
                         }, 200);
                       }}
                     >
-                      {subject}
+                      {subject.name}
                     </Button>
                   ) : null
                 )}
@@ -127,16 +159,17 @@ const FirstStep = () => {
                   index > 2 && index <= 5 ? (
                     <Button
                       key={index}
-                      value={subject}
+                      value={subject.name}
                       onClick={() => {
                         setTimeout(() => {
-                          dispatch(setSubject(subject));
+                          dispatch(setSubject(subject.name));
                           dispatch(setType(isCheck ? "tyt" : "ayt"));
                           dispatch(setStep(1));
+                          dispatch(setSubjectId(subject.id));
                         }, 200);
                       }}
                     >
-                      {subject}
+                      {subject.name}
                     </Button>
                   ) : null
                 )}
@@ -154,16 +187,17 @@ const FirstStep = () => {
                   index <= 1 ? (
                     <Button
                       key={index}
-                      value={subject}
+                      value={subject.name}
                       onClick={() => {
                         setTimeout(() => {
-                          dispatch(setSubject(subject));
+                          dispatch(setSubject(subject.name));
                           dispatch(setType(isCheck ? "tyt" : "ayt"));
                           dispatch(setStep(1));
+                          dispatch(setSubjectId(subject.id));
                         }, 200);
                       }}
                     >
-                      {subject}
+                      {subject.name}
                     </Button>
                   ) : null
                 )}
@@ -178,16 +212,17 @@ const FirstStep = () => {
                   index > 1 && index <= 4 ? (
                     <Button
                       key={index}
-                      value={subject}
+                      value={subject.name}
                       onClick={() => {
                         setTimeout(() => {
-                          dispatch(setSubject(subject));
+                          dispatch(setSubject(subject.name));
                           dispatch(setType(isCheck ? "tyt" : "ayt"));
                           dispatch(setStep(1));
+                          dispatch(setSubjectId(subject.id));
                         }, 200);
                       }}
                     >
-                      {subject}
+                      {subject.name}
                     </Button>
                   ) : null
                 )}

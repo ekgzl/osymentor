@@ -6,8 +6,10 @@ import { addSession } from "../../../../features/drawer/SessionsSlice";
 import { Button, Dialog } from "@material-tailwind/react";
 import { StepperComp } from "./dailyQuestion/Stepper";
 import FirstStep from "./dailyQuestion/FirstStep";
-import SecondStep from "./dailyQuestion/SecondStep";
+
 import LastStep from "./dailyQuestion/LastStep";
+import { SecondStep } from "./dailyQuestion/SecondStep";
+import { setDuration } from "../../../../features/drawer/StepperSlice";
 
 function ChronometerComp() {
   const dispatch = useDispatch();
@@ -81,6 +83,8 @@ function ChronometerComp() {
     // dispatch ile stateini güncelle
     dispatch(addSession(state));
     localStorage.removeItem("timekeeper");
+
+    dispatch(setDuration(hours * 60 + minutes + seconds / 60));
   };
 
   return (
@@ -133,7 +137,6 @@ function ChronometerComp() {
                   handleWorkEnd();
                   reset(new Date(), false);
                   localStorage.removeItem("timekeeper");
-                  
                 }}
               >
                 Etütü Bitir
