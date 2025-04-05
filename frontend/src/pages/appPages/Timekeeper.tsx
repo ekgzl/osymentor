@@ -3,7 +3,6 @@
 import OldSessionChartComp from "../../components/appComponents/timekeeperComponents/OldSessionChart";
 import ChronometerComp from "../../components/appComponents/timekeeperComponents/Chronometer";
 import TimerComp from "../../components/appComponents/timekeeperComponents/Timer";
-import DailyQuestion from "../../components/appComponents/timekeeperComponents/dailyQuestion/FirstStep";
 
 export const TimekeeperPage = () => {
   return (
@@ -16,14 +15,8 @@ export const TimekeeperPage = () => {
           <TimerComp />
         </div>
       </div>
-      <div className="w-full p-4 sm:p-8 bg-gradient-to-l from-orange-100 to-sky-100 rounded-lg shadow-lg mt-8">
-        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center text-primary-dark">
-          Günlük Soru
-        </h1>
-        <DailyQuestion></DailyQuestion>
-      </div>
-      <div className="w-full p-4 sm:p-8 bg-gradient-to-l from-orange-100 to-sky-100 rounded-lg shadow-lg mt-8">
-        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center text-primary-dark">
+      <div className="w-full p-4 sm:p-8 bg-gradient-to-l from-[#212121] to-[#242526] rounded-lg shadow-lg mt-8">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center text-amber-700">
           Çalışma Geçmişi
         </h1>
         <div className="mt-4">

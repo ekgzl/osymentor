@@ -12,11 +12,7 @@ export const AppLayout = () => {
 
   return (
     <>
-      <div
-        className={
-          "flex min-h-screen bg-gradient-to-l from-orange-200 to-sky-200"
-        }
-      >
+      <div className="flex min-h-screen bg-[#121212]">
         {/* SIDEBAR */}
         <div
           /* SIDEBAR kayma EFEKTI --girerken oluyor çıkarken yapamadım */

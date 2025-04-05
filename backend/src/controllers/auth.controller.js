@@ -10,7 +10,6 @@ exports.login = async (req, res) => {
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(idToken);
-
     //if email verification is not done
     if (!decodedToken.email_verified) {
       console.log(decodedToken.email_verified);

@@ -130,6 +130,7 @@ export default function InfoComp() {
             exam: values.exam,
             avatar: values.avatar,
             birthdate: values.birthdate,
+            _id: user._id,
           },
           {
             headers: {
@@ -145,6 +146,7 @@ export default function InfoComp() {
             avatar: values.avatar,
             exam: values.exam,
             birthdate: values.birthdate,
+            _id: user._id,
           })
         );
 

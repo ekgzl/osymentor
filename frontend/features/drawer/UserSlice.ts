@@ -6,6 +6,7 @@ interface User {
   exam: string;
   avatar: string;
   birthdate: string;
+  _id: string;
 }
 
 const initialState: User = (() => {
@@ -15,6 +16,7 @@ const initialState: User = (() => {
     exam: "",
     avatar: "",
     birthdate: "",
+    _id: "",
   };
 })();
 
@@ -28,6 +30,7 @@ const userSlice = createSlice({
         state.exam = action.payload.exam;
         state.avatar = action.payload.avatar;
         state.birthdate = action.payload.birthdate;
+        state._id = action.payload._id;
     },
     clearUser: () => {
       return {
@@ -36,6 +39,7 @@ const userSlice = createSlice({
         exam: "",
         avatar: "",
         birthdate: "",
+        _id: "",
       };
     },
   },
