@@ -8,13 +8,18 @@ export function AvatarComp() {
   const user = useSelector((state: RootState) => state.user);
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-2">
-        <Avatar src={user.avatar} alt="avatar" shape="rounded" />
+      <div className="flex items-center gap-2 ">
+        <Avatar
+          src={user.avatar}
+          alt="avatar"
+          shape="rounded"
+          className="border-[#404040] border-2"
+        />
 
         <div>
-          <Typography>{user.username}</Typography>
+          <Typography className="text-white">{user.username}</Typography>
 
-          <Typography type="small" className="text-foreground">
+          <Typography type="small" className=" text-[#B3B3B3]">
             {user.exam} Öğrencisi
           </Typography>
         </div>

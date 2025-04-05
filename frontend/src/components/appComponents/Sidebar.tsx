@@ -93,7 +93,7 @@ export function SidebarComp() {
   };
 
   return (
-    <Card className="h-full max-w-[280px] rounded-none bg-[#030826] border-none flex flex-col items-center justify-between">
+    <Card className="h-full max-w-[280px] rounded-none bg-[#181818] border-none flex flex-col items-center justify-between">
       <div>
         <Card.Header className="mx-3 mb-0 mt-3 flex items-center gap-2">
           <img
@@ -110,7 +110,7 @@ export function SidebarComp() {
               <List.Item
                 key={title}
                 className={
-                  "cursor-pointer hover:bg-[#025373] focus:bg-[#182349]"
+                  "cursor-pointer hover:bg-[#404040] focus:bg-[#282828]"
                 }
                 /* Burada list.item bir "a" elementi oluyor. */
                 as={Link}
@@ -127,7 +127,7 @@ export function SidebarComp() {
             <hr className="-mx-3 my-3 border-secondary" />
 
             <List.Item
-              className={"hover:bg-[#025373]"}
+              className={"hover:bg-[#404040]"}
               onClick={() => setIsOpen((cur) => !cur)}
             >
               <List.ItemStart>
@@ -149,7 +149,7 @@ export function SidebarComp() {
                 <List.Item
                   as={Link}
                   to="/app/profile"
-                  className={"hover:bg-[#025373] focus:bg-[#182349]"}
+                  className={"hover:bg-[#404040] focus:bg-[#282828]"}
                 >
                   <List.ItemStart>
                     <ProfileCircle
@@ -163,7 +163,7 @@ export function SidebarComp() {
                 <List.Item
                   as={Link}
                   to="/app/social"
-                  className={"hover:bg-[#025373] focus:bg-[#182349] "}
+                  className={"hover:bg-[#404040] focus:bg-[#282828] "}
                 >
                   <List.ItemStart>
                     <ChatLines color="#F28A2E" className="h-[18px] w-[18px]" />

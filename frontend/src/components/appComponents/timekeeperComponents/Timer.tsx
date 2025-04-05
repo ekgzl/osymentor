@@ -15,11 +15,11 @@ function TimerComp() {
   const formatNumber = (num: number) => num.toString().padStart(2, "0");
 
   return (
-    <div className="w-full h-full p-4 sm:p-8 bg-gradient-to-l from-orange-50 to-sky-100 rounded-lg shadow-lg">
-      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-4xl font-bold md:mb-8 mb-3 text-center text-primary-dark">
+    <div className="w-full h-full p-4 sm:p-8 bg-gradient-to-l from-[#212121] to-[#242526] rounded-lg shadow-lg">
+      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-4xl font-bold md:mb-8 mb-3 text-center text-amber-700">
         Zamanlayıcı
       </h1>
-      <div className="text-[3.5rem] md:text-9xl lg:text-[9rem] md:mb-10 mb-6 text-center text-primary-dark font-mono font-normal">
+      <div className="text-[3.5rem] md:text-9xl lg:text-[9rem] md:mb-10 mb-6 text-center text-slate-300 font-mono font-normal">
         {formatNumber(minutes)}:{formatNumber(seconds)}
       </div>
       <div>
@@ -28,7 +28,7 @@ function TimerComp() {
             as={Button}
             disabled={isRunning}
             className={`
-              ${!isRunning ? "bg-amber-600 hover:bg-amber-700" : "bg-gray-400 cursor-not-allowed"}
+              ${!isRunning ? "bg-emerald-700 hover:bg-amber-800" : "bg-gray-400 cursor-not-allowed"}
                 
           cursor-pointer py-1 px-2 md:px-3 lg:px-4  lg:py-2 rounded-lg text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-xl sm:text-base text-sm `}
             onClick={() => {
@@ -51,7 +51,7 @@ function TimerComp() {
                 className={`${
                   !isRunning
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-red-600 hover:bg-red-700"
+                    : "bg-red-700 hover:bg-red-800"
                 } py-1 px-2 md:px-3 lg:px-4 lg:py-2 rounded-lg text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm`}
               >
                 <PauseSolid className="sm:h-[30px] sm:w-[30px] h-[20px] w-[20px] text-white" />
@@ -71,7 +71,7 @@ function TimerComp() {
                 as={Button}
                 color="secondary"
                 className={
-                  "py-1 px-2 md:px-3 lg:px-4  lg:py-2 rounded-lgtext-white font-semibold bg-blue-500 hover:bg-blue-600 transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm"
+                  "py-1 px-2 md:px-3 lg:px-4  lg:py-2 rounded-lgtext-white font-semibold bg-sky-700 hover:bg-sky-800 transition-all duration-500 ease-in-out border-none lg:text-xl md:text-lg sm:text-base text-sm"
                 }
               >
                 <Refresh className="h-[28px] w-[28px] text-white" />

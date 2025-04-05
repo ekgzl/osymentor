@@ -22,6 +22,7 @@ interface Topic {
 export function StepperComp() {
   const dispatch = useDispatch();
   const stepper = useSelector((state: RootState) => state.stepper);
+  const userId = useSelector((state: RootState) => state.user._id);
   return (
     <div className="w-full">
       <Timeline
@@ -82,13 +83,7 @@ export function StepperComp() {
             variant="solid"
             color="success"
             onClick={async () => {
-              try {
-                await axios
-                  .get(`${import.meta.env.VITE_API_URL}/api/v1/user`, {
-                    withCredentials: true,
-                  })
-                  .then(async (res) => {
-                    const user_id = res.data.user._id;
+              try {  
                     await axios
                       .get(`${import.meta.env.VITE_API_URL}/api/v1/topic`, {
                         withCredentials: true,
@@ -100,7 +95,7 @@ export function StepperComp() {
                         dispatch(setTopicId(topic_id));
                       });
                     const sessionData = {
-                      user: user_id,
+                      user: userId,
                       //UPPERCASE
                       examType: stepper.type.toUpperCase(),
                       subjects: {
@@ -119,7 +114,7 @@ export function StepperComp() {
                         withCredentials: true,
                       }
                     );
-                  });
+                  
               } catch (error) {
                 console.error("Kullanıcı bilgileri alınamadı:", error);
               }
