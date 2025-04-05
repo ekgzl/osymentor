@@ -26,7 +26,6 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
         }
       );
       dispatch(setUser(response.data.user));
-      console.log("userdatafromapi", response.data.user);
     } catch (error) {
       console.error("Kullanıcı bilgileri alınamadı:", error);
       dispatch(clearUser());

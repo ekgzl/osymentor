@@ -1,10 +1,13 @@
 import { Select, Typography } from "@material-tailwind/react";
 import { RootState } from "../../../../../app/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setTopic } from "../../../../../features/drawer/StepperSlice";
+import {
+  setTopic,
+  setTopicId,
+} from "../../../../../features/drawer/StepperSlice";
 import { setStep } from "../../../../../features/drawer/StepperSlice";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface Topic {
   _id: string;
@@ -14,21 +17,25 @@ interface Topic {
 
 export function SecondStep() {
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/api/v1/topic`).then((res) => {
-      setTopics(res.data.data.topics);
-    });
+    try {
+      axios.get(`${import.meta.env.VITE_API_URL}/api/v1/topic`).then((res) => {
+        setTopics(res.data.data.topics);
+      });
+    } catch (error) {
+      console.error("Error fetching topics:", error);
+    }
   }, []);
 
   const dispatch = useDispatch();
   const stepper = useSelector((state: RootState) => state.stepper);
   const [topics, setTopics] = useState<Topic[]>([]);
 
-  function topicSelector() {
+  const topics_ = useMemo(() => {
+    if (!Array.isArray(topics)) return [];
     return topics
       .filter((sub) => sub.subject === stepper.subjectId)
       .map((topic) => ({ name: topic.name, id: topic._id }));
-  }
-  const topics_ = topicSelector();
+  }, [topics, stepper.subjectId]);
 
   return (
     <>
@@ -42,8 +49,10 @@ export function SecondStep() {
         </p>
         <Select
           onValueChange={(value: string) => {
-            dispatch(setTopic(value));
+            const parsed = JSON.parse(value);
+            dispatch(setTopic(parsed.name));
             dispatch(setStep(2));
+            dispatch(setTopicId(parsed.id));
           }}
         >
           <Select.Trigger className="w-72 mt-1" placeholder="Konu Seç" />
@@ -53,7 +62,10 @@ export function SecondStep() {
  Çözüm: 'topics' değişkeninin bir dizi olduğunu kontrol etmek için Array.isArray(topics) fonksiyonunu ekledik.
 Eğer 'topics' bir dizi değilse, mevcut konuların olmadığını belirten bir yedek seçenek gösteriyoruz. */}
             {topics_.map((topic: { name: string; id: string }) => (
-              <Select.Option key={topic.id} value={topic.name}>
+              <Select.Option
+                key={topic.id}
+                value={JSON.stringify({ name: topic.name, id: topic.id })}
+              >
                 {topic.name}
               </Select.Option>
             ))}

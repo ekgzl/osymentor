@@ -124,6 +124,7 @@ function ChronometerComp() {
             onClick={() => {
               reset(new Date(), false);
               localStorage.removeItem("timekeeper");
+              document.title = "ösyMentor";
             }}
             className=" py-1 px-3 md:px-4 lg:px-5  lg:py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-lg md:text-lg sm:text-base text-sm"
           >

@@ -9,15 +9,8 @@ import { RootState } from "../../../../../app/store";
 import {
   nextStep,
   prevStep,
-  setTopicId,
 } from "../../../../../features/drawer/StepperSlice";
 import axios from "axios";
-
-interface Topic {
-  _id: string;
-  name: string;
-  subject: string;
-}
 
 export function StepperComp() {
   const dispatch = useDispatch();
@@ -83,38 +76,27 @@ export function StepperComp() {
             variant="solid"
             color="success"
             onClick={async () => {
-              try {  
-                    await axios
-                      .get(`${import.meta.env.VITE_API_URL}/api/v1/topic`, {
-                        withCredentials: true,
-                      })
-                      .then((res) => {
-                        const topic_id = res.data.data.topics.find(
-                          (topic: Topic) => topic.name === stepper.topic
-                        )._id;
-                        dispatch(setTopicId(topic_id));
-                      });
-                    const sessionData = {
-                      user: userId,
-                      //UPPERCASE
-                      examType: stepper.type.toUpperCase(),
-                      subjects: {
-                        subject: stepper.subjectId,
-                        topics: {
-                          topic: stepper.topicId,
-                        },
-                        totalSolved: stepper.questionNumber,
-                      },
-                      totalDuration: stepper.duration,
-                    };
-                    await axios.post(
-                      `${import.meta.env.VITE_API_URL}/api/v1/session`,
-                      sessionData,
-                      {
-                        withCredentials: true,
-                      }
-                    );
-                  
+              try {
+                const sessionData = {
+                  user: userId,
+                  //UPPERCASE
+                  examType: stepper.type.toUpperCase(),
+                  subjects: {
+                    subject: stepper.subjectId,
+                    topics: {
+                      topic: stepper.topicId,
+                    },
+                    totalSolved: stepper.questionNumber,
+                  },
+                  totalDuration: stepper.duration,
+                };
+                await axios.post(
+                  `${import.meta.env.VITE_API_URL}/api/v1/session`,
+                  sessionData,
+                  {
+                    withCredentials: true,
+                  }
+                );
               } catch (error) {
                 console.error("Kullanıcı bilgileri alınamadı:", error);
               }
