@@ -41,7 +41,10 @@ function LastStep() {
             min={0}
             max={1000}
             placeholder="Soru Sayısı"
-            onChange={handleChange}
+            onChange={(e) => {
+              handleChange(e);
+              dispatch(setQuestionNumber(parseInt(e.target.value)));
+            }}
             onBlur={handleBlur}
             value={values.count}
             id="count"
