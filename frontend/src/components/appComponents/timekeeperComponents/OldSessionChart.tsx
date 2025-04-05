@@ -9,10 +9,8 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
-  BarChart,
   Bar,
   YAxis,
-  Rectangle,
   ComposedChart,
   Line,
 } from "recharts";
