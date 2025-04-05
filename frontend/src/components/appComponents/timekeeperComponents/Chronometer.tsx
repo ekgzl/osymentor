@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useStopwatch } from "react-timer-hook";
 import { RootState } from "../../../../app/store";
