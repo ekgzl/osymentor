@@ -41,7 +41,7 @@ function LastStep() {
             min={0}
             max={1000}
             placeholder="Soru Sayısı"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               handleChange(e);
               dispatch(setQuestionNumber(parseInt(e.target.value)));
             }}
