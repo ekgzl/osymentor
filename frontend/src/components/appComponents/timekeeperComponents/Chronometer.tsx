@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useStopwatch } from "react-timer-hook";
 import { RootState } from "../../../../app/store";
 import { addSession } from "../../../../features/drawer/SessionsSlice";
-import { Button, Dialog } from "@material-tailwind/react";
+import { Button, Dialog, IconButton } from "@material-tailwind/react";
 import { StepperComp } from "./dailyQuestion/Stepper";
 import FirstStep from "./dailyQuestion/FirstStep";
 
 import LastStep from "./dailyQuestion/LastStep";
 import { SecondStep } from "./dailyQuestion/SecondStep";
-import { setDuration } from "../../../../features/drawer/StepperSlice";
+import { setDuration, setStep } from "../../../../features/drawer/StepperSlice";
+import { Xmark } from "iconoir-react";
 
 function ChronometerComp() {
   const dispatch = useDispatch();
@@ -89,8 +90,8 @@ function ChronometerComp() {
   };
 
   return (
-    <div className="w-full p-4 sm:p-8 bg-gradient-to-l from-[#212121] to-[#242526] rounded-lg shadow-md ">
-      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-4xl font-bold md:mb-8 mb-3 text-center  text-amber-700">
+    <div className="w-full p-4 sm:p-8 bg-gradient-to-l bg-[#1D1D1D] rounded-lg shadow-md ">
+      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-4xl font-bold md:mb-8 mb-3 text-center  text-amber-600">
         Kronometre
       </h1>
       <div className="text-[3.5rem] md:text-9xl lg:text-[9rem] md:mb-10 mb-6 text-center font-mono font-normal text-gray-300">
@@ -125,6 +126,7 @@ function ChronometerComp() {
               reset(new Date(), false);
               localStorage.removeItem("timekeeper");
               document.title = "ösyMentor";
+              dispatch(setStep(0));
             }}
             className=" py-1 px-3 md:px-4 lg:px-5  lg:py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-semibold transition-all duration-500 ease-in-out border-none lg:text-lg md:text-lg sm:text-base text-sm"
           >
@@ -148,7 +150,17 @@ function ChronometerComp() {
               </span>
             </Dialog.Trigger>
             <Dialog.Overlay>
-              <Dialog.Content>
+              <Dialog.Content className="bg-[#1c1c1c] border-[#b3b3b3] h-[27rem] p-5 flex flex-col justify-between">
+                <Dialog.DismissTrigger
+                  as={IconButton}
+                  size="sm"
+                  variant="outline"
+                  color="secondary"
+                  className="absolute right-2 top-2 border-none hover:bg-transparent hover:outline-none hover:border-none"
+                  isCircular
+                >
+                  <Xmark className="h-6 w-6 text-rose-600 hover:text-rose-700 " />
+                </Dialog.DismissTrigger>
                 {stepper.step === 0 && <FirstStep></FirstStep>}
                 {stepper.step === 1 && <SecondStep></SecondStep>}
                 {stepper.step === 2 && <LastStep></LastStep>}

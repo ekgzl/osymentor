@@ -49,7 +49,7 @@ function CustomTooltip({
 }) {
   if (active && payload && payload.length) {
     return (
-      <Card className="rounded-lg items-center text-sm pl-2 py-2 pr-3 flex gap-2 bg-[#404040]">
+      <Card className="rounded-lg items-center text-sm pl-2 py-2 pr-3 flex gap-2 bg-[#404040] border-[#b3b3b3]">
         <div className="flex flex-col">
           <div className="w-1.5 rounded-full shrink-0 h-10 block bg-[#7c86ff]" />
           <div className="w-1.5 rounded-full shrink-0 h-10 block bg-[#bedbff]" />

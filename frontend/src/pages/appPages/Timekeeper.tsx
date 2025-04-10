@@ -15,8 +15,8 @@ export const TimekeeperPage = () => {
           <TimerComp />
         </div>
       </div>
-      <div className="w-full p-4 sm:p-8 bg-gradient-to-l from-[#212121] to-[#242526] rounded-lg shadow-lg mt-8">
-        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center text-amber-700">
+      <div className="w-full p-4 sm:p-8 bg-gradient-to-l bg-[#1D1D1D] rounded-lg shadow-lg mt-8">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center text-amber-600">
           Çalışma Geçmişi
         </h1>
         <div className="mt-4">

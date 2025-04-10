@@ -39,33 +39,35 @@ export function StepperComp() {
       >
         <Timeline.Item disabled={stepper.step < 0} value="0" className="w-full">
           <Timeline.Header>
-            <Timeline.Separator className="translate-x-1/2" />
-            <Timeline.Icon className="mx-auto">
-              <Book className="h-6 w-6" />
+            <Timeline.Separator className="translate-x-1/2 bg-[#606060] group-data-[completed=true]:bg-emerald-600" />
+            <Timeline.Icon className="mx-auto bg-[#606060] group-data-[active=true]:bg-white group-data-[completed=true]:bg-emerald-600">
+              <Book className="h-6 w-6 group-data-[completed=true]:text-white text-black" />
             </Timeline.Icon>
           </Timeline.Header>
           <Timeline.Body className="text-center"></Timeline.Body>
         </Timeline.Item>
         <Timeline.Item disabled={stepper.step < 1} value="1" className="w-full">
           <Timeline.Header>
-            <Timeline.Separator className="translate-x-1/2" />
-            <Timeline.Icon className="mx-auto">
-              <Notes className="h-6 w-6" />
+            <Timeline.Separator className="translate-x-1/2 bg-[#606060] group-data-[completed=true]:bg-emerald-600" />
+            <Timeline.Icon className="mx-auto bg-[#606060] group-data-[active=true]:bg-white group-data-[completed=true]:bg-emerald-600">
+              <Notes className="h-6 w-6 group-data-[completed=true]:text-white text-black" />
             </Timeline.Icon>
           </Timeline.Header>
           <Timeline.Body className="text-center"></Timeline.Body>
         </Timeline.Item>
         <Timeline.Item disabled={stepper.step < 2} value="2" className="w-full">
           <Timeline.Header>
-            <Timeline.Icon className="mx-auto">
-              <NumberedListLeft className="h-6 w-6" />
+            <Timeline.Icon className="mx-auto bg-[#606060] group-data-[active=true]:bg-white group-data-[completed=true]:bg-white">
+              <NumberedListLeft className="h-6 w-6 group-data-[completed=true]:text-white text-black" />
             </Timeline.Icon>
           </Timeline.Header>
           <Timeline.Body className="text-center"></Timeline.Body>
         </Timeline.Item>
       </Timeline>
-      <div className="flex w-full justify-between gap-4">
+      <div className="flex w-full justify-between gap-4 -mt-5">
         <Button
+          variant="solid"
+          color="secondary"
           disabled={stepper.step === 0}
           onClick={() => dispatch(prevStep())}
         >
@@ -80,7 +82,7 @@ export function StepperComp() {
                 return;
               }
             }}
-            color={"primary"}
+            color="secondary"
           >
             İleri
           </Button>

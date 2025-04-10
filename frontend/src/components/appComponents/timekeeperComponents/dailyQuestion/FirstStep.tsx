@@ -73,22 +73,27 @@ const FirstStep = () => {
   const examSubjects = createExamSubjectsArray();
   return (
     <>
-      <Typography type="h4">DERS</Typography>
       <div className="flex flex-col gap-5 items-start justify-start">
-        <div className="flex w-full gap-4 justify-start items-center">
+        <Typography type="h4" color="secondary">
+          DERS
+        </Typography>
+        <div className="flex w-full gap-4 justify-start items-center text-slate-200">
           <p>Sınav Türü:</p>
-          <Select disabled>
-            <Select.Trigger
-              className="w-52 text-dark bg-white"
-              placeholder={exam}
-            />
-          </Select>
+          <div className="cursor-not-allowed">
+            <Select disabled>
+              <Select.Trigger
+                className="w-52 text-gray-400 bg-[#090909] "
+                placeholder={exam}
+              />
+            </Select>
+          </div>
           <p>{isCheck ? "TYT" : "AYT"}</p>
           <Switch
             checked={isCheck}
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
               setIsCheck(event.target.checked)
             }
+            className="after:border-2 checked:before:bg-in checked:after:border-[#2ec946]"
           />
         </div>
         <div className="flex flex-col w-full items-center justify-start gap-4 text-center">
@@ -99,7 +104,6 @@ const FirstStep = () => {
                 variant="outline"
                 color="secondary"
                 isFullWidth
-                className="border-amber-800 border-[1px] rounded-lg"
                 // Problem: 'onChange' olay işleyicisini tanımlarken, 'FormEventHandler<HTMLDivElement>' türünü kullanmaya çalıştık.
                 // Ancak bu tür, bir işlevin imzasını belirtir ve doğrudan parametre türü olarak kullanılamaz.
                 // Çözüm: 'onChange' olay işleyicisinin parametre türünü 'React.FormEvent<HTMLDivElement>' olarak değiştirdik.
@@ -118,18 +122,14 @@ const FirstStep = () => {
                           dispatch(setSubjectId(subject.id));
                         }, 200);
                       }}
+                      className="border-amber-600 border-[1px] rounded-lg hover:bg-[#404040] text-slate-200"
                     >
                       {subject.name}
                     </Button>
                   ) : null
                 )}
               </ButtonGroup>
-              <ButtonGroup
-                variant="outline"
-                color="secondary"
-                isFullWidth
-                className="border-indigo-800 border-[1px] rounded-lg"
-              >
+              <ButtonGroup variant="outline" color="secondary" isFullWidth>
                 {examSubjects.map((subject, index) =>
                   index > 5 && index <= 9 ? (
                     <Button
@@ -143,18 +143,14 @@ const FirstStep = () => {
                           dispatch(setSubjectId(subject.id));
                         }, 200);
                       }}
+                      className="border-indigo-500 border-[1px] rounded-lg hover:bg-[#404040] text-slate-200"
                     >
                       {subject.name}
                     </Button>
                   ) : null
                 )}
               </ButtonGroup>
-              <ButtonGroup
-                variant="outline"
-                color="secondary"
-                isFullWidth
-                className="border-teal-800 border-[1px] rounded-lg"
-              >
+              <ButtonGroup variant="outline" color="secondary" isFullWidth>
                 {examSubjects.map((subject, index) =>
                   index > 2 && index <= 5 ? (
                     <Button
@@ -168,6 +164,7 @@ const FirstStep = () => {
                           dispatch(setSubjectId(subject.id));
                         }, 200);
                       }}
+                      className="border-sky-500 border-[1px] rounded-lg hover:bg-[#404040] text-slate-200"
                     >
                       {subject.name}
                     </Button>
@@ -177,12 +174,7 @@ const FirstStep = () => {
             </>
           ) : (
             <>
-              <ButtonGroup
-                variant="outline"
-                color="secondary"
-                isFullWidth
-                className="border-amber-800 border-[1px] rounded-lg"
-              >
+              <ButtonGroup variant="outline" color="secondary" isFullWidth>
                 {examSubjects.map((subject, index) =>
                   index <= 1 ? (
                     <Button
@@ -196,18 +188,14 @@ const FirstStep = () => {
                           dispatch(setSubjectId(subject.id));
                         }, 200);
                       }}
+                      className="border-amber-600 border-[1px] rounded-lg hover:bg-[#404040] text-slate-200"
                     >
                       {subject.name}
                     </Button>
                   ) : null
                 )}
               </ButtonGroup>
-              <ButtonGroup
-                variant="outline"
-                color="secondary"
-                isFullWidth
-                className="border-indigo-800 border-[1px] rounded-lg"
-              >
+              <ButtonGroup variant="outline" color="secondary" isFullWidth>
                 {examSubjects.map((subject, index) =>
                   index > 1 && index <= 4 ? (
                     <Button
@@ -221,6 +209,7 @@ const FirstStep = () => {
                           dispatch(setSubjectId(subject.id));
                         }, 200);
                       }}
+                      className="border-sky-500 border-[1px] rounded-lg hover:bg-[#404040] text-slate-200"
                     >
                       {subject.name}
                     </Button>

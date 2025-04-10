@@ -15,8 +15,8 @@ function TimerComp() {
   const formatNumber = (num: number) => num.toString().padStart(2, "0");
 
   return (
-    <div className="w-full h-full p-4 sm:p-8 bg-gradient-to-l from-[#212121] to-[#242526] rounded-lg shadow-lg">
-      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-4xl font-bold md:mb-8 mb-3 text-center text-amber-700">
+    <div className="w-full h-full p-4 sm:p-8 bg-gradient-to-l bg-[#1D1D1D] rounded-lg shadow-lg">
+      <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-4xl font-bold md:mb-8 mb-3 text-center text-amber-600">
         Zamanlayıcı
       </h1>
       <div className="text-[3.5rem] md:text-9xl lg:text-[9rem] md:mb-10 mb-6 text-center text-slate-300 font-mono font-normal">

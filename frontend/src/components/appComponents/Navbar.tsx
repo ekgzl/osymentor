@@ -23,14 +23,14 @@ export function NavbarComp() {
           {isSidebarOpen ? (
             <MenuScale
               className={
-                "cursor-pointer text-[#404040] hover:text-[#F28A2E] duration-300"
+                "cursor-pointer text-[#B3B3B3] hover:text-[#F28A2E] duration-300"
               }
               onClick={() => dispatch(toggleSidebar())}
             ></MenuScale>
           ) : (
             <Menu
               className={
-                "cursor-pointer text-[#404040] hover:text-[#F28A2E] duration-300"
+                "cursor-pointer text-[#B3B3B3] hover:text-[#F28A2E] duration-300"
               }
               onClick={() => dispatch(toggleSidebar())}
             ></Menu>

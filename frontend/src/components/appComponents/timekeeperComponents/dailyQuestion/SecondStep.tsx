@@ -39,11 +39,11 @@ export function SecondStep() {
 
   return (
     <>
-      <Typography type="h3" className="mb-3">
+      <Typography type="h3" className="mb-3" color="secondary">
         KONU
       </Typography>
       <div className="flex items-center text-start justify-between">
-        <p>
+        <p className="text-slate-200">
           Ders: <span className="uppercase">{stepper.type}</span>{" "}
           {stepper.subject}
         </p>
