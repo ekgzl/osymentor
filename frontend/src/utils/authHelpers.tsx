@@ -1,6 +1,4 @@
 import {
-  getRedirectResult,
-  GoogleAuthProvider,
   signInWithPopup,
   signInWithRedirect,
   UserCredential,
