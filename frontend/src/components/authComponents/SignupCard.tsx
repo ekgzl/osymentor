@@ -284,7 +284,7 @@ export default function SignupCardComp() {
             isFullWidth
             onClick={() => {
               if (isMobileOrTablet()) {
-                handleGoogleRedirect(navigate);
+                handleGoogleRedirect();
               } else {
                 handleGoogleLogin(navigate);
               }
