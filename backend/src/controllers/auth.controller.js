@@ -26,7 +26,7 @@ exports.login = async (req, res) => {
       sameSite: "none",
       maxAge: expiresIn,
     });
-
+    
     // kullanıcıyı veritabanından getir
     let user = await User.findOne({ uid: decodedToken.uid });
     //ilk kayıtta kullanıcı kaydetmek için

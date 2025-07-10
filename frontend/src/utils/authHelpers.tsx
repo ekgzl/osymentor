@@ -8,13 +8,13 @@ import axios from "axios";
 import { Toast } from "./toastConfig";
 
 export const handleGoogleRedirect = async () => {
-  console.log("fonksiyon başı");
-  try {
-    await signInWithRedirect(auth, googleProvider);
-  } catch (error) {
-    console.error("Google Redirect Error:", error);
-  }
-};
+    console.log("Google yönlendirme başlatılıyor...");
+    try {
+      await signInWithRedirect(auth, googleProvider);
+    } catch (error) {
+      console.error("Google Redirect Error:", error);
+    }
+  };
 
 export const handleGoogleLogin = async (
   navigate: (path: string) => void

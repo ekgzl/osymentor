@@ -19,22 +19,8 @@ import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { SignupSchema } from "../../formikSchemas/SignupSchema.tsx";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import {
-  handleGoogleLogin,
-  handleGoogleRedirect,
-} from "../../utils/authHelpers.tsx";
-
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 1200,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  },
-});
+import { handleGoogleRedirect } from "../../utils/authHelpers.tsx";
+import { Toast } from "../../utils/toastConfig.tsx";
 
 export default function SignupCardComp() {
   const navigate = useNavigate();
@@ -46,12 +32,6 @@ export default function SignupCardComp() {
   const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
   const [capsLockOn2, setCapsLockOn2] = React.useState(false);
   const [isPasswordFocused2, setIsPasswordFocused2] = React.useState(false);
-
-  const isMobileOrTablet = () => {
-    console.log(window.innerWidth);
-    console.log(window.innerWidth <= 768);
-    return window.innerWidth <= 768; // Örneğin, 768px ve altı mobil/tablet olarak kabul edilir
-  };
 
   //-------FORMIK------
   const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
@@ -71,14 +51,11 @@ export default function SignupCardComp() {
             const user = userCredential.user;
 
             sendEmailVerification(user);
-            await Toast.fire({
-              icon: "success",
-              title:
-                "E-posta doğrulaması gönderildi, giriş sayfasına aktarılıyorsun.",
-              timer: 2000,
-            }).then(() => {
-              navigate("/login");
-            });
+            await Toast(
+              "E-posta doğrulaması gönderildi, giriş sayfasına aktarılıyorsun.",
+              "success"
+            );
+            navigate("/login");
             resetForm();
           })
           .catch((error) => {
@@ -283,11 +260,7 @@ export default function SignupCardComp() {
             color="secondary"
             isFullWidth
             onClick={() => {
-              if (isMobileOrTablet()) {
-                handleGoogleRedirect();
-              } else {
-                handleGoogleLogin(navigate);
-              }
+              handleGoogleRedirect();
             }}
           >
             <GoogleCircle className="xl:w-7 xl:h-7 sm:w-5 sm:h-5 mr-2" /> Google
