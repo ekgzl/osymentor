@@ -36,6 +36,10 @@ exports.createTopic = async (req, res) => {
 };
 
 exports.getTopics = async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+    if (!token) {
+      return res.status(401).json({ error: "Session gelirken token bulunamadı." });
+    }
   try {
     const topics = await Topic.find();
     res.json({
@@ -50,6 +54,10 @@ exports.getTopics = async (req, res) => {
 };
 
 exports.getTopic = async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+    if (!token) {
+      return res.status(401).json({ error: "Session gelirken token bulunamadı." });
+    }
   try {
     // filter by subject
     const topic = await Topic.find({ subject: req.params.subject });

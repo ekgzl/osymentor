@@ -47,8 +47,10 @@ export function LoginCardComp() {
             await axios
               .post(
                 `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
-                { idToken: idToken },
-                { withCredentials: true }
+                {},
+                {
+                  headers: { Authorization: `Bearer ${idToken}` },
+                }
               )
               .then(async () => {
                 console.log("Giriş başarılı, yönlendiriliyor...");
@@ -130,8 +132,10 @@ export function LoginCardComp() {
           await axios
             .post(
               `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
-              { idToken: idToken },
-              { withCredentials: true }
+              {},
+              {
+                headers: { Authorization: `Bearer ${idToken}` },
+              }
             )
             .then(() => {
               console.log("Giriş başarılı, yönlendiriliyor...");

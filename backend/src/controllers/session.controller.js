@@ -2,8 +2,7 @@ const Session = require("../models/session.model");
 const admin = require("../config/firebase");
 
 exports.createSession = async (req, res) => {
-  const token = req.cookies.authToken;
-
+  const token = req.headers.authorization?.split(" ")[1]; // Bearer token
   if (!token) {
     return res
       .status(401)
@@ -34,6 +33,10 @@ exports.createSession = async (req, res) => {
 };
 
 exports.getSession = async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+    if (!token) {
+      return res.status(401).json({ error: "Session gelirken token bulunamadı." });
+    }
   try {
     // filter by user
     const session = await Session.find({
@@ -51,6 +54,10 @@ exports.getSession = async (req, res) => {
 };
 
 exports.getSessionForDurationChart = async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+    if (!token) {
+      return res.status(401).json({ error: "Session gelirken token bulunamadı." });
+    }
   try {
     // Kullanıcının tüm oturumlarını bul
     const sessions = await Session.find({

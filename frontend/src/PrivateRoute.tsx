@@ -17,15 +17,15 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const dispatch = useDispatch();
 
   //-----FETCH USER-----
-  const fetchUser = async () => {
+  const fetchUser = async (token: string) => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/api/v1/user`,
         {
-          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
-      dispatch(setUser(response.data.user));
+      dispatch(setUser({ ...response.data.user, token }));
     } catch (error) {
       console.error("Kullanıcı bilgileri alınamadı:", error);
       dispatch(clearUser());
@@ -39,7 +39,8 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         // Firebase'de oturum açıksa, backend'den kullanıcı bilgilerini çek
-        await fetchUser();
+        const token = await user.getIdToken();
+        await fetchUser(token);
       } else {
         dispatch(clearUser());
         setLoading(false);
@@ -52,8 +53,8 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     return <Spinner className="h-12 w-12" color="primary" />;
   }
 
-  if (!user.email) {
-    console.log("email yok", user.email);
+  if (!user.token) {
+    console.log("token yok", user.token);
     return <Navigate to="/login" />;
   }
   return children;

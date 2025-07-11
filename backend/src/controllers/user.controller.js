@@ -2,7 +2,7 @@ const admin = require("../config/firebase");
 const User = require("../models/user.model");
 
 exports.getUser = async (req, res) => {
-  const token = req.cookies.authToken;
+  const token = req.headers.authorization?.split(" ")[1]; // Bearer token
 
   if (!token) {
     return res
@@ -33,7 +33,7 @@ exports.getUser = async (req, res) => {
 };
 
 exports.setUser = async (req, res) => {
-  const token = req.cookies.authToken;
+  const token = req.headers.authorization?.split(" ")[1]; // Bearer token
   const { username, email, exam, avatar, birthdate } = req.body;
   if (!token) {
     return res.status(401).json({ error: "Set ederken token bulunamadı." });

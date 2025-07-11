@@ -2,8 +2,8 @@ const admin = require("../config/firebase");
 const User = require("../models/user.model");
 
 exports.login = async (req, res) => {
-  const { idToken } = req.body;
-
+  const idToken = req.headers.authorization?.split(" ")[1]; // Bearer token
+console.log("idToken", idToken);
   if (!idToken) {
     return res.status(400).json({ error: "Giriş yaparken token bulunamadı." });
   }
@@ -16,17 +16,7 @@ exports.login = async (req, res) => {
       return res.status(401).json({
         error: "Giriş yaparken e-posta doğrulanmamış.",
       });
-    }
-    const expiresIn = 60 * 60 * 1000;
-
-    // cookie oluştur ve tarayıcıya göm
-    res.cookie("authToken", idToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: expiresIn,
-    });
-    
+    }    
     // kullanıcıyı veritabanından getir
     let user = await User.findOne({ uid: decodedToken.uid });
     //ilk kayıtta kullanıcı kaydetmek için
@@ -42,13 +32,6 @@ exports.login = async (req, res) => {
 
     res.json({
       status: "success",
-      user: {
-        email: user.email,
-        username: user.username,
-        avatar: user.avatar,
-        exam: user.exam,
-        birthdate: user.birthdate,
-      },
     });
   } catch (error) {
     console.error("Giriş yaparken token doğrulama hatası:", error);
@@ -57,12 +40,5 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  // cookie temizle
-  res.clearCookie("authToken", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    path: "/",
-  });
   res.json({ status: "success" });
 };

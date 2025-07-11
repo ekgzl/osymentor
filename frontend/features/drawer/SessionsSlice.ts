@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 interface Session {
-    time: String;
+    time: string;
 }
 interface SessionsState{
     sessions: Session[];

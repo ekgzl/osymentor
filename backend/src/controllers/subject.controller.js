@@ -1,6 +1,10 @@
 const Subject = require("../models/subject.model");
 
 exports.getSubjects = async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+    if (!token) {
+      return res.status(401).json({ error: "Session gelirken token bulunamadı." });
+    }   
   try {
     const subjects = await Subject.find();
     res.json({
@@ -15,6 +19,10 @@ exports.getSubjects = async (req, res) => {
 };
 
 exports.getSubject = async (req, res) => {
+    const token = req.headers.authorization?.split(" ")[1]; // Bearer token
+    if (!token) {
+      return res.status(401).json({ error: "Session gelirken token bulunamadı." });
+    }
   try {
     // filter by examType
     const subject = await Subject.find({ examType: req.params.examType });
