@@ -16,20 +16,24 @@ interface Topic {
 }
 
 export function SecondStep() {
+  const dispatch = useDispatch();
+  const stepper = useSelector((state: RootState) => state.stepper);
+  const authToken = useSelector((state: RootState) => state.auth.token);
+  const [topics, setTopics] = useState<Topic[]>([]);
+
   useEffect(() => {
     try {
-      axios.get(`${import.meta.env.VITE_API_URL}/api/v1/topic`).then((res) => {
-        setTopics(res.data.data.topics);
-      });
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/api/v1/topic`, {
+          headers: { Authorization: `Bearer ${authToken}` },
+        })
+        .then((res) => {
+          setTopics(res.data.data.topics);
+        });
     } catch (error) {
       console.error("Error fetching topics:", error);
     }
   }, []);
-
-  const dispatch = useDispatch();
-  const stepper = useSelector((state: RootState) => state.stepper);
-  const [topics, setTopics] = useState<Topic[]>([]);
-
   const topics_ = useMemo(() => {
     if (!Array.isArray(topics)) return [];
     return topics

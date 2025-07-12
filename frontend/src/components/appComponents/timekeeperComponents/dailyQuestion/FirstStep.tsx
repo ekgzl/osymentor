@@ -29,14 +29,21 @@ const FirstStep = () => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const exam = user.exam;
+  const authToken = useSelector((state: RootState) => state.auth.token);
   const [isCheck, setIsCheck] = useState(false);
 
   const [subjects, setSubjects] = useState<Subject[]>([]);
   //GET ALL SUBJECTS FROM API
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/api/v1/subject`).then((res) => {
-      setSubjects(res.data.data.subjects);
-    });
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/api/v1/subject`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      .then((res) => {
+        setSubjects(res.data.data.subjects);
+      });
   }, []);
 
   // Create an array of exam subjects based on the current exam type

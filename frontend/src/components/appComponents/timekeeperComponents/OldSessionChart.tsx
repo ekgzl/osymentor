@@ -71,13 +71,17 @@ function CustomTooltip({
 export default function OldSessionChartComp() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const user = useSelector((state: RootState) => state.user._id);
+    const authToken = useSelector((state: RootState) => state.auth.token);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get<{ data: { sessions: Session[] } }>(
           `${import.meta.env.VITE_API_URL}/api/v1/session/duration-chart/${user}`,
           {
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+             },
+
           }
         );
 
