@@ -22,18 +22,19 @@ export function SecondStep() {
   const [topics, setTopics] = useState<Topic[]>([]);
 
   useEffect(() => {
-    try {
-      axios
-        .get(`${import.meta.env.VITE_API_URL}/api/v1/topic`, {
+    async function fetchTopics() {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/topic`, {
           headers: { Authorization: `Bearer ${authToken}` },
-        })
-        .then((res) => {
-          setTopics(res.data.data.topics);
         });
-    } catch (error) {
-      console.error("Error fetching topics:", error);
+        setTopics(res.data.data.topics);
+      } catch (error) {
+        console.error("Error fetching topics:", error);
+      }
     }
+    fetchTopics();
   }, []);
+  
   const topics_ = useMemo(() => {
     if (!Array.isArray(topics)) return [];
     return topics
@@ -59,7 +60,12 @@ export function SecondStep() {
             dispatch(setTopicId(parsed.id));
           }}
         >
-          <Select.Trigger className="w-72 mt-1" placeholder="Konu Seç" />
+          <Select.Trigger
+            className="w-72 mt-1 border-slate-200 hover:border-amber-400 focus:border-amber-500 data-[open=true]:border-amber-500
+            ring-0 [&_[data-slot=placeholder]]:text-slate-200
+            "
+            placeholder="Konu Seç"
+          />
           <Select.List className="overflow-y-scroll">
             {/*  Problem: TypeScript, "Bu ifade çağrılabilir değil. 'string[] | (<U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[])' türünün tüm bileşenleri çağrılabilir değil." hatasını verdi.
  Bu hata, 'topics' değişkeninin, .map() metodunu çağırmadan önce bir dizi (array) olup olmadığının garanti edilmemesinden kaynaklandı.

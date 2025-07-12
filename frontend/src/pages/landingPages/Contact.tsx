@@ -4,8 +4,6 @@ import { useFormik } from "formik";
 import { ContactSchema } from "../../formikSchemas/ContactSchema";
 import Swal from "sweetalert2";
 
-
-
 const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
@@ -18,9 +16,7 @@ const Toast = Swal.mixin({
   },
 });
 
-
 export function ContactPage() {
-
   const [isClicked, setIsClicked] = useState(false);
 
   //-------FORMIK------
@@ -46,13 +42,9 @@ export function ContactPage() {
           resetForm();
         });
       },
-
     });
 
-
-
   return (
-
     <section className="px-8 py-8 lg:py-16">
       <div className="container mx-auto text-center">
         <Typography
@@ -128,7 +120,9 @@ export function ContactPage() {
                     onBlur={handleBlur}
                   />
                   {touched.name && errors.name && (
-                    <p className={"pl-1 text-red-700 text-xs "}>{errors.name}</p>
+                    <p className={"pl-1 text-red-700 text-xs "}>
+                      {errors.name}
+                    </p>
                   )}
                 </div>
                 <div>
@@ -149,7 +143,9 @@ export function ContactPage() {
                     onBlur={handleBlur}
                   />
                   {touched.surname && errors.surname && (
-                    <p className={"pl-1 text-red-700 text-xs "}>{errors.surname}</p>
+                    <p className={"pl-1 text-red-700 text-xs "}>
+                      {errors.surname}
+                    </p>
                   )}
                 </div>
               </div>
@@ -171,7 +167,9 @@ export function ContactPage() {
                   onBlur={handleBlur}
                 />
                 {touched.email && errors.email && (
-                  <p className={" pl-1 text-red-700 text-xs "}>{errors.email}</p>
+                  <p className={" pl-1 text-red-700 text-xs "}>
+                    {errors.email}
+                  </p>
                 )}
               </div>
               <div>
@@ -190,17 +188,22 @@ export function ContactPage() {
                   onChange={handleChange}
                   value={values.message}
                   onBlur={handleBlur}
-                />{touched.message && errors.message && (
-                  <p className={"pl-1 text-red-700 text-xs "}>{errors.message}</p>
+                />
+                {touched.message && errors.message && (
+                  <p className={"pl-1 text-red-700 text-xs "}>
+                    {errors.message}
+                  </p>
                 )}
               </div>
 
-              <Button className="w-full shadow-md bg-amber-600 hover:text-white border-none hover:border"
+              <Button
+                className="w-full shadow-md bg-amber-600 hover:text-white border-none hover:border"
                 type="submit"
               >
                 Mesaj gönder
               </Button>
-            </form></div>
+            </form>
+          </div>
         </div>
       </div>
     </section>

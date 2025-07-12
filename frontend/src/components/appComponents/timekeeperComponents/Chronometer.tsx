@@ -150,7 +150,7 @@ function ChronometerComp() {
               </span>
             </Dialog.Trigger>
             <Dialog.Overlay>
-              <Dialog.Content className="bg-[#1c1c1c] border-[#b3b3b3] h-[27rem] p-5 flex flex-col justify-between">
+              <Dialog.Content className="bg-[#1c1c1c] border-[#b3b3b3]  p-5 flex flex-col justify-between">
                 <Dialog.DismissTrigger
                   as={IconButton}
                   size="sm"

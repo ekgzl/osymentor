@@ -26,6 +26,7 @@ export function LoginCardComp() {
   // useStateler function içinde tanımlanmalı!!
   const [capsLockOn, setCapsLockOn] = React.useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = React.useState(false);
+  const [inputType, setInputType] = React.useState("password");
 
   const navigate = useNavigate();
   const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
@@ -116,7 +117,6 @@ export function LoginCardComp() {
           });
       },
     });
-  const [inputType, setInputType] = React.useState("password");
 
   React.useEffect(() => {
     const fetchRedirectResult = async () => {
@@ -129,21 +129,16 @@ export function LoginCardComp() {
           console.log("Google yönlendirme sonucu geldi:", result);
           const idToken = await auth?.currentUser?.getIdToken(); // Doğru ID Token
 
-          await axios
-            .post(
-              `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
-              {},
-              {
-                headers: { Authorization: `Bearer ${idToken}` },
-              }
-            )
-            .then(() => {
-              console.log("Giriş başarılı, yönlendiriliyor...");
-              navigate("/app");
-            })
-            .catch((error) => {
-              console.error("Giriş yapılırken hata oluştu:", error, idToken);
-            });
+          await axios.post(
+            `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
+            {},
+            {
+              headers: { Authorization: `Bearer ${idToken}` },
+            }
+          );
+          console.log("Giriş başarılı, yönlendiriliyor...");
+          await Toast("Giriş başarılı! Uygulamaya aktarılıyorsun..", "success");
+          navigate("/app");
         } else {
           console.log("Google yönlendirme sonucu gelmedi.");
         }

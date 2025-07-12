@@ -14,5 +14,5 @@ export const Toast = (title: string, icon: "success" | "error" | "warning") => {
       toast.onmouseenter = Swal.stopTimer;
       toast.onmouseleave = Swal.resumeTimer;
     },
-  });
+  }).fire();
 };

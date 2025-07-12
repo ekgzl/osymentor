@@ -1,11 +1,11 @@
 import {
   Button,
   ButtonGroup,
+  List,
   Select,
-  Switch,
   Typography,
 } from "@material-tailwind/react";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { RootState } from "../../../../../app/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +31,7 @@ const FirstStep = () => {
   const exam = user.exam;
   const authToken = useSelector((state: RootState) => state.auth.token);
   const [isCheck, setIsCheck] = useState(false);
-
+  const [selected, setSelected] = useState("tyt");
   const [subjects, setSubjects] = useState<Subject[]>([]);
   //GET ALL SUBJECTS FROM API
   useEffect(() => {
@@ -84,7 +84,7 @@ const FirstStep = () => {
         <Typography type="h4" color="secondary">
           DERS
         </Typography>
-        <div className="flex w-full gap-4 justify-start items-center text-slate-200">
+        <div className="flex w-full gap-4 justify-start items-center text-slate-100">
           <p>Sınav Türü:</p>
           <div className="cursor-not-allowed">
             <Select disabled>
@@ -94,14 +94,28 @@ const FirstStep = () => {
               />
             </Select>
           </div>
-          <p>{isCheck ? "TYT" : "AYT"}</p>
-          <Switch
-            checked={isCheck}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              setIsCheck(event.target.checked)
-            }
-            className="after:border-2 checked:before:bg-in checked:after:border-[#2ec946]"
-          />
+          <List className="flex flex-row ">
+            <List.Item
+              className="cursor-pointer hover:text-orange-500 secondary   text-slate-100 border-2 border-slate-500"
+              selected={selected === "tyt"}
+              onClick={() => {
+                setSelected("tyt");
+                setIsCheck(true);
+              }}
+            >
+              TYT
+            </List.Item>
+            <List.Item
+              className="cursor-pointer hover:text-orange-500 secondary text-slate-100 border-2 border-slate-500 "
+              selected={selected === "ayt"}
+              onClick={() => {
+                setSelected("ayt");
+                setIsCheck(false);
+              }}
+            >
+              AYT
+            </List.Item>
+          </List>
         </div>
         <div className="flex flex-col w-full items-center justify-start gap-4 text-center">
           {isCheck ? (

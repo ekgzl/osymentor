@@ -95,24 +95,22 @@ export function StepperComp() {
                   },
                   totalDuration: stepper.duration,
                 };
-                await axios
-                  .post(
-                    `${import.meta.env.VITE_API_URL}/api/v1/session`,
-                    sessionData,
-                    {
-                      headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${authToken}`,
-                      },
-                    }
-                  )
-                  .then(async () => {
-                    await Toast(
-                      "Etüt başarıyla kaydedildi! Tebrikler..",
-                      "success"
-                    );
-                    dispatch(setStep(0));
-                  });
+                await axios.post(
+                  `${import.meta.env.VITE_API_URL}/api/v1/session`,
+                  sessionData,
+                  {
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${authToken}`,
+                    },
+                  }
+                );
+
+                await Toast(
+                  "Etüt başarıyla kaydedildi! Tebrikler..",
+                  "success"
+                );
+                dispatch(setStep(0));
               } catch (error) {
                 console.error("Kullanıcı bilgileri alınamadı:", error);
               }

@@ -23,20 +23,23 @@ function LastStep() {
 
   return (
     <>
-      <Typography type="h3">SORU</Typography>
+      <Typography type="h3" color="secondary">
+        SORU
+      </Typography>
       <div className="flex justify-between items-center w-full text-start">
         <div>
-          <p>
+          <p className="text-slate-100">
             Ders: <span className="uppercase">{stepper.type}</span>{" "}
             {stepper.subject}
           </p>
         </div>
 
-        <p>Konu: {stepper.topic}</p>
-        <div>
+        <p className="text-slate-100">Konu: {stepper.topic}</p>
+        <div className="flex flex-row items-center gap-3">
+          <p className="text-slate-100 whitespace-nowrap">Soru Sayısı:</p>
           <Input
             size="sm"
-            className="w-72 text-dark bg-white"
+            className="w-72 text-slate-100 bg-[#1D1D1D] hover:border-amber-500 focus:border-amber-600 "
             type="number"
             min={0}
             max={1000}
