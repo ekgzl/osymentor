@@ -12,7 +12,7 @@ import {
 
 import { Menu, Xmark } from "iconoir-react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const LINKS = [
   {
     title: "Hakkımızda",
@@ -25,7 +25,6 @@ const LINKS = [
 
     href: "/services",
   },
-
 
   {
     title: "İletişim",
@@ -56,12 +55,12 @@ function NavList() {
 
 export function LandingNavbarComp() {
   const [openNav, setOpenNav] = React.useState(false);
-
+  const navigate = useNavigate();
   React.useEffect(() => {
     window.addEventListener(
       "resize",
 
-      () => window.innerWidth >= 960 && setOpenNav(false),
+      () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
 
@@ -94,8 +93,10 @@ export function LandingNavbarComp() {
               className={
                 "rounded-3xl hover:border-transparent hover:bg-transparent hover:text-blue-700 hover:shadow-none hidden lg:inline-block border-none px-8"
               }
-              as={"a"}
-              href={"/login"}
+              onClick={(e) => {
+                e.preventDefault();
+                setTimeout(() => navigate("/login"), 300); // Ripple için kısa gecikme
+              }}
             >
               Giriş Yap
             </Button>
@@ -103,8 +104,10 @@ export function LandingNavbarComp() {
             <Button
               size="lg"
               className="mr-3 hidden lg:inline-block hover:bg-amber-600 border-none rounded-3xl px-8"
-              as={"a"}
-              href={"/signup"}
+              onClick={(e) => {
+                e.preventDefault();
+                setTimeout(() => navigate("/login"), 300); // Ripple için kısa gecikme
+              }}
             >
               Kayıt Ol
             </Button>
@@ -128,15 +131,23 @@ export function LandingNavbarComp() {
         <Collapse open={openNav}>
           <NavList />
 
-          <Button as={"a"} isFullWidth size="sm" className="mt-3 border-none" href={"/login"}>
-            Giriş yap
-          </Button>
           <Button
             as={"a"}
             isFullWidth
             size="sm"
+            className="mt-3 border-none"
+            href={"/login"}
+          >
+            Giriş yap
+          </Button>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              setTimeout(() => navigate("/signup"), 300); // Ripple için kısa gecikme
+            }}
+            isFullWidth
+            size="sm"
             className="mt-2 mb-3 hover:bg-amber-600 border-none"
-            href={"/signup"}
           >
             Kayıt Ol
           </Button>
