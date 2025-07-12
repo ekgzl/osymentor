@@ -8,13 +8,13 @@ import axios from "axios";
 import { Toast } from "./toastConfig";
 
 export const handleGoogleRedirect = async () => {
-    console.log("Google yönlendirme başlatılıyor...");
-    try {
-      await signInWithRedirect(auth, googleProvider);
-    } catch (error) {
-      console.error("Google Redirect Error:", error);
-    }
-  };
+  console.log("Google yönlendirme başlatılıyor...");
+  try {
+    await signInWithRedirect(auth, googleProvider);
+  } catch (error) {
+    console.error("Google Redirect Error:", error);
+  }
+};
 
 export const handleGoogleLogin = async (
   navigate: (path: string) => void
@@ -23,11 +23,14 @@ export const handleGoogleLogin = async (
     const result: UserCredential = await signInWithPopup(auth, googleProvider);
     const token: string = await result.user.getIdToken();
 
-    await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
-      { idToken: token },
-      { withCredentials: true }
-    );
+    await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/auth/login`, {
+      
+    },{
+        headers:{
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        }
+    });
 
     await Toast("Giriş başarılı! Uygulamaya aktarılıyorsun..", "success");
     navigate("/app");

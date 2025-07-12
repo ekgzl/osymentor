@@ -23,17 +23,13 @@ import {
 import { Link } from "react-router-dom";
 import { auth } from "../../config/firebase-config";
 import { signOut } from "firebase/auth";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/store";
 
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 1200,
-  timerProgressBar: true,
-});
+import { Toast } from "../../utils/toastConfig";
+
 const Links = [
   {
     icon: DashboardDots,
@@ -68,23 +64,26 @@ export function SidebarComp() {
 
   // ------- ÇIKIŞ -------
   const navigate = useNavigate();
+  const authState = useSelector((state: RootState) => state.auth);
   const handleLogout = async () => {
     try {
       //VITE_ veya NEXT_PUBLIC_ prefix'ini eklediğine emin ol.
       //Vite'de VITE_ Eğer sadece API_URL yazarsan, frontend’de çalışmaz.
       await signOut(auth).then(async () => {
         await axios
-          .post(`${import.meta.env.VITE_API_URL}/api/v1/auth/logout`, {
-            withCredentials: true,
-          })
-          .then(() => {
-            Toast.fire({
-              icon: "success",
-              title: "Çıkış başarılı...",
-              timer: 1000,
-            }).then(() => {
-              navigate("/");
-            });
+          .post(
+            `${import.meta.env.VITE_API_URL}/api/v1/auth/logout`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${authState.token}`,
+              },
+            }
+          )
+          .then(async () => {
+            await Toast("Çıkış başarılı...", "success");
+
+            navigate("/");
           });
       });
     } catch (error) {

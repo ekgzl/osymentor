@@ -12,24 +12,13 @@ import {
   setStep,
 } from "../../../../../features/drawer/StepperSlice";
 import axios from "axios";
-import Swal from "sweetalert2";
-
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 1500,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  },
-});
+import { Toast } from "../../../../utils/toastConfig";
 
 export function StepperComp() {
   const dispatch = useDispatch();
   const stepper = useSelector((state: RootState) => state.stepper);
   const userId = useSelector((state: RootState) => state.user._id);
+  const authToken = useSelector((state: RootState) => state.auth.token);
   return (
     <div className="w-full">
       <Timeline
@@ -111,17 +100,18 @@ export function StepperComp() {
                     `${import.meta.env.VITE_API_URL}/api/v1/session`,
                     sessionData,
                     {
-                      withCredentials: true,
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${authToken}`,
+                      },
                     }
                   )
-                  .then(() => {
-                    Toast.fire({
-                      icon: "success",
-                      title: "Etüt başarıyla kaydedildi! Tebrikler..",
-                      timer: 1000,
-                    }).then(() => {
-                      dispatch(setStep(0));
-                    });
+                  .then(async () => {
+                    await Toast(
+                      "Etüt başarıyla kaydedildi! Tebrikler..",
+                      "success"
+                    );
+                    dispatch(setStep(0));
                   });
               } catch (error) {
                 console.error("Kullanıcı bilgileri alınamadı:", error);

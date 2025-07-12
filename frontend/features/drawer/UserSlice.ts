@@ -7,7 +7,6 @@ interface User {
   avatar: string;
   birthdate: string;
   _id: string;
-  token: string | null; // Assuming token can be null
 }
 
 const initialState: User = (() => {
@@ -18,7 +17,6 @@ const initialState: User = (() => {
     avatar: "",
     birthdate: "",
     _id: "",
-    token: null, // Initialize token as null
   };
 })();
 
@@ -33,7 +31,6 @@ const userSlice = createSlice({
         state.avatar = action.payload.avatar;
         state.birthdate = action.payload.birthdate;
         state._id = action.payload._id;
-        state.token = action.payload.token;
     },
     clearUser: () => {
       return {
@@ -43,7 +40,6 @@ const userSlice = createSlice({
         avatar: "",
         birthdate: "",
         _id: "",
-        token: null,
       };
     },
   },

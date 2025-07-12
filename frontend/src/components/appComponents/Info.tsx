@@ -87,6 +87,7 @@ function InputSlot({
 export default function InfoComp() {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
+  const authState = useSelector((state: RootState) => state.auth);
   const {
     values,
     errors,
@@ -135,8 +136,9 @@ export default function InfoComp() {
           {
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${authState.token}`,
             },
-            withCredentials: true,
+
           }
         );
         dispatch(
@@ -162,9 +164,14 @@ export default function InfoComp() {
             confirmButtonColor: "#111827",
             willClose: () => {
               signOut(auth);
-              axios.post(`${import.meta.env.VITE_API_URL}/api/v1/auth/logout`, {
-                withCredentials: true,
-              });
+              axios.post(`${import.meta.env.VITE_API_URL}/api/v1/auth/logout`, {},
+                {
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${authState.token}`,
+                    },
+                  }
+              );
             },
           });
           return;
