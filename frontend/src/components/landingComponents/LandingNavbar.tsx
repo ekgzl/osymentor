@@ -93,7 +93,7 @@ export function LandingNavbarComp() {
               className={
                 "rounded-3xl hover:border-transparent hover:bg-transparent hover:text-blue-700 hover:shadow-none hidden lg:inline-block border-none px-8"
               }
-              onClick={(e) => {
+              onClick={(e: React.MouseEvent) => {
                 e.preventDefault();
                 setTimeout(() => navigate("/login"), 300); // Ripple için kısa gecikme
               }}
@@ -104,9 +104,9 @@ export function LandingNavbarComp() {
             <Button
               size="lg"
               className="mr-3 hidden lg:inline-block hover:bg-amber-600 border-none rounded-3xl px-8"
-              onClick={(e) => {
+              onClick={(e: React.MouseEvent) => {
                 e.preventDefault();
-                setTimeout(() => navigate("/login"), 300); // Ripple için kısa gecikme
+                setTimeout(() => navigate("/signup"), 300); // Ripple için kısa gecikme
               }}
             >
               Kayıt Ol
@@ -141,7 +141,7 @@ export function LandingNavbarComp() {
             Giriş yap
           </Button>
           <Button
-            onClick={(e) => {
+            onClick={(e: React.MouseEvent) => {
               e.preventDefault();
               setTimeout(() => navigate("/signup"), 300); // Ripple için kısa gecikme
             }}
